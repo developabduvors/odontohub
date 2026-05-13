@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { Link, usePathname } from '~/i18n/navigation';
+import { Link, usePathname } from '@/i18n/navigation';
 import { paths } from '@/lib/paths';
 import { useAppDispatch } from '@/store/hooks';
 import { clearUser } from '@/store/slices/userSlice';
