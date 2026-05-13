@@ -1,0 +1,688 @@
+{
+  "sidebar": {
+    "dashboard": "Басқару панелі",
+    "patients": "Пациенттер",
+    "appointments": "Қабылдаулар",
+    "chats": "Чаттар",
+    "focus_title": "Бүгінгі фокус",
+    "focus_appointments": "7 қабылдау",
+    "focus_consultations": "3 онлайн кеңес",
+    "focus_patients": "2 жаңа пациент",
+    "analytics": "Аналитика"
+  },
+  "common": {
+    "close": "Жабу",
+    "months": {
+      "0": "Қаңтар",
+      "1": "Ақпан",
+      "2": "Наурыз",
+      "3": "Сәуір",
+      "4": "Мамыр",
+      "5": "Маусым",
+      "6": "Шілде",
+      "7": "Тамыз",
+      "8": "Қыркүйек",
+      "9": "Қазан",
+      "10": "Қараша",
+      "11": "Желтоқсан"
+    },
+    "months_short": {
+      "0": "Қаң",
+      "1": "Ақп",
+      "2": "Нау",
+      "3": "Сәу",
+      "4": "Мам",
+      "5": "Мау",
+      "6": "Шіл",
+      "7": "Там",
+      "8": "Қыр",
+      "9": "Қаз",
+      "10": "Қар",
+      "11": "Жел"
+    },
+    "weekdays": {
+      "0": "Жек",
+      "1": "Дүй",
+      "2": "Сей",
+      "3": "Сәр",
+      "4": "Бей",
+      "5": "Жұм",
+      "6": "Сен"
+    },
+    "weekdays_full": {
+      "0": "Жексенбі",
+      "1": "Дүйсенбі",
+      "2": "Сейсенбі",
+      "3": "Сәрсенбі",
+      "4": "Бейсенбі",
+      "5": "Жұма",
+      "6": "Сенбі"
+    },
+    "confirm_delete": "Сенімдісіз бе?",
+    "delete": "Жою",
+    "cancel": "Болдырмау"
+  },
+  "appointments": {
+    "title": "Қабылдаулар",
+    "today": "Бүгін",
+    "calendar": "Күнтізбе",
+    "record_appointment": "Қабылдауға жазу",
+    "success_toast": "Қабылдау сәтті белгіленді",
+    "month_view": {
+      "month_appointments": "Айлық қабылдаулар",
+      "week": "Апта",
+      "month": "Ай",
+      "search_placeholder": "аты немесе диагноз...",
+      "weekend": "Демалыс"
+    },
+    "statuses": {
+      "completed": "Аяқталды",
+      "cancelled": "Болдырмалды",
+      "rescheduled": "Ауыстырылды",
+      "in_progress": "Орындалуда",
+      "in_queue": "Кезекте"
+    },
+    "progress": {
+      "recipe": "Рецепт",
+      "notes": "Жазбалар",
+      "allergies": "Аллергиялар",
+      "attach_photo": "Суретті тіркеу",
+      "schedule_next": "Келесі қабылдауды белгілеу",
+      "finish": "Аяқтау",
+      "add_payment": "Төлем қосу"
+    },
+    "detail": {
+      "patient": "Пациент",
+      "time": "Уақыты",
+      "date": "Күні",
+      "status": "Мәртебесі",
+      "initial": "Бастапқы"
+    }
+  },
+  "modal": {
+    "title": "Қабылдауды белгілеу",
+    "name_placeholder": "Т.А.Ә.",
+    "phone_placeholder": "Телефон нөмірі",
+    "service_placeholder": "Қызметті таңдаңыз",
+    "status_placeholder": "Емдеу мәртебесі",
+    "date_placeholder": "Күнді көрсетіңіз",
+    "time_label": "Қабылдау уақыты",
+    "notes_placeholder": "Қабылдауға ескертулер немесе түсініктемелер жазыңыз",
+    "services": {
+      "implantation": "Имплантация",
+      "consultation": "Консультация"
+    },
+    "patient_statuses": {
+      "primary": "Алғашқы",
+      "recurring": "Қайталанған"
+    }
+  },
+  "settings": {
+    "title": "Баптаулар",
+    "language_title": "Интерфейс тілін таңдаңыз",
+    "in_development": "Әзірленуде. Жақында.",
+    "tabs": {
+      "notification": "Хабарландыру",
+      "privacy": "Құпиялылық",
+      "language": "Тіл",
+      "data_management": "Деректерді басқару",
+      "support": "Қолдау"
+    },
+    "notifications": {
+      "news_title": "Жаңалықтар мен жаңартулар",
+      "news_desc": "Қосымша туралы жаңалықтар мен жаңартуларды алу",
+      "new_appt_title": "Жаңа қабылдаулар",
+      "new_appt_desc": "Жаңа қабылдаулар туралы хабарландыруларды алу",
+      "appt_changes_title": "Қабылдаулардағы өзгерістер",
+      "appt_changes_desc": "Қабылдауды болдырмау немесе ауыстыру туралы хабарландыруларды алу",
+      "sms_label": "SMS арқылы хабарландыру алуға рұқсат беру",
+      "telegram_label": "Telegram арқылы хабарландыру алуға рұқсат беру"
+    },
+    "privacy": {
+      "change_password": "Құпия сөзді өзгерту",
+      "active_sessions_title": "Белсенді сеанстар",
+      "active_sessions_desc": "Тіркелгіңіз қосылған құрылғыларды көру үшін басыңыз",
+      "add_device_title": "Құрылғыны қосу",
+      "add_device_desc": "Тіркелгіні қосу үшін смартфон камерасын бағыттаңыз",
+      "backup_number_title": "Резервтік нөмір",
+      "backup_number_desc": "Тек қауіпсіздік үшін пайдаланылады",
+      "delete_account_title": "Тіркелгіні жою",
+      "delete_account_desc": "Бұл тіркелгінің барлық деректері толығымен жойылады",
+      "logout": "Шығу"
+    },
+    "support_items": {
+      "contact": "Қолдау қызметімен байланысу",
+      "faq": "Жиі қойылатын сұрақтар (FAQ)",
+      "privacy_policy": "Құпиялылық саясаты",
+      "about": "Қосымша туралы"
+    },
+    "about": {
+      "welcome": "Стоматологиялық клиниканы басқару жүйесіне қош келдіңіз.",
+      "beta_notice": "Қазіргі уақытта қосымша сынақ режимінде (Beta нұсқасы) жұмыс істейді. Біз функционалдықты белсенді түрде жетілдіреміз, өнімділікті оңтайландырамыз және пайдаланушы тәжірибесін жақсартамыз.",
+      "issues_notice": "Уақытша қателер, жекелеген функциялардың тұрақсыз жұмысы немесе интерфейс жаңартулары мүмкін. Біз пікіріңізге ризамыз — бұл бізге жүйені ыңғайлырақ және сенімдірек етуге көмектеседі.",
+      "feedback_request": "Егер сізде сұрақтар немесе техникалық мәселелер туындаса, өтінеміз",
+      "support_link": "қолдау қызметіне",
+      "thanks": "Өнімді дамытуға көмектескеніңіз үшін рахмет."
+    }
+  },
+  "patient_profile": {
+    "not_found": "Пациент табылмады",
+    "back_to_list": "Тізімге оралу",
+    "back": "Артқа",
+    "profile": "Профиль",
+    "age": "Жасы",
+    "gender": "Жынысы",
+    "not_specified": "Көрсетілмеген",
+    "status": "Мәртебесі",
+    "chat": "Чат",
+    "no_appointments": "Әзірге қабылдаулар жоқ",
+    "schedule_appointment": "Қабылдауды белгілеу",
+    "data": "Деректер",
+    "diagnosis": "Диагноз",
+    "birth_date": "Туған күні",
+    "doctor": "Дәрігер",
+    "not_assigned": "Тағайындалмаған",
+    "phone": "Телефон",
+    "diseases": "Аурулар",
+    "allergies": "Аллергия",
+    "severity": "Ауырлық дәрежесі",
+    "mild": "Жеңіл",
+    "illnesses": "Сырқаттар",
+    "severe": "Ауыр",
+    "report": "Есеп",
+    "date": "Күні",
+    "next_appointment": "Қабылдау: 24 Желтоқсан",
+    "allergies_list": "Жер жаңғағы, Пенициллин",
+    "illnesses_list": "Қант диабеті",
+    "male": "Ер",
+    "female": "Әйел",
+    "patient_title": "Пациент",
+    "notes": "Жазбалар",
+    "prescription": "Рецепт",
+    "labels": {
+      "full_name": "Т.А.Ә.",
+      "phone": "Телефон",
+      "age": "Жасы",
+      "gender": "Жынысы",
+      "address": "Мекенжай",
+      "not_specified": "Көрсетілмеген",
+      "personal_data": "Жеке мәліметтер",
+      "info_not_found": "Пациент туралы мәлімет табылмады",
+      "years_label": "жас"
+    },
+    "allergies_view": {
+      "title": "Аллергиялар",
+      "add_btn": "Аллергия қосу",
+      "no_allergies": "Аллергиялар жоқ",
+      "reaction": "Реакция",
+      "notes": "Ескертпелер",
+      "documented_at": "Құжатталған",
+      "delete_confirm": "Бұл аллергияны жойғыңыз келетініне сенімдісіз бе?",
+      "delete_error": "Аллергияны жою мүмкін болмады",
+      "fetch_error": "Аллергияларды жүктеу мүмкін болмады",
+      "severity": {
+        "mild": "Жеңіл",
+        "moderate": "Орташа",
+        "severe": "Ауыр"
+      },
+      "add_title": "Аллергия қосу",
+      "edit_title": "Аллергияны өңдеу",
+      "allergen": "Аллерген",
+      "reaction_type": "Реакция түрі",
+      "severity_label": "Ауырлық дәрежесі",
+      "placeholder_allergen": "Мысалы: Пенициллин",
+      "placeholder_reaction": "Мысалы: Бөртпе, ісіну",
+      "placeholder_notes": "Қосымша мәліметтер...",
+      "saving": "Сақталуда...",
+      "error_required": "Барлық міндетті өрістерді толтырыңыз",
+      "error_add": "Аллергияны қосу мүмкін болмады",
+      "error_update": "Аллергияны жаңарту мүмкін болмады"
+    },
+    "prescriptions_view": {
+      "title": "Рецепттер",
+      "add_btn": "Рецепт қосу",
+      "no_prescriptions": "Рецепттер жоқ",
+      "medication": "Дәрі",
+      "dosage": "Дозасы",
+      "frequency": "Жиілігі",
+      "duration": "Ұзақтығы",
+      "notes": "Ескертпелер",
+      "prescribed_at": "Тағайындалды",
+      "delete_confirm": "Бұл рецептті жойғыңыз келетініне сенімдісіз бе?",
+      "delete_error": "Рецептті жою мүмкін болмады",
+      "fetch_error": "Рецепттерді жүктеу мүмкін болмады",
+      "add_title": "Рецепт қосу",
+      "edit_title": "Рецептті өңдеу",
+      "save_error": "Рецептті сақтау мүмкін болмады",
+      "medication_label": "Препарат атауы",
+      "dosage_label": "Дозасы",
+      "frequency_label": "Қабылдау жиілігі",
+      "duration_label": "Ұзақтығы",
+      "notes_label": "Ескертпелер",
+      "placeholder_medication": "Мысалы: Амоксициллин",
+      "placeholder_dosage": "Мысалы: 500 мг",
+      "placeholder_frequency": "Мысалы: Күніне 3 рет",
+      "placeholder_duration": "Мысалы: 7 күн",
+      "placeholder_notes": "Қосымша нұсқаулар...",
+      "error_fields": "Барлық міндетті өрістерді толтырыңыз"
+    },
+    "tabs": {
+      "info": "Деректер",
+      "photo": "Фото",
+      "treatments": "Емдеу",
+      "appointments": "Қабылдаулар",
+      "prescriptions": "Рецепттер",
+      "allergies": "Аллергиялар",
+      "payments": "Төлемдер",
+      "chat": "Чат",
+      "medcard": "Медкарта"
+    },
+    "treatments_table": {
+      "no": "№",
+      "name": "Атауы",
+      "period": "Кезең",
+      "appointments": "Қабылдаулар",
+      "amount": "Сома(сом)",
+      "status1": "Статус#1",
+      "status2": "Статус#2",
+      "paid": "Төленген",
+      "unpaid": "Төленбеген",
+      "completed": "Аяқталды"
+    },
+    "payments_view": {
+      "payment_percentage": "Төлем пайызы",
+      "paid": "Төленді",
+      "paid_to_you": "Сізге төленді",
+      "percentage": "Пайыз",
+      "debts": "Қарыздар",
+      "currency": "сом"
+    },
+    "patient_detail": {
+      "title": "Пациент мәліметтері",
+      "delete_btn": "Жою",
+      "delete_confirm": "Бұл пациентті жойғыңыз келетініне сенімдісіз бе? Барлық деректер біржола жойылады.",
+      "delete_success": "Пациент сәтті жойылды",
+      "delete_error": "Пациентті жою кезінде қате"
+    }
+  },
+  "patients_list": {
+    "search_placeholder": "Пациентті іздеу...",
+    "add_patient": "Пациент қосу",
+    "filter": "Сүзгі",
+    "new_patient_added": "Жаңа пациент қосылды!",
+    "table": {
+      "name": "Аты",
+      "age": "Жасы",
+      "phone": "Нөмірі",
+      "diagnosis": "Диагноз",
+      "status": "Мәртебесі",
+      "age_label": "жаста",
+      "not_found": "Ештеңе табылмады"
+    },
+    "statuses": {
+      "treating": "ЕМДЕЛУДЕ",
+      "new": "ЖАҢА",
+      "recorded": "ЖАЗЫЛҒАН"
+    },
+    "defaults": {
+      "new_patient": "Жаңа Пациент",
+      "checkup": "Тексеру"
+    },
+    "add_modal": {
+      "title": "Пациент қосу",
+      "full_name": "Т.А.Ә.",
+      "full_name_placeholder": "Толық аты-жөнін енгізіңіз",
+      "phone": "Телефон нөмірі",
+      "gender": "Жынысы",
+      "gender_select": "Жынысын таңдаңыз",
+      "gender_male": "Ер",
+      "gender_female": "Әйел",
+      "birth_date": "Туған күні",
+      "address": "Мекенжай",
+      "address_placeholder": "Мекенжайды енгізіңіз",
+      "cancel": "Болдырмау",
+      "add": "Қосу",
+      "error_required": "Аты-жөнін және телефон нөмірін енгізіңіз",
+      "success_added": "Пациент сәтті қосылды"
+    }
+  },
+  "doctor_profile": {
+    "save": "Сақтау",
+    "edit": "Өңдеу",
+    "contacts": "Байланыс",
+    "services": "Қызметтер",
+    "schedule": "Жұмыс кестесі",
+    "work_days": "Жұмыс күндері",
+    "work_hours": "Жұмыс сағаттары",
+    "my_services": "Менің қызметтерім",
+    "all": "Барлығы",
+    "currency": "сум",
+    "from_reviews": "{count} пікір негізінде",
+    "total_patients": "Барлық пациенттер",
+    "ratings": "Бағалаулар",
+    "total_appointments": "Барлық қабылдаулар",
+    "view": "Көру",
+    "my_works": "Менің жұмыстарым",
+    "add": "Қосу",
+    "photo_saved": "Фото сақталды!",
+    "photo_save_error": "Фотоны сақтау кезінде қате",
+    "max_photos_reached": "20 фотоға шек жетті",
+    "social_networks": "Әлеуметтік желілер",
+    "phone_number": "Тел.нөмірі",
+    "email": "Email",
+    "address": "Мекенжай",
+    "education": "Білім",
+    "clinic": "Клиника",
+    "every_day": "Күн сайын",
+    "weekend": "Демалыс күндері",
+    "change_photo": "Фотоны өзгерту",
+    "specialization_label": "Мамандығы",
+    "age_label": "Жасы",
+    "address_placeholder": "Мекенжайды енгізіңіз"
+  },
+  "dashboard": {
+    "search_placeholder": "Пациенттерді, қызметтерді іздеу...",
+    "consultation": "Кеңес беру",
+    "improve": "жақсарту",
+    "notifications": {
+      "title": "Хабарландырулар",
+      "new_count": "{count} жаңа",
+      "show_all": "Барлығын көрсету"
+    },
+    "stats": {
+      "consultations_today": "Бүгінге кеңестер",
+      "appointments_month": "Осы айдағы қабылдаулар",
+      "new_patients_week": "Осы аптадағы жаңа пациенттер"
+    },
+    "new_patients": {
+      "title": "Жаңа пациенттер",
+      "age_label": "жаста",
+      "comment": "Түсініктеме:",
+      "status_label": "Мәртебесі:",
+      "accept": "Қабылдау",
+      "quick_actions": "Жылдам әрекеттер",
+      "today": "Бүгін",
+      "no_comment": "Түсініктемесіз",
+      "urgent": "Шұғыл"
+    },
+    "appointments_card": {
+      "title": "Қабылдаулар",
+      "tabs": {
+        "day": "Күн",
+        "week": "Апта",
+        "month": "Ай"
+      },
+      "today": "Бүгін",
+      "months": {
+        "0": "Қаңтар",
+        "1": "Ақпан",
+        "2": "Наурыз",
+        "3": "Сәуір",
+        "4": "Мамыр",
+        "5": "Маусым",
+        "6": "Шілде",
+        "7": "Тамыз",
+        "8": "Қыркүйек",
+        "9": "Қазан",
+        "10": "Қараша",
+        "11": "Желтоқсан"
+      },
+      "weekdays": {
+        "0": "Жексенбі",
+        "1": "Дүйсенбі",
+        "2": "Сейсенбі",
+        "3": "Сәрсенбі",
+        "4": "Бейсенбі",
+        "5": "Жұма",
+        "6": "Сенбі"
+      }
+    },
+    "quick_actions": {
+      "title": "Жылдам әрекеттер",
+      "add_appointment": "Қабылдауды қосу",
+      "new_note": "Жаңа ескерту",
+      "message_patient": "Пациентке жазу",
+      "add_patient": "Пациент қосу"
+    },
+    "rating": {
+      "average": "Сіздің орташа бағаңыз",
+      "how_to_improve": "Рейтингіңізді қалай көтеруге болады?",
+      "desc": "Рейтинг пікірлер, белсенділік және қызмет көрсету сапасы негізінде жасалады",
+      "tip1": "Чаттарда жылдам жауап беруге тырысыңыз",
+      "tip2": "Жазбаларды жылдам растаңыз",
+      "tip3": "Пациенттерден пікір алыңыз",
+      "tip4": "Қабылдауларды өте жақсы аяқтаңыз",
+      "request_review": "Пікір сұрау"
+    },
+    "qidiruv": {
+      "search_placeholder": "Іздеу",
+      "add_title": "Пациент қосу",
+      "name_placeholder": "Пациенттің аты",
+      "phone_placeholder": "Телефон нөмірі",
+      "diagnosis_placeholder": "Диагноз",
+      "not_specified": "Диагноз көрсетілмеген",
+      "add_button": "Қосу",
+      "filter_title": "Сүзгі",
+      "age_label": "Жасы",
+      "age_from": "Дан",
+      "age_to": "Дейін",
+      "status_label": "Мәртебесі",
+      "status_treating": "Емделуде",
+      "status_new": "Жаңа",
+      "status_recorded": "Жазылған",
+      "apply_button": "Қолдану"
+    }
+  },
+  "analytics": {
+    "title": "Аналитика",
+    "header": {
+      "monitoring": "Мониторинг",
+      "analytics": "Аналитика",
+      "finance": "Қаржы",
+      "filter": "Сүзгі"
+    },
+    "stats": {
+      "total_appointments": "Барлық қабылдаулар",
+      "completed_appointments": "Аяқталған қабылдаулар",
+      "reviews": "Пікірлер",
+      "revenue": "Табыстар",
+      "thousand": "мың",
+      "million": "млн",
+      "last_month": "өткен айда",
+      "last_week": "өткен аптада"
+    },
+    "charts": {
+      "appointments": {
+        "title": "Қабылдаулар",
+        "subtitle": "Бір айдағы қабылдаулар",
+        "appointments_label": "қабылдаулар"
+      },
+      "patients": {
+        "title": "Пациенттер",
+        "subtitle": "Пациенттердің жынысы",
+        "male": "Ерлер",
+        "female": "Әйелдер",
+        "count_label": "адам"
+      },
+      "age": {
+        "title": "Жас",
+        "subtitle": "Пациенттердің жасы",
+        "count_label": "адам"
+      },
+      "clients": {
+        "title": "Клиенттер",
+        "old": "Ескілер",
+        "new": "Жаңалар"
+      },
+      "status": {
+        "title": "Мәртебе",
+        "completed": "АЯҚТАЛДЫ",
+        "rescheduled": "АУЫСТЫРЫЛДЫ",
+        "cancelled": "БОЛДЫРМАЛДЫ"
+      }
+    },
+    "filter": {
+      "title": "Сүзгі",
+      "period": "Кезең",
+      "period_year": "Бір жылға",
+      "statuses": "Мәртебелер",
+      "all": "Барлығы",
+      "completed": "Аяқталғандар",
+      "cancelled": "Болдырмалғандар",
+      "patient": "Пациент",
+      "new": "Жаңалар",
+      "recurring": "Қайталанғандар",
+      "apply": "Қолдану",
+      "reset": "Тастау"
+    },
+    "monitoring": {
+      "title": "Мониторинг",
+      "name": "Аты",
+      "date": "Күні",
+      "sum": "Сомасы"
+    },
+    "finance": {
+      "title": "Қаржы",
+      "income": "Табыс",
+      "net_profit": "Таза пайда",
+      "expenses": "Шығындар",
+      "daily_expenses": "Тәуліктік шығындар",
+      "stats_title": "Статистика",
+      "for_year": "Жылға",
+      "total": "Жалпы",
+      "today": "Бүгін",
+      "add_expense": "Шығын",
+      "profit": "Пайда",
+      "today_expenses": "Шығын",
+      "appointments": "Қабылдаулар",
+      "view": "Көру",
+      "top_services": "Ең көп сатылатын қызметтер",
+      "per_month": "Айына",
+      "avg_per_day": "Орташа",
+      "services": {
+        "implantation": "Пломба",
+        "removal": "Алып тастау",
+        "filling": "Имплантация",
+        "prosthetics": "Периостотомия",
+        "crown": "Тәж"
+      }
+    }
+  },
+  "patient": {
+    "navbar": {
+      "home": "Басты бет",
+      "appointments": "Қабылдаулар",
+      "chats": "Хабарламалар",
+      "history": "Тарих",
+      "profile": "Профиль"
+    },
+    "home": {
+      "greeting": "Сәлем, {name}",
+      "greeting_subtitle": "Денсаулығыңызға қамқорлық жасайтын уақыт келді",
+      "search": "Іздеу...",
+      "upcoming": "Жақын арадағы қабылдаулар",
+      "services": "Біздің қызметтеріміз",
+      "services_all": "Барлығы",
+      "services_treatment": "Емдеу",
+      "services_hygiene": "Гигиена",
+      "services_surgery": "Хирургия",
+      "action_book": "Стоматологқа жазылу",
+      "action_doctors": "Дәрігерлер",
+      "action_my_dentist": "Менің стоматологым",
+      "action_chat": "Чат",
+      "action_notifications": "Хабарлама",
+      "more_details": "Толығырақ",
+      "until_appointment": "Қабылдауға дейін:",
+      "time_days": "күн",
+      "time_day": "күн",
+      "time_hours": "сағ",
+      "time_minutes": "мин",
+      "time_seconds": "сек"
+    },
+    "chats": {
+      "title": "Хабарламалар",
+      "search": "Іздеу...",
+      "typing": "Жазып жатыр...",
+      "online": "Желіде",
+      "today": "Бүгін",
+      "write_message": "Хабарлама жазыңыз..."
+    },
+    "profile": {
+      "title": "Профиль",
+      "gender": "Жынысы",
+      "male": "Ер",
+      "female": "Әйел",
+      "birth_date": "Туған күні",
+      "edit": "Өңдеу",
+      "logout": "Есептік жазбадан шығу",
+      "language": "Тіл",
+      "notification": "Хабарландыру",
+      "select_language": "Тілді таңдаңыз"
+    },
+    "appointment_detail": {
+      "title": "Қабылдау мәліметтері",
+      "doctor": "Дәрігер",
+      "price": "Бағасы",
+      "back": "Артқа",
+      "status_label": "Мәртебесі",
+      "when_label": "Қашан",
+      "duration_label": "Болжалды ұзақтығы",
+      "tip_label": "Кеңес",
+      "notes_label": "Жазбалар",
+      "direction_label": "Бағыты",
+      "experience_label": "Жұмыс тәжірибесі",
+      "rating_label": "Бағалау",
+      "contact_btn": "Байланысу",
+      "reschedule_btn": "Ауыстыру",
+      "cancel_btn": "Болдырмау",
+      "view_doctor": "Өту"
+    },
+    "appointments": {
+      "title": "Қабылдаулар",
+      "upcoming_tab": "Жақын арадағы",
+      "past_tab": "Өткен",
+      "doctor_label": "Дәрігерлер",
+      "date_time_label": "Қабылдау күні мен уақыты",
+      "success_status": "Сәтті өтті",
+      "cancelled_status": "Болдырылмады",
+      "rescheduled_status": "Ауыстырылды",
+      "comment_label": "Пікірлер",
+      "new_date_label": "Ауыстырылған қабылдау күні мен уақыты",
+      "type_extraction": "Ақыл тісін жұлдыру",
+      "type_examination": "Тексеру",
+      "specialty_general": "Жалпы-профильді стоматолог"
+    },
+    "specialties": {
+      "title": "Мамандар",
+      "found_count": "Табылды: {count} маман",
+      "view_btn": "Көру",
+      "items": {
+        "therapist": { "name": "Терапевт", "desc": "Кариесті, каналдарды емдеу" },
+        "surgeon": { "name": "Хирург", "desc": "Тісті жұлу, имплантация" },
+        "orthopedist": { "name": "Ортопед", "desc": "Протездеу, винирлер" },
+        "orthodontist": { "name": "Ортодонт", "desc": "Тістеуді түзету (брекеттер)" },
+        "periodontist": { "name": "Пародонтолог", "desc": "Қызыл иекті емдеу" },
+        "pediatric": { "name": "Балалар стоматологы", "desc": "Балалардың тістерін емдеу" },
+        "hygienist": { "name": "Гигиенист", "desc": "Тістерді тазалау, гигиена" },
+        "aesthetic": { "name": "Эстетик", "desc": "Ағарту, реставрация" }
+      }
+    },
+    "alerts": {
+      "appointment_cancelled": "Қабылдау болдырылмады",
+      "select_new_date": "Жаңа күнді таңдаңыз",
+      "appointment_rescheduled": "Қабылдау ауыстырылды",
+      "appointment_created": "Жазба сәтті жасалды!",
+      "fill_required_fields": "Барлық міндетті өрістерді толтырыңыз!",
+      "booking_success": "Өтініш сәтті жіберілді!",
+      "user_not_found": "Пайдаланушы табылмады. Тіркеліңіз.",
+      "patient_deleted": "Науқас сәтті жойылды",
+      "patient_delete_error": "Науқасты жою кезінде қате",
+      "profile_save_error": "Профильді сақтау кезінде қате",
+      "prescription_delete_error": "Рецептті жою мүмкін болмады",
+      "allergy_delete_error": "Аллергияны жою мүмкін болмады",
+      "auth_error": "Авторизация қатесі. Жүйеге қайта кіріңіз.",
+      "note_add_error": "Жазба қосу кезінде қате",
+      "function_in_development": "Функция әзірленуде"
+    }
+  }
+}
