@@ -14,6 +14,7 @@ import AllergySection from '@/components/Patients/AllergySection';
 import PrescriptionSection from '@/components/Patients/PrescriptionSection';
 import PaymentsSection from '@/components/Patients/PaymentsSection';
 import PhotosSection from '@/components/Patients/PhotosSection';
+import AppointmentsSection from '@/components/Patients/AppointmentsSection';
 
 type TabType = 'info' | 'appointments' | 'prescriptions' | 'allergies' | 'photos' | 'payments' | 'medcard';
 
@@ -114,7 +115,8 @@ const PatientDetailPage: FC = () => {
           {activeTab === 'prescriptions' && <PrescriptionSection patientId={patientId} />}
           {activeTab === 'payments' && <PaymentsSection patientId={patientId} />}
           {activeTab === 'photos' && <PhotosSection patientId={patientId} />}
-          {activeTab !== 'info' && activeTab !== 'allergies' && activeTab !== 'prescriptions' && activeTab !== 'payments' && activeTab !== 'photos' && (
+          {activeTab === 'appointments' && <AppointmentsSection patientId={patientId} dentistId={dentistId} />}
+          {activeTab !== 'info' && activeTab !== 'allergies' && activeTab !== 'prescriptions' && activeTab !== 'payments' && activeTab !== 'photos' && activeTab !== 'appointments' && (
             <div className="flex min-h-[320px] items-center justify-center text-gray-500">
               <p>{t('settings.in_development')}</p>
               <span className="ml-2 text-xs text-gray-400">[{activeTab}] — dentistId={dentistId}</span>
