@@ -15,6 +15,7 @@ import PrescriptionSection from '@/components/Patients/PrescriptionSection';
 import PaymentsSection from '@/components/Patients/PaymentsSection';
 import PhotosSection from '@/components/Patients/PhotosSection';
 import AppointmentsSection from '@/components/Patients/AppointmentsSection';
+import MedcardSection from '@/components/Patients/MedcardSection';
 
 type TabType = 'info' | 'appointments' | 'prescriptions' | 'allergies' | 'photos' | 'payments' | 'medcard';
 
@@ -111,17 +112,12 @@ const PatientDetailPage: FC = () => {
       <div className="px-4 mt-6">
         <div className="bg-white rounded-2xl p-6 shadow-sm min-h-[400px]">
           {activeTab === 'info' && <PatientInfoSection patientId={patientId} />}
+          {activeTab === 'medcard' && <MedcardSection patientId={patientId} />}
           {activeTab === 'allergies' && <AllergySection patientId={patientId} />}
           {activeTab === 'prescriptions' && <PrescriptionSection patientId={patientId} />}
           {activeTab === 'payments' && <PaymentsSection patientId={patientId} />}
           {activeTab === 'photos' && <PhotosSection patientId={patientId} />}
           {activeTab === 'appointments' && <AppointmentsSection patientId={patientId} dentistId={dentistId} />}
-          {activeTab !== 'info' && activeTab !== 'allergies' && activeTab !== 'prescriptions' && activeTab !== 'payments' && activeTab !== 'photos' && activeTab !== 'appointments' && (
-            <div className="flex min-h-[320px] items-center justify-center text-gray-500">
-              <p>{t('settings.in_development')}</p>
-              <span className="ml-2 text-xs text-gray-400">[{activeTab}] — dentistId={dentistId}</span>
-            </div>
-          )}
         </div>
       </div>
     </div>
