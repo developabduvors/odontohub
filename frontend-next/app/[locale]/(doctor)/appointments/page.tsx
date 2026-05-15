@@ -10,6 +10,7 @@ import AppointmentCard, { type AppointmentStatus } from '@/components/Appointmen
 import CalendarView from '@/components/Appointments/CalendarView';
 import AppointmentModal from '@/components/Appointments/AppointmentModal';
 import AppointmentDetailModal from '@/components/Appointments/AppointmentDetailModal';
+import InProgressView from '@/components/Appointments/InProgressView';
 import { toast } from '@/components/Shared/Toast';
 import { useMyAppointments } from '@/api/appointments';
 import { useServices } from '@/api/services';
@@ -17,7 +18,7 @@ import { useServices } from '@/api/services';
 const AppointmentsPage: React.FC = () => {
     const t = useTranslations();
     const router = useRouter();
-    const [view, setView] = useState<'list' | 'calendar'>('list');
+    const [view, setView] = useState<'list' | 'calendar' | 'in_progress'>('list');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedAppointment, setSelectedAppointment] = useState<any>(null);
     const [isDetailOpen, setIsDetailOpen] = useState(false);
@@ -116,9 +117,11 @@ const AppointmentsPage: React.FC = () => {
             notes: apt.notes,
             raw: apt.raw
         });
-        // InProgressView (status === 'in_progress') is ported in the next task;
-        // for now every appointment opens the detail modal.
-        setIsDetailOpen(true);
+        if (apt.status === 'in_progress') {
+            setView('in_progress');
+        } else {
+            setIsDetailOpen(true);
+        }
     };
 
     const day = effectiveDate.getDate();
@@ -131,6 +134,11 @@ const AppointmentsPage: React.FC = () => {
             <div className="max-w-[1600px] mx-auto space-y-6 md:space-y-10">
                 {view === 'calendar' ? (
                     <CalendarView onBack={() => setView('list')} />
+                ) : view === 'in_progress' ? (
+                    <InProgressView
+                        appointment={selectedAppointment}
+                        onBack={() => setView('list')}
+                    />
                 ) : (
                     <>
                         <div className="flex flex-col gap-6">
