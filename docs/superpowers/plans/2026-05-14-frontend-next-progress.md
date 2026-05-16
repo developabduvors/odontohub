@@ -35,6 +35,64 @@ b4ec79b8 feat(frontend-next): port /profile page (DoctorProfile with 8 sub-secti
 
 ---
 
+## Register role selection (Пациент/Врач) port (2026-05-16) — yakunlandi
+
+Vite `Register1.tsx`'da register sahifasida Врач/Пациент tanlovi bor edi;
+Next port (`register_pat`) faqat patientga hardcode qilingan, tanlov yo'q edi
+(user screenshot bilan ko'rsatdi). Spec + plan yozildi (commit `39d2498c`,
+`e01a018e`), keyin implementatsiya:
+
+- **NEW `components/Auth/RegisterView.tsx`** (`'use client'`) — Vite Register1
+  sodiq port. `role: 'patient'|'dentist'` **prop** (local state emas). Селектор
+  tugmalari route'lar orasida navigatsiya qiladi: Врач → `paths.registrDoc`,
+  Пациент → `paths.registerPat` (URL har doim rolни aks ettiradi). Submit →
+  `POST /auth/register {role}` → `/auth/me` (fallback user) → dispatch(setUser).
+  Redirect: dentist → `/menu`, patient → `is_first_time` + `/home`. Hardcoded
+  RU matnlar (login/register_pat kabi, next-intl kalitsiz). Commit `cb0e7f73`.
+- **`(public)/register_pat/page.tsx`** to'liq almashtirildi (eski patient-only
+  forma + `Field` helper o'chdi, 199 deletion) → `<RegisterView role="patient"/>`.
+  **NEW `(public)/register_doc/page.tsx`** → `<RegisterView role="dentist"/>`.
+  Ikkalasi ham server component wrapper (`'use client'` faqat RegisterView'da).
+  Commit `793bde13`.
+- Login register link allaqachon `paths.registerPat`'ga ketardi — o'zgartirilmadi.
+  Backend `/auth/register` `role:'dentist'`ni allaqachon qabul qiladi.
+
+Verifikatsiya: `npx tsc --noEmit` (exit 0) ×2 + `npm run build` (✓, 0 warning).
+Static sahifalar **63 → 67** (`/register_doc` ×4 locale qo'shildi),
+`/register_pat` va `/register_doc` ikkalasi SSG ●. **Qoldi:** manual smoke
+(backend + dev) — user vizual tekshiradi: selektor, route toggle, redirectlar.
+Push qilinmadi (oldingi fazalar kabi local). Spec:
+`docs/superpowers/specs/2026-05-16-frontend-next-register-role-selection-design.md`,
+Plan: `docs/superpowers/plans/2026-05-16-frontend-next-register-role-selection.md`.
+
+---
+
+## Chats WebSocket + Analytics/Chat layout fix (2026-05-16) — yakunlandi
+
+`docs/superpowers/plans/2026-05-16-frontend-next-chats-websocket.md` rejasining
+Task 1-4'i implementatsiya qilindi (commit'lar `ef38f7e1..104dc7b1`): `api/chat.ts`,
+`components/Chat/MessageBubble.tsx`, `components/Chat/ChatsView.tsx`,
+`/chats` + `/chats/[id]` route'lari. Build 63 static (chats + chats/[id] qo'shildi).
+
+Keyin user 2 ta layout bug'ni topdi (Analytics + Chat) — `togrla` so'rovi:
+
+- **`/analytics/finance`** DoctorPageShell'siz edi (bare `flex-1 min-h-screen`
+  div), shuning uchun `/analytics` (Analitic, DoctorPageShell ishlatadi) kabi
+  `<main pt-20 lg:pt-0>` ichiga to'g'ri joylashmas edi. Yechim: kontentni
+  `DoctorPageShell`ga o'radik (parity), finance/monitoring toggle header +
+  `AnalyticsFilter` saqlandi. Stray bo'sh qator (`'use client'` oldidan) ham
+  olib tashlandi. Commit `31fef367`.
+- **`ChatsView`** root balandligi `h-[calc(100dvh-56px)]`/`md:100vh-88px` edi,
+  lekin MainLayout `<main>` `lg`'gacha `pt-20` (80px) va `md:m-4` (32px)
+  qo'shadi — mobil/md'da xabar inputi ~24px ekrandan tushib ketardi. Yechim:
+  `100dvh-80px` / `md 100vh-112px`; `lg 100vh-32px` o'zgarmadi. Commit `7a7dea7a`.
+
+Verifikatsiya: `npx tsc --noEmit` (exit 0) + `npm run build` (✓, 63 static,
+0 warning). `/analytics/finance` hali SSG ●, `/chats` ●, `/chats/[id]` ƒ.
+Push qilinmadi (oldingi fazalar kabi local).
+
+---
+
 ## Phase 2d Doctor finish (2026-05-16) — yakunlandi
 
 Reja: `docs/superpowers/plans/2026-05-15-frontend-next-phase-2d-doctor-finish.md`. 8 ta task'dan 7 tasi bajarildi (8-chi = chats spec, implementatsiya alohida session).
