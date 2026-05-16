@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { useRouter } from '@/i18n/navigation';
 import AnalyticsFilter from '@/components/Analytics/AnalyticsFilter';
+import DoctorPageShell from '@/components/Layout/DoctorPageShell';
 
 interface ServiceItem {
     id: number;
@@ -57,8 +58,14 @@ const FinancePage: React.FC = () => {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
 
     return (
-        <div className="flex-1 bg-[#f5f7fb] min-h-screen overflow-y-auto custom-scrollbar">
-            <div className="min-w-0 p-4 lg:p-8">
+        <DoctorPageShell
+            badge="Finance"
+            title="Финансы"
+            accent="Доходы и расходы"
+            description="Отслеживайте доходы, расходы и прибыль клиники, анализируйте популярные услуги и ежедневные показатели в едином интерфейсе."
+            contentClassName="p-4 sm:p-6 lg:p-8"
+        >
+            <div className="mx-auto max-w-[1600px]">
                 {/* Header Context from Image */}
                 <div className="mb-8 flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
                     <div className="flex min-w-0 items-center gap-3 sm:gap-4">
@@ -331,12 +338,11 @@ const FinancePage: React.FC = () => {
                 )}
             </div>
 
-
             <AnalyticsFilter
                 isOpen={isFilterOpen}
                 onClose={() => setIsFilterOpen(false)}
             />
-        </div>
+        </DoctorPageShell>
     );
 };
 
