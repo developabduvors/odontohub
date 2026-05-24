@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from typing import List
 
@@ -22,7 +23,11 @@ def read_services(
     if search:
         query = query.filter(Service.name.ilike(f"%{search}%"))
     if dentist_id:
-        query = query.filter(Service.dentist_id == dentist_id)
+        # Show this dentist's own services PLUS the shared global catalogue
+        # (services with no dentist assigned, dentist_id IS NULL).
+        query = query.filter(
+            or_(Service.dentist_id == dentist_id, Service.dentist_id.is_(None))
+        )
     services = query.offset(skip).limit(limit).all()
     return services
 

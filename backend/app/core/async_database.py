@@ -30,6 +30,10 @@ async_engine = create_async_engine(
     DATABASE_URL,
     echo=False,
     future=True,
+    # Neon closes idle connections; validate/replace stale ones before
+    # checkout and recycle ones older than 5 min (below Neon's idle timeout).
+    pool_pre_ping=True,
+    pool_recycle=300,
     connect_args={"check_same_thread": False} if "sqlite" in DATABASE_URL else engine_connect_args
 )
 

@@ -92,14 +92,33 @@ const Appointments: React.FC = () => {
             const d = new Date(a.dateObj); d.setHours(0, 0, 0, 0);
             return d >= today;
         });
-        return upcoming ? upcoming.dateObj : new Date();
+        // No upcoming appointment → land on the patient's most recent past
+        // appointment (list is sorted ascending) instead of an empty "today",
+        // otherwise patients whose appointments are all in the past see a
+        // blank "Qabullar" even though they have records.
+        return upcoming
+            ? upcoming.dateObj
+            : allAppointmentsData[allAppointmentsData.length - 1].dateObj;
     }, [selectedDate, allAppointmentsData]);
 
-    // Filter by effective date
+    // Default list = upcoming (today + future), soonest first — so an
+    // appointment booked for tomorrow already shows today. If there are no
+    // upcoming appointments, fall back to the patient's past ones, most
+    // recent first, so the list is never wrongly empty. A single day is
+    // shown only when the user explicitly taps a date in the DateStrip.
     const appointmentsData = useMemo(() => {
-        const selectedDateStr = `${effectiveDate.getFullYear()}-${(effectiveDate.getMonth() + 1).toString().padStart(2, '0')}-${effectiveDate.getDate().toString().padStart(2, '0')}`;
-        return allAppointmentsData.filter(a => a.dateStr === selectedDateStr);
-    }, [allAppointmentsData, effectiveDate]);
+        if (selectedDate) {
+            const sel = `${selectedDate.getFullYear()}-${(selectedDate.getMonth() + 1).toString().padStart(2, '0')}-${selectedDate.getDate().toString().padStart(2, '0')}`;
+            return allAppointmentsData.filter(a => a.dateStr === sel);
+        }
+        const today = new Date(); today.setHours(0, 0, 0, 0);
+        const upcoming = allAppointmentsData.filter(a => {
+            const d = new Date(a.dateObj); d.setHours(0, 0, 0, 0);
+            return d >= today;
+        });
+        if (upcoming.length > 0) return upcoming;          // soonest first
+        return [...allAppointmentsData].reverse();          // none upcoming → most recent first
+    }, [allAppointmentsData, selectedDate]);
 
     const showToast = (message: string, type: 'success' | 'error' | 'info' | 'warning' = 'success') => {
         if (type === 'success') toast.success(message);

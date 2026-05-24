@@ -18,6 +18,7 @@ class AppointmentCreate(AppointmentBase):
 class AppointmentUpdate(BaseModel):
     start_time: datetime | None = None
     end_time: datetime | None = None
+    actual_start_time: datetime | None = None
     status: AppointmentStatus | None = None
     cancel_reason: str | None = None
     service: str | None = None
@@ -32,6 +33,7 @@ class AppointmentSchema(AppointmentBase):
     patient_id: int
     dentist_name: str | None = None
     patient_name: str | None = None
+    actual_start_time: datetime | None = None
     status: AppointmentStatus
     cancel_reason: str | None = None
     notes: str | None = None

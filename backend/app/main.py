@@ -93,6 +93,13 @@ def on_startup():
     from app.models.notification import Notification
     from app.models.complaint import Complaint
 
+    # Register ALL remaining model modules so Base.metadata is complete
+    # (medical_record, schedule, time_slot are not in the explicit list above).
+    import importlib, pkgutil
+    import app.models as _models_pkg
+    for _m in pkgutil.iter_modules(_models_pkg.__path__):
+        importlib.import_module(f"app.models.{_m.name}")
+
     db_url = str(engine.url)
     if "postgresql" in db_url or "postgres" in db_url:
         # Safely create enum types — won't fail if they already exist
@@ -163,6 +170,8 @@ def on_startup():
         if 'appointments' in inspector.get_table_names():
             appt_cols = [col['name'] for col in inspector.get_columns('appointments')]
             appt_fields = []
+            if 'actual_start_time' not in appt_cols:
+                appt_fields.append(('actual_start_time', 'TIMESTAMP WITH TIME ZONE'))
             if 'visit_type' not in appt_cols:
                 appt_fields.append(('visit_type', "VARCHAR DEFAULT 'primary'"))
             if 'diagnosis' not in appt_cols:
@@ -195,6 +204,40 @@ def on_startup():
     except Exception as e:
         print(f"Warning: Could not migrate dentist fields: {e}")
         # Don't fail startup if migration fails
+
+    # --- Generic schema auto-migration -------------------------------------
+    # Supersedes the hand-maintained ALTER blocks above: on every boot, any
+    # column declared on a model but missing from its (already-existing) table
+    # is added automatically. This is the structural fix for the recurring
+    # "column ... does not exist" drift. Conservative by design:
+    #   * ADD COLUMN only — never drops or retypes anything
+    #   * a NOT NULL column with no server_default is added as NULLable, so
+    #     existing rows are not rejected (the ORM still applies Python-side
+    #     defaults for new rows)
+    #   * brand-new tables are left to create_all() below
+    try:
+        from sqlalchemy import inspect as _inspect, text as _text
+        from sqlalchemy.schema import CreateColumn
+        _insp = _inspect(engine)
+        _db_tables = set(_insp.get_table_names())
+        _is_pg = "postgresql" in db_url or "postgres" in db_url
+        for _tname, _table in Base.metadata.tables.items():
+            if _tname not in _db_tables:
+                continue  # whole table missing → create_all() handles it
+            _existing = {c["name"] for c in _insp.get_columns(_tname)}
+            for _col in _table.columns:
+                if _col.primary_key or _col.name in _existing:
+                    continue
+                _ddl = str(CreateColumn(_col).compile(dialect=engine.dialect)).strip()
+                if not _col.nullable and _col.server_default is None:
+                    _ddl = _ddl.replace(" NOT NULL", "")
+                _add = "ADD COLUMN IF NOT EXISTS" if _is_pg else "ADD COLUMN"
+                with engine.begin() as _conn:
+                    _conn.execute(_text(f"ALTER TABLE {_tname} {_add} {_ddl}"))
+                print(f"OK: auto-migrate added {_tname}.{_col.name} -> {_ddl}")
+    except Exception as e:
+        print(f"Warning: generic schema auto-migration failed: {e}")
+        # Never fail startup on migration issues
 
     # Create all tables (checkfirst=True skips existing tables)
     Base.metadata.create_all(bind=engine, checkfirst=True)

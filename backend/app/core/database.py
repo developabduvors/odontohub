@@ -14,6 +14,13 @@ if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
 
 engine = create_engine(
     DATABASE_URL,
+    # Neon (serverless Postgres) closes idle connections / suspends compute,
+    # leaving stale connections in the pool that fail with "SSL connection has
+    # been closed unexpectedly". pool_pre_ping validates (and transparently
+    # replaces) a connection before checkout; pool_recycle proactively drops
+    # connections older than 5 min, below Neon's idle timeout.
+    pool_pre_ping=True,
+    pool_recycle=300,
     connect_args={"check_same_thread": False}
     if "sqlite" in DATABASE_URL else {}
 )

@@ -39,7 +39,7 @@ const CheckupBookingPreview = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#F5F7FA] p-4 flex flex-col font-sans max-w-md mx-auto w-full relative">
+        <div className="min-h-screen bg-[#F5F7FA] p-4 md:p-8 flex flex-col font-sans max-w-5xl mx-auto w-full relative">
             {/* Header */}
             <div className="flex items-center gap-4 mb-8">
                 <button
