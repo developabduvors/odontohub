@@ -34,6 +34,7 @@ app.add_middleware(
         "https://odontohub.netlify.app",
         "https://odontohub-app.netlify.app",
         "https://statuesque-bonbon-133025.netlify.app",
+        "https://gosmile.netlify.app",
     ],
     allow_credentials=False,
     allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
@@ -54,6 +55,7 @@ ALLOWED_ORIGINS = [
     "https://odontohub.netlify.app",
     "https://odontohub-app.netlify.app",
     "https://statuesque-bonbon-133025.netlify.app",
+    "https://gosmile.netlify.app",
 ]
 
 
