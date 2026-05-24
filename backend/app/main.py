@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from app.core.database import engine, Base, get_db
 from app.routers import auth, patients, dentists, services, appointments
 from app.routers import prescriptions, allergies, payments, photos, chat
-from app.routers import reviews, notifications, complaints
+from app.routers import reviews, notifications, complaints, telegram
 import traceback
 import os
 # Temporarily disabled - uncomment to enable notifications:
@@ -244,6 +244,7 @@ def on_startup():
 
 
 # Include routers
+app.include_router(telegram.router, prefix="/api", tags=["Telegram"])
 app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 app.include_router(patients.router, tags=["Patients"])
 app.include_router(dentists.router, tags=["Dentists"])

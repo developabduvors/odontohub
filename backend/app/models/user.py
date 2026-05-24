@@ -19,6 +19,7 @@ class User(Base):
     backup_phone: Mapped[str | None] = mapped_column(String, nullable=True)
     email: Mapped[str | None] = mapped_column(String, nullable=True)
     password: Mapped[str | None] = mapped_column(String, nullable=True)  # Nullable for passwordless auth
+    telegram_id: Mapped[str | None] = mapped_column(String, unique=True, nullable=True, index=True)
     role: Mapped[UserRole] = mapped_column(Enum(UserRole, values_callable=lambda x: [e.value for e in x], create_type=False))
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
 
