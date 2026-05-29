@@ -1,0 +1,17 @@
+
+> frontend-next@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.100.217:3000
+- Environments: .env.local
+✓ Ready in 2.8min
+○ Compiling middleware ...
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+
+ GET /ru/login 200 in 33.5s (next.js: 25.7s, proxy.ts: 84ms, generate-params: 11.9s, application-code: 7.7s)
+ GET /ru/register_pat 200 in 14.7s (next.js: 12.8s, proxy.ts: 85ms, generate-params: 12.0s, application-code: 1732ms)
+ GET /ru/register_pat 200 in 1161ms (next.js: 196ms, proxy.ts: 63ms, generate-params: 121ms, application-code: 902ms)
+ GET /ru/login 200 in 1073ms (next.js: 163ms, proxy.ts: 37ms, generate-params: 100ms, application-code: 872ms)
+[?25h
