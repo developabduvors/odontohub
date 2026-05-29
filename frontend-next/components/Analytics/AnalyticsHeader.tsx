@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { ArrowLeft, Filter } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
-import { paths } from '@/lib/paths';
 import AnalyticsFilter from './AnalyticsFilter';
 
 const AnalyticsHeader: React.FC = () => {
@@ -25,12 +24,6 @@ const AnalyticsHeader: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-2 md:gap-4">
-                <button
-                    onClick={() => router.push(paths.finance)}
-                    className="px-4 md:px-6 py-2 md:py-2.5 rounded-2xl border border-gray-300 font-semibold text-sm md:text-base text-[#1e2235] hover:bg-gray-50 transition-colors"
-                >
-                    {t('analytics.header.finance')}
-                </button>
                 <button
                     onClick={() => setIsFilterOpen(true)}
                     className="px-4 md:px-6 py-2 md:py-2.5 rounded-2xl bg-[#1e2235] text-white font-semibold text-sm md:text-base flex items-center gap-2 hover:bg-[#2c314a] transition-colors"

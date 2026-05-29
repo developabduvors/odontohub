@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 // Define the shape of Telegram's global object for TypeScript
 declare global {
     interface Window {
-        Telegram: {
+        Telegram?: {
             WebApp: any;
         };
     }
