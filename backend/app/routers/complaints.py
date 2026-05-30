@@ -2,7 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import Optional
 from app.core.database import get_db
-from app.models.user import User
+from app.core.security import require_role
+from app.models.user import User, UserRole
 from app.models.complaint import Complaint
 from app.models.dentist import DentistProfile
 from pydantic import BaseModel
@@ -79,7 +80,10 @@ def create_complaint(
     }
 
 @router.get("/")
-def get_complaints(db: Session = Depends(get_db)):
+def get_complaints(
+    db: Session = Depends(get_db),
+    _admin: User = Depends(require_role(UserRole.ADMIN)),
+):
     """Admin endpoint to see all complaints"""
     complaints = db.query(Complaint).order_by(Complaint.created_at.desc()).all()
     return complaints

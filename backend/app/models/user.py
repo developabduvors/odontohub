@@ -9,6 +9,7 @@ from .base import Base
 class UserRole(enum.Enum):
     PATIENT = "patient"
     DENTIST = "dentist"
+    ADMIN = "admin"
 
 
 class User(Base):
