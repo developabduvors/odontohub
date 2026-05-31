@@ -14,6 +14,7 @@
   },
   "common": {
     "close": "Close",
+    "menu": "Open menu",
     "months": {
       "0": "January",
       "1": "February",
@@ -647,7 +648,22 @@
       "typing": "Typing...",
       "online": "Online",
       "today": "Today",
-      "write_message": "Write a message..."
+      "write_message": "Write a message...",
+      "not_found": "No chats found",
+      "doctor": "Doctor",
+      "patient": "Patient",
+      "appointment": "Appointment",
+      "photo": "📷 Photo",
+      "start_with_doctor": "Start a conversation with the doctor",
+      "start_with_patient": "Start a conversation with the patient",
+      "editing": "Editing",
+      "edit_placeholder": "Edit...",
+      "select_chat": "Select a chat",
+      "back": "Back",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "edit": "Edit",
+      "delete": "Delete"
     },
     "profile": {
       "title": "Profile",
@@ -762,6 +778,68 @@
       "auth_error": "Authorization error. Please log in again.",
       "note_add_error": "Error adding note",
       "function_in_development": "Feature in development"
+    },
+    "medcard": {
+      "title": "Medical card",
+      "load_error": "Failed to load medical card data.",
+      "not_specified": "Not specified",
+      "treatment_plan": "Treatment plan",
+      "no_appointments_yet": "No appointments yet",
+      "gender": {
+        "male": "Male",
+        "female": "Female",
+        "unspecified": "Not specified"
+      },
+      "profile": {
+        "patient_id": "Patient ID",
+        "birth_date": "Date of birth",
+        "gender": "Gender",
+        "phone": "Phone",
+        "treatment_start": "Treatment start date"
+      },
+      "medical": {
+        "title": "Important medical information",
+        "allergies": "Allergies",
+        "no_allergies": "No allergies recorded",
+        "card_address": "Address on file",
+        "risk_note": "Risk note",
+        "risk_warning": "Check allergies before treatment",
+        "no_restrictions": "No restrictions recorded",
+        "severity": {
+          "high": "High",
+          "medium": "Medium",
+          "low": "Low",
+          "none": "No level"
+        }
+      },
+      "prescriptions": {
+        "title": "Prescriptions",
+        "empty": "No prescriptions added yet",
+        "dosage": "Dose",
+        "frequency": "Intake",
+        "duration": "Duration"
+      },
+      "treatments": {
+        "title": "Treatment processes",
+        "subtitle": "For ongoing work such as implantation, you can see how many appointments there were and how many days it lasted.",
+        "duration_days": "lasted {count} days",
+        "single_day": "Completed in one day",
+        "appointments_count": "{count} appointments",
+        "empty": "Treatment history has not been formed yet.",
+        "doctor_label": "Doctor",
+        "diagnosis_label": "Diagnosis",
+        "status": {
+          "completed": "Completed",
+          "confirmed": "Confirmed",
+          "pending": "Pending",
+          "moved": "Moved",
+          "cancelled": "Cancelled"
+        },
+        "visit": {
+          "primary": "First visit",
+          "followup": "Follow-up"
+        }
+      }
     }
   },
   "finance": {

@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslations } from "next-intl";
+
 const avatar = "/assets/img/photos/Dentist.png";
 
 interface PatientHistoryProfile {
@@ -16,29 +18,30 @@ interface ProfileCardProps {
 }
 
 const ProfileCard = ({ profile }: ProfileCardProps) => {
+  const t = useTranslations("patient.medcard.profile");
   return (
     <div className="bg-linear-to-br from-blue-600 via-blue-700 to-cyan-600 rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row gap-8 relative shadow-[0_18px_50px_rgba(37,99,235,0.22)] text-white overflow-hidden">
       <div className="absolute inset-y-0 right-0 w-40 bg-white/10 blur-3xl pointer-events-none" />
 
       <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-1">
         <div className="space-y-0.5">
-          <p className="text-[10px] md:text-xs uppercase font-black tracking-widest opacity-70">Patient ID</p>
+          <p className="text-[10px] md:text-xs uppercase font-black tracking-widest opacity-70">{t("patient_id")}</p>
           <p className="text-lg md:text-2xl font-black">{profile.id}</p>
         </div>
         <div className="space-y-0.5">
-          <p className="text-[10px] md:text-xs uppercase font-black tracking-widest opacity-70">Tug'ilgan sana</p>
+          <p className="text-[10px] md:text-xs uppercase font-black tracking-widest opacity-70">{t("birth_date")}</p>
           <p className="text-lg md:text-2xl font-black">{profile.dob}</p>
         </div>
         <div className="space-y-0.5">
-          <p className="text-[10px] md:text-xs uppercase font-black tracking-widest opacity-70">Jinsi</p>
+          <p className="text-[10px] md:text-xs uppercase font-black tracking-widest opacity-70">{t("gender")}</p>
           <p className="text-lg md:text-2xl font-black">{profile.gender}</p>
         </div>
         <div className="space-y-0.5">
-          <p className="text-[10px] md:text-xs uppercase font-black tracking-widest opacity-70">Telefon</p>
+          <p className="text-[10px] md:text-xs uppercase font-black tracking-widest opacity-70">{t("phone")}</p>
           <p className="text-lg md:text-2xl font-black">{profile.phone}</p>
         </div>
         <div className="space-y-0.5 sm:col-span-2">
-          <p className="text-[10px] md:text-xs uppercase font-black tracking-widest opacity-70">Davolanish boshlangan sana</p>
+          <p className="text-[10px] md:text-xs uppercase font-black tracking-widest opacity-70">{t("treatment_start")}</p>
           <p className="text-lg md:text-2xl font-black">{profile.registrationDate}</p>
         </div>
       </div>

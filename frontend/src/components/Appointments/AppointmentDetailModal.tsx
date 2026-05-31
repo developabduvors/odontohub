@@ -89,11 +89,10 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
         try {
             await updateMutation.mutateAsync({
                 id: appointment.id,
-                status: 'confirmed'
+                status: 'in_progress'
             });
             toast.success(t('appointments.toasts.started'));
             onClose();
-            // Transitions to InProgressView happens via Appointments.tsx logic
         } catch (error) {
             toast.error('Хатолик юз берди');
         }
@@ -108,7 +107,7 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
         'pending': 'text-[#feb019]',
     };
 
-    const isPending = appointment.status === 'pending';
+    const canStart = appointment.status === 'pending' || appointment.status === 'in_queue';
 
     return (
         <div
@@ -234,7 +233,7 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
                         </button>
                     )}
 
-                    {isPending && (
+                    {canStart && (
                         <button
                             onClick={handleStart}
                             disabled={updateMutation.isPending}

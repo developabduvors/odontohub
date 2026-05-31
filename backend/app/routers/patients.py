@@ -97,8 +97,28 @@ def list_patients(
     db: Session = Depends(get_db),
     user: User = Depends(require_role(UserRole.DENTIST))
 ):
-    # Показываем только пациентов добавленных врачом (у них есть source)
-    patients = db.query(PatientProfile).filter(PatientProfile.source.isnot(None)).all()
+    from sqlalchemy import or_
+
+    dentist_profile = user.dentist_profile
+    if not dentist_profile:
+        return []
+
+    # Patient IDs who have appointments with this dentist (except cancelled)
+    appt_patient_ids = [
+        pid for (pid,) in db.query(Appointment.patient_id).filter(
+            Appointment.dentist_id == dentist_profile.id,
+            Appointment.status != AppointmentStatus.CANCELLED
+        ).distinct().all()
+    ]
+
+    # Show patients manually added (source IS NOT NULL) OR booked with this dentist
+    patients = db.query(PatientProfile).filter(
+        or_(
+            PatientProfile.source.isnot(None),
+            PatientProfile.id.in_(appt_patient_ids) if appt_patient_ids else False
+        )
+    ).all()
+
     result = []
     for p in patients:
         schema = PatientSchema.model_validate(p)
@@ -217,8 +237,13 @@ from fastapi import HTTPException
 def get_patient(
     patient_id: int,
     db: Session = Depends(get_db),
-    user: User = Depends(require_role(UserRole.DENTIST))
+    user: User = Depends(get_current_user)
 ):
+    # Patients can only access their own profile
+    if user.role == UserRole.PATIENT:
+        if not user.patient_profile or user.patient_profile.id != patient_id:
+            raise HTTPException(status_code=403, detail="Not authorized to view this patient")
+
     profile = db.query(PatientProfile).filter(PatientProfile.id == patient_id).first()
     if not profile:
         raise HTTPException(status_code=404, detail="Patient not found")

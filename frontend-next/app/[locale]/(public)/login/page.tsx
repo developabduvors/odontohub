@@ -9,6 +9,7 @@ import api from '@/api/api';
 import { paths } from '@/lib/paths';
 import { setUser } from '@/store/slices/userSlice';
 import { useAppDispatch } from '@/store/hooks';
+import { useTelegram } from '@/hooks/useTelegram';
 import { toast } from '@/components/Shared/Toast';
 
 interface LoginData {
@@ -20,6 +21,7 @@ export default function LoginPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = useState(false);
+  const { initData } = useTelegram();
 
   const {
     register,
@@ -35,6 +37,18 @@ export default function LoginPage() {
         password: data.password,
       });
       const { access_token } = result.data;
+
+      if (initData) {
+        try {
+          await api.post('/telegram/link',
+            { init_data: initData },
+            { headers: { Authorization: `Bearer ${access_token}` } }
+          );
+        } catch (e) {
+          console.error("Failed to link TG account on login", e);
+        }
+      }
+
       localStorage.setItem('access_token', access_token);
 
       const meResponse = await api.get('/auth/me', {
@@ -126,9 +140,8 @@ export default function LoginPage() {
                       Номер телефона
                     </label>
                     <div
-                      className={`flex items-center rounded-2xl border bg-white px-4 ${
-                        errors.phone ? 'border-red-400' : 'border-[#d9def7]'
-                      }`}
+                      className={`flex items-center rounded-2xl border bg-white px-4 ${errors.phone ? 'border-red-400' : 'border-[#d9def7]'
+                        }`}
                     >
                       <Phone size={18} className="mr-3 text-[#7080ff]" />
                       <input
@@ -158,9 +171,8 @@ export default function LoginPage() {
                       Пароль
                     </label>
                     <div
-                      className={`flex items-center rounded-2xl border bg-white px-4 ${
-                        errors.password ? 'border-red-400' : 'border-[#d9def7]'
-                      }`}
+                      className={`flex items-center rounded-2xl border bg-white px-4 ${errors.password ? 'border-red-400' : 'border-[#d9def7]'
+                        }`}
                     >
                       <LockKeyhole size={18} className="mr-3 text-[#7080ff]" />
                       <input

@@ -9,7 +9,7 @@ const Support: React.FC = () => {
     const [showAboutModal, setShowAboutModal] = useState(false);
 
     const handleContactSupport = () => {
-        window.open('https://t.me/AKBARKHONOV', '_blank');
+        window.open('https://t.me/gosmilesupport', '_blank');
     };
 
     const handleItemClick = (index: number) => {

@@ -14,7 +14,6 @@ export const paths = {
   settings: '/settings',
   appointments: '/appointments',
   analytics: '/analytics',
-  finance: '/analytics/finance',
   chats: '/chats',
   chatDetail: '/chats/:id',
   patientHome: '/home',

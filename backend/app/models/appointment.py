@@ -10,6 +10,7 @@ from .base import Base
 class AppointmentStatus(str, enum.Enum):
     PENDING = "pending"
     CONFIRMED = "confirmed"
+    IN_PROGRESS = "in_progress"
     MOVED = "moved"
     CANCELLED = "cancelled"
     COMPLETED = "completed"

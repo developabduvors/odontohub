@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import { Search, Send, ArrowLeft, MessageCircle, Image } from 'lucide-react';
 import { useRouter } from '@/i18n/navigation';
 import { useMyAppointments } from '@/api/appointments';
@@ -19,6 +20,7 @@ interface ChatsViewProps {
 export default function ChatsView({ appointmentId, variant = 'doctor' }: ChatsViewProps) {
     const isPatient = variant === 'patient';
     const router = useRouter();
+    const t = useTranslations('patient.chats');
     const [searchQuery, setSearchQuery] = useState('');
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [newMessage, setNewMessage] = useState('');
@@ -71,7 +73,7 @@ export default function ChatsView({ appointmentId, variant = 'doctor' }: ChatsVi
                 setChatPreviews(prev => ({
                     ...prev,
                     [apt.id]: {
-                        last: last ? last.text || '📷 Rasm' : '',
+                        last: last ? last.text || t('photo') : '',
                         time: last ? formatTime(last.created_at) : '',
                         unread,
                     }
@@ -113,7 +115,7 @@ export default function ChatsView({ appointmentId, variant = 'doctor' }: ChatsVi
                         return {
                             ...prev,
                             [data.appointment_id]: {
-                                last: data.text || '📷 Rasm',
+                                last: data.text || t('photo'),
                                 time: formatTime(data.created_at),
                                 unread: (current?.unread || 0) + 1,
                             },
@@ -250,17 +252,17 @@ export default function ChatsView({ appointmentId, variant = 'doctor' }: ChatsVi
                             type="button"
                             onClick={() => router.push(isPatient ? paths.patientHome : paths.menu)}
                             className="p-2 rounded-full hover:bg-gray-100 transition-colors shrink-0"
-                            aria-label="Orqaga qaytish"
+                            aria-label={t('back')}
                         >
                             <ArrowLeft size={20} className="text-gray-600" />
                         </button>
-                        <h2 className="text-xl sm:text-2xl font-black text-gray-900">Chatlar</h2>
+                        <h2 className="text-xl sm:text-2xl font-black text-gray-900">{t('title')}</h2>
                     </div>
                     <div className="relative">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input
                             type="text"
-                            placeholder="Qidirish..."
+                            placeholder={t('search')}
                             value={searchQuery}
                             onChange={e => setSearchQuery(e.target.value)}
                             className="w-full bg-gray-50 rounded-2xl py-3 pl-11 pr-4 text-sm font-medium outline-none focus:ring-2 focus:ring-blue-100 transition-all border border-transparent focus:border-blue-200"
@@ -271,7 +273,7 @@ export default function ChatsView({ appointmentId, variant = 'doctor' }: ChatsVi
                     {chats.length === 0 && (
                         <div className="flex flex-col items-center justify-center py-20 text-gray-400 gap-2">
                             <MessageCircle size={32} className="opacity-20" />
-                            <p className="text-sm font-medium">Chatlar topilmadi</p>
+                            <p className="text-sm font-medium">{t('not_found')}</p>
                         </div>
                     )}
                     {chats.map(apt => {
@@ -300,11 +302,11 @@ export default function ChatsView({ appointmentId, variant = 'doctor' }: ChatsVi
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex justify-between items-baseline mb-0.5">
-                                        <p className={`font-bold text-sm truncate ${isActive ? 'text-[#4D71F8]' : 'text-gray-900'}`}>{isPatient ? (apt.dentist_name || 'Shifokor') : (apt.patient_name || 'Bemor')}</p>
+                                        <p className={`font-bold text-sm truncate ${isActive ? 'text-[#4D71F8]' : 'text-gray-900'}`}>{isPatient ? (apt.dentist_name || t('doctor')) : (apt.patient_name || t('patient'))}</p>
                                         <span className="text-[10px] font-bold text-gray-400 shrink-0 ml-1 uppercase">{preview?.time || ''}</span>
                                     </div>
                                     <div className="flex justify-between items-center">
-                                        <p className="text-xs text-gray-500 truncate font-medium">{preview?.last || apt.service || 'Qabul'}</p>
+                                        <p className="text-xs text-gray-500 truncate font-medium">{preview?.last || apt.service || t('appointment')}</p>
                                         {preview?.unread ? (
                                             <span className="ml-2 px-1.5 py-0.5 bg-[#4D71F8] text-white text-[10px] font-black rounded-full shadow-sm shadow-blue-500/20">
                                                 {preview.unread}
@@ -329,10 +331,10 @@ export default function ChatsView({ appointmentId, variant = 'doctor' }: ChatsVi
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img src={DENTIST_IMG} alt="" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-white shadow-sm" />
                             <div className="min-w-0">
-                                <p className="font-bold text-gray-900 text-sm sm:text-base truncate">{isPatient ? (activeApt.dentist_name || 'Shifokor') : (activeApt.patient_name || 'Bemor')}</p>
+                                <p className="font-bold text-gray-900 text-sm sm:text-base truncate">{isPatient ? (activeApt.dentist_name || t('doctor')) : (activeApt.patient_name || t('patient'))}</p>
                                 <div className="flex items-center gap-2">
                                     <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                                    <p className="text-[10px] sm:text-xs font-bold text-emerald-500 uppercase tracking-wider">Online</p>
+                                    <p className="text-[10px] sm:text-xs font-bold text-emerald-500 uppercase tracking-wider">{t('online')}</p>
                                 </div>
                             </div>
                         </div>
@@ -341,7 +343,7 @@ export default function ChatsView({ appointmentId, variant = 'doctor' }: ChatsVi
                             {messages.length === 0 && (
                                 <div className="flex flex-col items-center justify-center py-20 text-gray-400 gap-2">
                                     <MessageCircle size={40} className="opacity-10" />
-                                    <p className="text-sm italic font-medium">{isPatient ? 'Shifokor bilan muloqotni boshlang' : 'Bemor bilan muloqotni boshlang'}</p>
+                                    <p className="text-sm italic font-medium">{isPatient ? t('start_with_doctor') : t('start_with_patient')}</p>
                                 </div>
                             )}
                             {messages.map(msg => (
@@ -364,7 +366,7 @@ export default function ChatsView({ appointmentId, variant = 'doctor' }: ChatsVi
                                 <div className="mb-3 bg-blue-50 border border-blue-200 rounded-2xl px-4 py-2.5 text-xs sm:text-sm text-blue-700 flex justify-between items-center animate-in slide-in-from-bottom-2">
                                     <div className="flex items-center gap-2 overflow-hidden">
                                         <div className="w-1 h-8 bg-blue-400 rounded-full shrink-0"></div>
-                                        <span className="font-semibold truncate">Tahrirlash: {editText}</span>
+                                        <span className="font-semibold truncate">{t('editing')}: {editText}</span>
                                     </div>
                                     <button onClick={() => { setEditingId(null); setEditText(''); }} className="text-blue-400 p-1 hover:bg-blue-100 rounded-full transition-colors ml-2">✕</button>
                                 </div>
@@ -386,7 +388,7 @@ export default function ChatsView({ appointmentId, variant = 'doctor' }: ChatsVi
                                         ref={textareaRef}
                                         value={editingId ? editText : newMessage}
                                         onChange={e => editingId ? setEditText(e.target.value) : setNewMessage(e.target.value)}
-                                        placeholder={editingId ? "Tahrirlash..." : "Xabar yozing..."}
+                                        placeholder={editingId ? t('edit_placeholder') : t('write_message')}
                                         className="w-full bg-gray-50 rounded-2xl px-4 py-3 sm:py-4 text-sm sm:text-base font-medium outline-none border border-transparent focus:border-blue-200 focus:ring-4 focus:ring-blue-100/50 transition-all resize-none max-h-32 custom-scrollbar"
                                         rows={1}
                                         onKeyDown={e => {
@@ -410,7 +412,7 @@ export default function ChatsView({ appointmentId, variant = 'doctor' }: ChatsVi
                 ) : (
                     <div className="flex-1 flex flex-col items-center justify-center text-gray-400 gap-3">
                         <MessageCircle size={48} className="opacity-20" />
-                        <p className="font-medium">Chat tanlang</p>
+                        <p className="font-medium">{t('select_chat')}</p>
                     </div>
                 )}
             </div>

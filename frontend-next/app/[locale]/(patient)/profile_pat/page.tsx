@@ -180,7 +180,7 @@ const PatientProfilePage = () => {
     const supportItems: SupportItem[] = [
         { icon: <Shield size={20} />, label: t("settings.support_items.privacy_policy"), path: "#" },
         { icon: <HelpCircle size={20} />, label: t("settings.support_items.faq"), path: "#" },
-        { icon: <Headphones size={20} />, label: t("settings.support_items.contact"), path: "#" },
+        { icon: <Headphones size={20} />, label: t("settings.support_items.contact"), path: "https://t.me/gosmilesupport", onClick: () => window.open("https://t.me/gosmilesupport", "_blank") },
         { icon: <Info size={20} />, label: t("settings.support_items.about"), path: "#" },
     ];
 
@@ -293,6 +293,7 @@ const PatientProfilePage = () => {
                                 {supportItems.map((item, idx) => (
                                     <div
                                         key={idx}
+                                        onClick={item.onClick}
                                         className={`group flex cursor-pointer items-center justify-between rounded-3xl p-5 transition-all hover:bg-gray-50 ${
                                             idx !== supportItems.length - 1 ? "border-b border-gray-50 sm:border-b-0" : ""
                                         }`}

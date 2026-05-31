@@ -14,6 +14,7 @@
   },
   "common": {
     "close": "Жабу",
+    "menu": "Мәзірді ашу",
     "months": {
       "0": "Қаңтар",
       "1": "Ақпан",
@@ -646,7 +647,22 @@
       "typing": "Жазып жатыр...",
       "online": "Желіде",
       "today": "Бүгін",
-      "write_message": "Хабарлама жазыңыз..."
+      "write_message": "Хабарлама жазыңыз...",
+      "not_found": "Чаттар табылмады",
+      "doctor": "Дәрігер",
+      "patient": "Емделуші",
+      "appointment": "Қабылдау",
+      "photo": "📷 Сурет",
+      "start_with_doctor": "Дәрігермен сөйлесуді бастаңыз",
+      "start_with_patient": "Емделушімен сөйлесуді бастаңыз",
+      "editing": "Өңдеу",
+      "edit_placeholder": "Өңдеу...",
+      "select_chat": "Чатты таңдаңыз",
+      "back": "Артқа",
+      "copy": "Көшіру",
+      "copied": "Көшірілді!",
+      "edit": "Өзгерту",
+      "delete": "Жою"
     },
     "profile": {
       "title": "Профиль",
@@ -761,6 +777,68 @@
       "auth_error": "Авторизация қатесі. Жүйеге қайта кіріңіз.",
       "note_add_error": "Жазба қосу кезінде қате",
       "function_in_development": "Функция әзірленуде"
+    },
+    "medcard": {
+      "title": "Медкарта",
+      "load_error": "Медкарта деректерін жүктеу мүмкін болмады.",
+      "not_specified": "Көрсетілмеген",
+      "treatment_plan": "Емдеу жоспары",
+      "no_appointments_yet": "Әзірге қабылдау жоқ",
+      "gender": {
+        "male": "Ер",
+        "female": "Әйел",
+        "unspecified": "Көрсетілмеген"
+      },
+      "profile": {
+        "patient_id": "Емделуші ID",
+        "birth_date": "Туған күні",
+        "gender": "Жынысы",
+        "phone": "Телефон",
+        "treatment_start": "Емдеу басталған күні"
+      },
+      "medical": {
+        "title": "Маңызды медициналық ақпарат",
+        "allergies": "Аллергиялар",
+        "no_allergies": "Аллергия тіркелмеген",
+        "card_address": "Картадағы мекенжай",
+        "risk_note": "Тәуекел туралы ескертпе",
+        "risk_warning": "Емдеу алдында аллергияларды тексеріңіз",
+        "no_restrictions": "Шектеулер тіркелмеген",
+        "severity": {
+          "high": "Жоғары",
+          "medium": "Орташа",
+          "low": "Төмен",
+          "none": "Деңгейсіз"
+        }
+      },
+      "prescriptions": {
+        "title": "Рецептер",
+        "empty": "Әзірге рецепт қосылмаған",
+        "dosage": "Доза",
+        "frequency": "Қабылдау",
+        "duration": "Мерзімі"
+      },
+      "treatments": {
+        "title": "Емдеу процестері",
+        "subtitle": "Имплантация сияқты ұзаққа созылатын жұмыстарда қанша қабылдау болғаны және қанша күн созылғаны осы жерде көрінеді.",
+        "duration_days": "{count} күн созылды",
+        "single_day": "Бір күнде аяқталды",
+        "appointments_count": "{count} қабылдау",
+        "empty": "Емдеу тарихы әзірге қалыптаспаған.",
+        "doctor_label": "Дәрігер",
+        "diagnosis_label": "Диагноз",
+        "status": {
+          "completed": "Аяқталды",
+          "confirmed": "Расталды",
+          "pending": "Күтілуде",
+          "moved": "Ауыстырылды",
+          "cancelled": "Болдырылмады"
+        },
+        "visit": {
+          "primary": "1-ші тексеру",
+          "followup": "Қайталама"
+        }
+      }
     }
   },
   "finance": {

@@ -12,8 +12,32 @@
     "focus_new_patients_plural": "ta yangi bemor bugun",
     "analytics": "Analitika"
   },
+  "bot": {
+    "welcome": {
+      "greeting": "Salom! GoSmile botiga xush kelibsiz!",
+      "choose_role": "Iltimos, rolni tanlang:",
+      "doctor_button": "👨‍⚕️ Shifokor",
+      "patient_button": "🦷 Bemor"
+    },
+    "commands": {
+      "support": "Yordam uchun quyidagi havolaga o'ting: https://t.me/gosmilesupport",
+      "privacy": "Maxfiylik siyosati haqida ma'lumot. GoSmile sizning shaxsiy ma'lumotlaringizni himoya qiladi va ularni uchinchi shaxslarga bermaydi.",
+      "terms": "Foydalanish shartlari. GoSmile xizmatidan foydalanish orqali siz bizning shartlarimizga rozilik bildirasiz.",
+      "help": "Mavjud buyruqlar:\n/start - Botni qayta ishga tushirish\n/support - Yordam\n/privacy - Maxfiylik siyosati\n/terms - Foydalanish shartlari\n/help - Yordam"
+    },
+    "language": {
+      "choose": "Tilni tanlang / Выберите язык:",
+      "uzbek_button": "🇺🇿 O'zbek tili",
+      "russian_button": "🇷🇺 Русский язык"
+    },
+    "errors": {
+      "unknown_command": "Noma'lum buyruq. Yordam uchun /help ni bosing.",
+      "server_error": "Server xatosi yuz berdi. Iltimos, keyinroq urinib ko'ring."
+    }
+  },
   "common": {
     "close": "Yopish",
+    "menu": "Menyuni ochish",
     "months": {
       "0": "Yanvar",
       "1": "Fevral",
@@ -646,7 +670,22 @@
       "typing": "Yozmoqda...",
       "online": "Onlayn",
       "today": "Bugun",
-      "write_message": "Xabar yozing..."
+      "write_message": "Xabar yozing...",
+      "not_found": "Chatlar topilmadi",
+      "doctor": "Shifokor",
+      "patient": "Bemor",
+      "appointment": "Qabul",
+      "photo": "📷 Rasm",
+      "start_with_doctor": "Shifokor bilan muloqotni boshlang",
+      "start_with_patient": "Bemor bilan muloqotni boshlang",
+      "editing": "Tahrirlash",
+      "edit_placeholder": "Tahrirlash...",
+      "select_chat": "Chat tanlang",
+      "back": "Orqaga qaytish",
+      "copy": "Nusxalash",
+      "copied": "Nusxalandi!",
+      "edit": "O'zgartirish",
+      "delete": "O'chirish"
     },
     "profile": {
       "title": "Profil",
@@ -761,6 +800,68 @@
       "auth_error": "Avtorizatsiya xatosi. Iltimos, tizimga qayta kiring.",
       "note_add_error": "Eslatma qo'shishda xatolik",
       "function_in_development": "Funksiya ishlab chiqilmoqda"
+    },
+    "medcard": {
+      "title": "Medkarta",
+      "load_error": "Medkarta ma'lumotlarini yuklab bo'lmadi.",
+      "not_specified": "Kiritilmagan",
+      "treatment_plan": "Davolash rejasi",
+      "no_appointments_yet": "Hali priyom yo'q",
+      "gender": {
+        "male": "Erkak",
+        "female": "Ayol",
+        "unspecified": "Ko'rsatilmagan"
+      },
+      "profile": {
+        "patient_id": "Bemor ID",
+        "birth_date": "Tug'ilgan sana",
+        "gender": "Jinsi",
+        "phone": "Telefon",
+        "treatment_start": "Davolanish boshlangan sana"
+      },
+      "medical": {
+        "title": "Muhim tibbiy ma'lumotlar",
+        "allergies": "Allergiyalar",
+        "no_allergies": "Allergiya qayd etilmagan",
+        "card_address": "Kartadagi manzil",
+        "risk_note": "Risk eslatmasi",
+        "risk_warning": "Davolashdan oldin allergiyalar tekshirilsin",
+        "no_restrictions": "Cheklovlar qayd etilmagan",
+        "severity": {
+          "high": "Yuqori",
+          "medium": "O'rta",
+          "low": "Past",
+          "none": "Daraja yo'q"
+        }
+      },
+      "prescriptions": {
+        "title": "Retseptlar",
+        "empty": "Hozircha retsept kiritilmagan",
+        "dosage": "Doza",
+        "frequency": "Qabul",
+        "duration": "Muddat"
+      },
+      "treatments": {
+        "title": "Davolanish jarayonlari",
+        "subtitle": "Implantatsiya kabi davomiy ishlarda nechta priyom bo'lgani va qancha kun davom etgani shu yerda ko'rinadi.",
+        "duration_days": "{count} kun davom etgan",
+        "single_day": "Bir kunda yakunlangan",
+        "appointments_count": "{count} priyom",
+        "empty": "Hali davolanish tarixi shakllanmagan.",
+        "doctor_label": "Shifokor",
+        "diagnosis_label": "Tashxis",
+        "status": {
+          "completed": "Tugallangan",
+          "confirmed": "Tasdiqlangan",
+          "pending": "Kutilmoqda",
+          "moved": "Ko'chirilgan",
+          "cancelled": "Bekor qilingan"
+        },
+        "visit": {
+          "primary": "1-ko'rik",
+          "followup": "Davomiy"
+        }
+      }
     }
   },
   "finance": {

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from "next-intl";
 import type { MedcardPrescription } from "@/api/medcard";
 
 interface PrescriptionCardProps {
@@ -13,12 +14,13 @@ const formatDate = (iso?: string | null) => {
 };
 
 const PrescriptionCard = ({ prescriptions }: PrescriptionCardProps) => {
+  const t = useTranslations("patient.medcard.prescriptions");
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl md:text-4xl font-black tracking-tight text-blue-900">Retseptlar</h2>
+      <h2 className="text-3xl md:text-4xl font-black tracking-tight text-blue-900">{t("title")}</h2>
       <div className="bg-blue-50 rounded-[2rem] p-6 md:p-8 space-y-4 border border-blue-100 shadow-sm">
         {prescriptions.length === 0 ? (
-          <p className="text-lg md:text-xl font-bold text-blue-800/70">Hozircha retsept kiritilmagan</p>
+          <p className="text-lg md:text-xl font-bold text-blue-800/70">{t("empty")}</p>
         ) : (
           prescriptions.map((prescription) => (
             <div key={prescription.id} className="rounded-[1.5rem] bg-white px-5 py-4 border border-blue-100">
@@ -29,9 +31,9 @@ const PrescriptionCard = ({ prescriptions }: PrescriptionCardProps) => {
                 )}
               </div>
               <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm md:text-base text-blue-900">
-                {prescription.dosage && <span><b>Doza:</b> {prescription.dosage}</span>}
-                {prescription.frequency && <span><b>Qabul:</b> {prescription.frequency}</span>}
-                {prescription.duration && <span><b>Muddat:</b> {prescription.duration}</span>}
+                {prescription.dosage && <span><b>{t("dosage")}:</b> {prescription.dosage}</span>}
+                {prescription.frequency && <span><b>{t("frequency")}:</b> {prescription.frequency}</span>}
+                {prescription.duration && <span><b>{t("duration")}:</b> {prescription.duration}</span>}
               </div>
               {prescription.notes && (
                 <p className="mt-3 text-sm md:text-base text-blue-900/70">{prescription.notes}</p>

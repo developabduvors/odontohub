@@ -7,7 +7,7 @@ export interface Appointment {
     patient_id: number;
     start_time: string;
     end_time: string;
-    status: "pending" | "confirmed" | "moved" | "cancelled" | "completed";
+    status: "pending" | "confirmed" | "in_progress" | "moved" | "cancelled" | "completed";
     service?: string | null;
     price?: number | null;
     notes?: string | null;

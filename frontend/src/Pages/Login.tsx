@@ -11,12 +11,14 @@ import LogoIcon from '../assets/img/icons/logo-icon1.png';
 import { toast } from '../components/Shared/Toast';
 import { paths } from '../Routes/path';
 import { setUser } from '../store/slices/userSlice';
+import { useTelegram } from '../hooks/useTelegram';
 
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
+  const { initData } = useTelegram();
 
   const {
     register,
@@ -35,6 +37,18 @@ export default function Login() {
           password: data.password,
         });
         const { access_token } = result.data;
+
+        if (initData) {
+          try {
+            await api.post('/telegram/link',
+              { init_data: initData },
+              { headers: { Authorization: `Bearer ${access_token}` } }
+            );
+          } catch (e) {
+            console.error("Failed to link TG account on login", e);
+          }
+        }
+
         localStorage.setItem('access_token', access_token);
 
         const meResponse = await api.get('/auth/me', {

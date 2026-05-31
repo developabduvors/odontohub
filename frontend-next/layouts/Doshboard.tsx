@@ -59,11 +59,11 @@ export default function Sidebar() {
   ];
 
   const SidebarInner = ({ isDrawer = false }: { isDrawer?: boolean }) => (
-    <div className="app-panel custom-scrollbar flex min-h-screen flex-col overflow-y-auto rounded-[32px] bg-transparent font-railway">
-      <div className="sticky top-0 z-10 flex items-center justify-between border-b border-white/50 bg-transparent p-5 backdrop-blur-xl sm:p-6">
-        <Link href={paths.menu} className="flex items-center gap-3">
+    <div className="app-panel flex h-full min-h-0 flex-col overflow-hidden rounded-[32px] bg-transparent font-railway">
+      <div className="flex items-center justify-between border-b border-white/50 bg-transparent px-5 pb-3 pt-1 sm:px-6 sm:pb-4 sm:pt-2">
+        <Link href={paths.menu} className="flex items-center gap-3 self-start">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/img/icons/logo1.png" alt="GoSmile" />
+          <img src="/assets/img/icons/logo1.png" alt="GoSmile" className="h-auto w-[150px] sm:w-[160px]" />
         </Link>
         {isDrawer && (
           <button
@@ -76,7 +76,7 @@ export default function Sidebar() {
         )}
       </div>
 
-      <nav className="flex-1 space-y-2 px-4 py-6">
+      <nav className="flex-1 space-y-2 px-4 py-4">
         {menuItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.path || (item.id === "chats" && pathname.startsWith("/chats"));
@@ -108,7 +108,7 @@ export default function Sidebar() {
         })}
       </nav>
 
-      <div className="m-5 overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,#6577ff_0%,#8b7cf6_100%)] p-6 text-white shadow-[0_24px_50px_rgba(90,96,195,0.28)]">
+      <div className="mx-5 mb-4 mt-3 shrink-0 overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,#6577ff_0%,#8b7cf6_100%)] p-5 text-white shadow-[0_24px_50px_rgba(90,96,195,0.28)]">
         <div className="relative z-10 text-center">
           <h3 className="mb-4 font-space text-lg font-bold">{t("sidebar.focus_title")}</h3>
           <div className="space-y-1.5 text-base font-semibold">
@@ -127,22 +127,22 @@ export default function Sidebar() {
 
   return (
     <>
-      <aside className="hidden bg-transparent lg:flex lg:h-screen lg:w-[280px] lg:shrink-0 lg:sticky lg:top-0 lg:p-4">
+      <aside className="hidden bg-transparent lg:sticky lg:top-4 lg:flex lg:h-[calc(100vh-32px)] lg:w-[280px] lg:shrink-0 lg:self-start">
         <SidebarInner />
       </aside>
 
       <header className="fixed inset-x-0 top-0 z-40 border-b border-white/40 bg-white/70 shadow-sm backdrop-blur-xl lg:hidden">
-        <div className="flex items-center justify-between px-4 py-3.5">
-          <Link href={paths.menu} className="flex items-center gap-3">
+        <div className="flex items-center justify-between px-4 py-2.5">
+          <Link href={paths.menu} className="flex shrink-0 items-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/img/icons/logo1.png" alt="GoSmile" />
+            <img src="/assets/img/icons/logo1.png" alt="GoSmile" className="h-9 w-auto" />
           </Link>
           <button
             onClick={() => setIsMobileOpen(true)}
-            className="rounded-lg p-2 transition-colors hover:bg-white"
-            aria-label="Открыть меню"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/60 bg-white/60 text-[#42507f] shadow-sm transition-colors hover:bg-white"
+            aria-label={t("common.menu")}
           >
-            <Menu size={26} className="text-[#42507f]" />
+            <Menu size={24} strokeWidth={2.2} />
           </button>
         </div>
       </header>
@@ -154,7 +154,7 @@ export default function Sidebar() {
         />
 
         <aside
-          className={`absolute inset-y-0 left-0 w-[85vw] max-w-xs bg-transparent p-3 shadow-2xl transform transition-transform duration-300 ease-in-out ${
+          className={`absolute inset-y-0 left-0 h-full w-[85vw] max-w-xs bg-transparent p-3 shadow-2xl transform transition-transform duration-300 ease-in-out ${
             isMobileOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { Copy, Trash2, Edit2 } from 'lucide-react';
 
 interface Props {
@@ -17,6 +18,7 @@ export default function MessageBubble({ id, text, image_data, time, isMe, onDele
     const [showMenu, setShowMenu] = useState(false);
     const [copied, setCopied] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
+    const t = useTranslations('patient.chats');
 
     useEffect(() => {
         const handler = (e: MouseEvent) => {
@@ -63,7 +65,7 @@ export default function MessageBubble({ id, text, image_data, time, isMe, onDele
                             className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                         >
                             <Copy size={15} className="text-gray-400" />
-                            {copied ? 'Nusxalandi!' : 'Nusxalash'}
+                            {copied ? t('copied') : t('copy')}
                         </button>
                         {onEdit && (
                             <button
@@ -71,7 +73,7 @@ export default function MessageBubble({ id, text, image_data, time, isMe, onDele
                                 className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                             >
                                 <Edit2 size={15} className="text-gray-400" />
-                                O&apos;zgartirish
+                                {t('edit')}
                             </button>
                         )}
                         {onDelete && (
@@ -80,7 +82,7 @@ export default function MessageBubble({ id, text, image_data, time, isMe, onDele
                                 className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors"
                             >
                                 <Trash2 size={15} />
-                                O&apos;chirish
+                                {t('delete')}
                             </button>
                         )}
                     </div>

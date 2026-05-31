@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import type { MedcardAppointment } from "@/api/medcard";
 
@@ -24,17 +25,6 @@ const statusClass: Record<string, string> = {
   cancelled: "bg-red-100 text-red-700",
 };
 
-const statusLabel: Record<string, string> = {
-  completed: "Tugallangan",
-  confirmed: "Tasdiqlangan",
-  pending: "Kutilmoqda",
-  moved: "Ko'chirilgan",
-  cancelled: "Bekor qilingan",
-};
-
-const visitLabel = (visitType?: string | null) =>
-  visitType === "primary" || visitType === "initial" ? "1-ko'rik" : "Davomiy";
-
 const formatDate = (iso: string) => {
   const utcValue = iso.endsWith("Z") || iso.includes("+") ? iso : `${iso}Z`;
   return new Date(utcValue).toLocaleDateString("ru-RU", {
@@ -46,6 +36,12 @@ const formatDate = (iso: string) => {
 
 const TreatmentCard = ({ treatment }: { treatment: TreatmentGroup }) => {
   const [open, setOpen] = useState(true);
+  const t = useTranslations("patient.medcard.treatments");
+
+  const statusLabel = (status: string) =>
+    t.has(`status.${status}`) ? t(`status.${status}`) : status;
+  const visitLabel = (visitType?: string | null) =>
+    visitType === "primary" || visitType === "initial" ? t("visit.primary") : t("visit.followup");
 
   return (
     <div className="rounded-[2rem] border border-gray-100 bg-white shadow-sm overflow-hidden">
@@ -59,10 +55,12 @@ const TreatmentCard = ({ treatment }: { treatment: TreatmentGroup }) => {
             <p className="text-sm text-gray-500 mt-1">{treatment.periodLabel}</p>
           </div>
           <div className="text-sm md:text-base font-bold text-gray-500">
-            {treatment.durationDays > 0 ? `${treatment.durationDays} kun davom etgan` : "Bir kunda yakunlangan"}
+            {treatment.durationDays > 0
+              ? t("duration_days", { count: treatment.durationDays })
+              : t("single_day")}
           </div>
           <div className="inline-flex justify-center rounded-full bg-blue-50 px-4 py-2 text-sm font-black text-blue-700">
-            {treatment.appointmentCount} priyom
+            {t("appointments_count", { count: treatment.appointmentCount })}
           </div>
         </div>
         {open ? <ChevronUp className="text-gray-400 shrink-0" /> : <ChevronDown className="text-gray-400 shrink-0" />}
@@ -85,7 +83,7 @@ const TreatmentCard = ({ treatment }: { treatment: TreatmentGroup }) => {
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="text-sm md:text-base font-black text-[#1d1d2b]">{formatDate(appointment.start_time)}</span>
                       <span className={`rounded-full px-3 py-1 text-xs font-bold ${statusClass[appointment.status] || "bg-gray-100 text-gray-600"}`}>
-                        {statusLabel[appointment.status] || appointment.status}
+                        {statusLabel(appointment.status)}
                       </span>
                       <span className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-bold text-indigo-700">
                         {visitLabel(appointment.visit_type)}
@@ -93,10 +91,10 @@ const TreatmentCard = ({ treatment }: { treatment: TreatmentGroup }) => {
                     </div>
 
                     {appointment.dentist_name && (
-                      <p className="mt-2 text-sm font-semibold text-gray-500">Shifokor: {appointment.dentist_name}</p>
+                      <p className="mt-2 text-sm font-semibold text-gray-500">{t("doctor_label")}: {appointment.dentist_name}</p>
                     )}
                     {appointment.diagnosis && (
-                      <p className="mt-2 text-sm text-gray-700"><b>Tashxis:</b> {appointment.diagnosis}</p>
+                      <p className="mt-2 text-sm text-gray-700"><b>{t("diagnosis_label")}:</b> {appointment.diagnosis}</p>
                     )}
                     {appointment.treatment_notes && (
                       <p className="mt-1 text-sm text-gray-600">{appointment.treatment_notes}</p>
@@ -116,20 +114,21 @@ const TreatmentCard = ({ treatment }: { treatment: TreatmentGroup }) => {
 };
 
 const TreatmentsTable = ({ treatments }: TreatmentsTableProps) => {
+  const t = useTranslations("patient.medcard.treatments");
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
         <div>
-          <h2 className="text-3xl md:text-4xl font-black tracking-tight text-blue-900">Davolanish jarayonlari</h2>
+          <h2 className="text-3xl md:text-4xl font-black tracking-tight text-blue-900">{t("title")}</h2>
           <p className="text-sm md:text-base text-gray-500 mt-2">
-            Implantatsiya kabi davomiy ishlarda nechta priyom bo'lgani va qancha kun davom etgani shu yerda ko'rinadi.
+            {t("subtitle")}
           </p>
         </div>
       </div>
 
       {treatments.length === 0 ? (
         <div className="rounded-[2rem] border border-dashed border-gray-200 bg-gray-50 px-6 py-10 text-center text-gray-500 font-semibold">
-          Hali davolanish tarixi shakllanmagan.
+          {t("empty")}
         </div>
       ) : (
         <div className="space-y-4">

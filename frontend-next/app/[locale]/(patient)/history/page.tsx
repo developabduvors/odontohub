@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { useRouter } from "@/i18n/navigation";
 import { useMyMedcard } from "@/api/medcard";
@@ -13,7 +14,7 @@ const toUTC = (iso: string) =>
   iso.endsWith("Z") || iso.includes("+") ? iso : `${iso}Z`;
 
 const formatDate = (iso?: string | null) =>
-  iso ? new Date(toUTC(iso)).toLocaleDateString("ru-RU") : "Kiritilmagan";
+  iso ? new Date(toUTC(iso)).toLocaleDateString("ru-RU") : null;
 
 const diffDays = (start: string, end: string) =>
   Math.max(
@@ -23,13 +24,14 @@ const diffDays = (start: string, end: string) =>
 
 const PatientHistory: React.FC = () => {
   const router = useRouter();
+  const t = useTranslations("patient.medcard");
   const { data, isLoading, isError } = useMyMedcard();
 
   const treatmentGroups = useMemo(() => {
     if (!data) return [];
 
     const grouped = data.appointments.reduce<Record<string, typeof data.appointments>>((acc, appointment) => {
-      const key = appointment.service?.trim() || "Davolash rejasi";
+      const key = appointment.service?.trim() || t("treatment_plan");
       if (!acc[key]) {
         acc[key] = [];
       }
@@ -58,7 +60,7 @@ const PatientHistory: React.FC = () => {
         const bTime = new Date(toUTC(b.appointments[0].start_time)).getTime();
         return bTime - aTime;
       });
-  }, [data]);
+  }, [data, t]);
 
   if (isLoading) {
     return (
@@ -79,7 +81,7 @@ const PatientHistory: React.FC = () => {
             <ArrowLeft size={24} />
           </button>
           <div className="rounded-[2rem] border border-red-100 bg-red-50 p-6 text-red-600 font-semibold">
-            Medkarta ma'lumotlarini yuklab bo'lmadi.
+            {t("load_error")}
           </div>
         </div>
       </div>
@@ -89,15 +91,17 @@ const PatientHistory: React.FC = () => {
   const profile = {
     name: data.patient.full_name,
     id: `P-${String(data.patient.id).padStart(6, "0")}`,
-    dob: formatDate(data.patient.birth_date),
+    dob: formatDate(data.patient.birth_date) ?? t("not_specified"),
     gender:
       data.patient.gender === "male"
-        ? "Erkak"
+        ? t("gender.male")
         : data.patient.gender === "female"
-          ? "Ayol"
-          : "Ko'rsatilmagan",
-    phone: data.patient.phone || "Kiritilmagan",
-    registrationDate: data.appointments[0] ? formatDate(data.appointments[0].start_time) : "Hali priyom yo'q",
+          ? t("gender.female")
+          : t("gender.unspecified"),
+    phone: data.patient.phone || t("not_specified"),
+    registrationDate: data.appointments[0]
+      ? (formatDate(data.appointments[0].start_time) ?? t("no_appointments_yet"))
+      : t("no_appointments_yet"),
   };
 
   return (
@@ -110,7 +114,7 @@ const PatientHistory: React.FC = () => {
           <ArrowLeft size={24} />
         </button>
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-blue-300">Medkarta</p>
+          <p className="text-sm font-bold uppercase tracking-[0.2em] text-blue-300">{t("title")}</p>
           <h1 className="text-2xl md:text-4xl font-black leading-tight tracking-tight text-blue-700">
             {data.patient.full_name}
           </h1>

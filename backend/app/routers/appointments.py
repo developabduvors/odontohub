@@ -167,6 +167,30 @@ def update_appointment(
     for key, value in update_data.items():
         setattr(db_appointment, key, value)
         
+    # Status change notification
+    if "status" in update_data and update_data["status"] == AppointmentStatus.COMPLETED:
+        try:
+            from app.models.notification import Notification, NotificationType
+            from app.models.patient import PatientProfile
+            import json
+
+            patient = db.query(PatientProfile).filter(PatientProfile.id == db_appointment.patient_id).first()
+            if patient:
+                notif = Notification(
+                    user_id=patient.user_id,
+                    type=NotificationType.APPOINTMENT_COMPLETED,
+                    title="Приём завершён",
+                    message="Ваш приём успешно завершён. Пожалуйста, оцените качество обслуживания.",
+                    data=json.dumps({
+                        "appointment_id": db_appointment.id,
+                        "dentist_id": db_appointment.dentist_id,
+                        "show_review": True
+                    })
+                )
+                db.add(notif)
+        except Exception as e:
+            print(f"Notification error: {e}")
+
     db.commit()
     db.refresh(db_appointment)
     return db_appointment

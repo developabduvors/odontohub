@@ -111,6 +111,7 @@ export interface SupportItem {
     icon: React.ReactNode;
     label: string;
     path: string;
+    onClick?: () => void;
 }
 
 export interface PatientHistoryProfile {
