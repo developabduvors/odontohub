@@ -350,7 +350,10 @@ def update_dentist_profile(
     }
 
 @router.get("/pending")
-def get_pending_dentists(db: Session = Depends(get_db)):
+def get_pending_dentists(
+    db: Session = Depends(get_db),
+    _admin: User = Depends(require_role(UserRole.ADMIN)),
+):
     """Get all pending dentists for admin approval"""
     from sqlalchemy.orm import joinedload
     
@@ -389,7 +392,11 @@ def get_pending_dentists(db: Session = Depends(get_db)):
     return result
 
 @router.get("/{dentist_id}/approve")
-def approve_dentist(dentist_id: int, db: Session = Depends(get_db)):
+def approve_dentist(
+    dentist_id: int,
+    db: Session = Depends(get_db),
+    _admin: User = Depends(require_role(UserRole.ADMIN)),
+):
     """Approve a pending dentist (admin only)"""
     from app.models.dentist import VerificationStatus
     
@@ -410,7 +417,11 @@ def approve_dentist(dentist_id: int, db: Session = Depends(get_db)):
     }
 
 @router.get("/{dentist_id}/reject")
-def reject_dentist(dentist_id: int, db: Session = Depends(get_db)):
+def reject_dentist(
+    dentist_id: int,
+    db: Session = Depends(get_db),
+    _admin: User = Depends(require_role(UserRole.ADMIN)),
+):
     """Reject a pending dentist (admin only)"""
     from app.models.dentist import VerificationStatus
 
@@ -435,7 +446,8 @@ def reject_dentist(dentist_id: int, db: Session = Depends(get_db)):
 def update_dentist_status(
     dentist_id: int,
     body: dict,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    _admin: User = Depends(require_role(UserRole.ADMIN)),
 ):
     """Update dentist verification status (admin only). Body: {verification_status: pending|approved|rejected}"""
     from app.models.dentist import VerificationStatus

@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from app.core.database import engine, Base, get_db
 from app.routers import auth, patients, dentists, services, appointments
 from app.routers import prescriptions, allergies, payments, photos, chat
-from app.routers import reviews, notifications, complaints, telegram
+from app.routers import reviews, notifications, complaints, telegram, admin
 import traceback
 import os
 # Temporarily disabled - uncomment to enable notifications:
@@ -264,6 +264,7 @@ app.include_router(payments.router, prefix="/api", tags=["Payments"])
 app.include_router(photos.router, prefix="/api", tags=["Photos"])
 app.include_router(reviews.router, tags=["Reviews"])
 app.include_router(complaints.router, tags=["Complaints"])
+app.include_router(admin.router, tags=["Admin"])
 
 @app.get("/")
 def read_root():
