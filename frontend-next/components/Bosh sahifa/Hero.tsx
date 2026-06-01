@@ -105,10 +105,10 @@ const Hero: React.FC<HeroProps> = ({ onSearch }) => {
               <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-[18px] sm:h-[18px] text-gray-500" />
             </div>
 
-            <div className="flex items-center justify-between gap-3 sm:gap-4 xl:justify-end xl:gap-5 shrink-0">
+            <div className="flex w-full flex-wrap items-center justify-end gap-2.5 sm:gap-3 xl:w-auto xl:flex-nowrap xl:gap-5">
               <button
                 onClick={() => setIsRatingModalOpen(true)}
-                className="flex h-11 min-w-[158px] sm:min-w-[180px] px-5 sm:px-7 items-center gap-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl shadow-lg shadow-blue-200 transition-all hover:scale-[1.02] active:scale-95"
+                className="flex h-11 flex-1 min-w-[140px] px-4 sm:px-7 items-center justify-center gap-3 sm:gap-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl shadow-lg shadow-blue-200 transition-all hover:scale-[1.02] active:scale-95 xl:flex-none xl:min-w-[180px] xl:justify-start"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/assets/img/icons/Star.svg" alt="" className="w-4 h-4 sm:w-5 sm:h-5 brightness-0 invert shrink-0" />
@@ -118,6 +118,7 @@ const Hero: React.FC<HeroProps> = ({ onSearch }) => {
                 </div>
               </button>
 
+              <div className="flex shrink-0 items-center gap-2.5 sm:gap-3 xl:gap-5">
               <div className="relative" ref={notifRef}>
                 <button onClick={() => setIsNotifOpen(!isNotifOpen)} className="w-11 h-11 p-2.5 rounded-xl border border-gray-200 transition-all flex items-center justify-center hover:bg-gray-50 bg-white relative shrink-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -166,16 +167,17 @@ const Hero: React.FC<HeroProps> = ({ onSearch }) => {
                 <img src="/assets/img/icons/Settings.svg" alt="" className="w-[18px] h-[18px] opacity-70" />
               </Link>
 
-              <Link href={user?.role === 'dentist' ? paths.profile : paths.patientProfileSettings} className="flex min-w-0 h-11 pl-2.5 pr-4 sm:pr-5 items-center gap-3 bg-gray-900 text-white rounded-2xl hover:bg-gray-800 transition-all active:scale-95 shadow-lg shadow-gray-200">
-                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl overflow-hidden border border-gray-700 shrink-0">
+              <Link href={user?.role === 'dentist' ? paths.profile : paths.patientProfileSettings} className="flex h-11 shrink-0 items-center gap-2.5 rounded-2xl bg-gray-900 pl-2.5 pr-2.5 text-white shadow-lg shadow-gray-200 transition-all hover:bg-gray-800 active:scale-95 sm:gap-3 sm:pr-5">
+                <div className="h-8 w-8 shrink-0 overflow-hidden rounded-xl border border-gray-700 sm:h-9 sm:w-9">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/assets/img/photos/Dentist.png" alt="Profile" className="w-full h-full object-cover" />
+                  <img src="/assets/img/photos/Dentist.png" alt="Profile" className="h-full w-full object-cover" />
                 </div>
-                <div className="flex min-w-0 flex-col leading-tight">
-                  <span className="font-bold text-xs truncate max-w-[110px]">{user?.full_name || 'Shifokor'}</span>
-                  <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Boshqaruv</span>
+                <div className="hidden min-w-0 flex-col leading-tight sm:flex">
+                  <span className="max-w-[110px] truncate text-xs font-bold">{user?.full_name || 'Shifokor'}</span>
+                  <span className="text-[10px] font-bold uppercase tracking-tighter text-gray-400">Boshqaruv</span>
                 </div>
               </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -238,3 +240,4 @@ const Hero: React.FC<HeroProps> = ({ onSearch }) => {
 };
 
 export default Hero;
+
