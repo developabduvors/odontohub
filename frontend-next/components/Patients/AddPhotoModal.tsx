@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, type ChangeEvent, type FormEvent } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { useCreatePhoto } from '@/api/photos';
 
@@ -11,6 +12,7 @@ interface AddPhotoModalProps {
 }
 
 const AddPhotoModal = ({ patientId, onClose, onSuccess }: AddPhotoModalProps) => {
+  const t = useTranslations();
   const createPhoto = useCreatePhoto(patientId);
   const [formData, setFormData] = useState({
     title: '',
@@ -26,11 +28,11 @@ const AddPhotoModal = ({ patientId, onClose, onSuccess }: AddPhotoModalProps) =>
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      setError('Пожалуйста, выберите изображение');
+      setError(t('patients_modals.photo.err_image'));
       return;
     }
     if (file.size > 5 * 1024 * 1024) {
-      setError('Размер файла не должен превышать 5 МБ');
+      setError(t('patients_modals.photo.err_size'));
       return;
     }
 
@@ -48,11 +50,11 @@ const AddPhotoModal = ({ patientId, onClose, onSuccess }: AddPhotoModalProps) =>
     e.preventDefault();
 
     if (!selectedFile) {
-      setError('Выберите файл для загрузки');
+      setError(t('patients_modals.photo.err_file'));
       return;
     }
     if (!formData.title.trim()) {
-      setError('Введите название фотографии');
+      setError(t('patients_modals.photo.err_title'));
       return;
     }
 
@@ -70,7 +72,7 @@ const AddPhotoModal = ({ patientId, onClose, onSuccess }: AddPhotoModalProps) =>
         onSuccess();
       } catch (err) {
         console.error('Error creating photo:', err);
-        setError('Не удалось добавить фотографию');
+        setError(t('patients_modals.photo.err_save'));
       }
     };
     reader.readAsDataURL(selectedFile);
@@ -81,7 +83,7 @@ const AddPhotoModal = ({ patientId, onClose, onSuccess }: AddPhotoModalProps) =>
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl p-6 w-full max-w-md">
-        <h2 className="text-xl font-bold text-gray-800 mb-4">Добавить фотографию</h2>
+        <h2 className="text-xl font-bold text-gray-800 mb-4">{t('patients_modals.photo.title')}</h2>
 
         {error && (
           <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm">{error}</div>
@@ -89,19 +91,19 @@ const AddPhotoModal = ({ patientId, onClose, onSuccess }: AddPhotoModalProps) =>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Название *</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t('patients_modals.photo.name')}</label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="Например: Рентген зуба 16"
+              placeholder={t('patients_modals.photo.name_ph')}
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Выберите файл *</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t('patients_modals.photo.file')}</label>
             <input
               type="file"
               accept="image/*"
@@ -110,13 +112,13 @@ const AddPhotoModal = ({ patientId, onClose, onSuccess }: AddPhotoModalProps) =>
               required
             />
             <p className="text-xs text-gray-500 mt-1">
-              Максимальный размер: 5 МБ. Форматы: JPG, PNG, GIF
+              {t('patients_modals.photo.file_hint')}
             </p>
           </div>
 
           {previewUrl && (
             <div className="mt-3">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Предпросмотр:</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('patients_modals.photo.preview')}</label>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={previewUrl}
@@ -127,28 +129,28 @@ const AddPhotoModal = ({ patientId, onClose, onSuccess }: AddPhotoModalProps) =>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Категория *</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t('patients_modals.photo.category')}</label>
             <select
               value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
-              <option value="xray">Рентген</option>
-              <option value="treatment">Лечение</option>
-              <option value="before">До</option>
-              <option value="after">После</option>
-              <option value="other">Другое</option>
+              <option value="xray">{t('patients_modals.photo.cat_xray')}</option>
+              <option value="treatment">{t('patients_modals.photo.cat_treatment')}</option>
+              <option value="before">{t('patients_modals.photo.cat_before')}</option>
+              <option value="after">{t('patients_modals.photo.cat_after')}</option>
+              <option value="other">{t('patients_modals.photo.cat_other')}</option>
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Описание</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t('patients_modals.photo.description')}</label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               rows={3}
-              placeholder="Дополнительная информация..."
+              placeholder={t('patients_modals.photo.description_ph')}
             />
           </div>
 
@@ -159,14 +161,14 @@ const AddPhotoModal = ({ patientId, onClose, onSuccess }: AddPhotoModalProps) =>
               className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
               disabled={isPending}
             >
-              Отмена
+              {t('common.cancel')}
             </button>
             <button
               type="submit"
               className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50"
               disabled={isPending}
             >
-              {isPending ? 'Добавление...' : 'Добавить'}
+              {isPending ? t('common.adding') : t('common.add')}
             </button>
           </div>
         </form>

@@ -28,7 +28,7 @@ type PatientProfileState = {
 };
 
 const formatBirthDate = (value: string) => {
-    if (!value) return "Не указано";
+    if (!value) return "";
     const date = new Date(value);
     return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString("ru-RU");
 };
@@ -43,17 +43,21 @@ const PatientProfilePage = () => {
     const { data: patientProfile, isLoading } = usePatientProfile();
     const updatePatient = useUpdatePatient();
 
+    const defaultCity = t('patient_pages.profile_pat.default_city');
+    const defaultDistrict = t('patient_pages.profile_pat.default_district');
+    const defaultAddress = t('patient_pages.profile_pat.default_address');
+
     const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [userData, setUserData] = useState<PatientProfileState>({
-        name: user?.full_name || "Пациент",
+        name: user?.full_name || t('common.patient'),
         phone: user?.phone || "+998 (90) 123 45 67",
         gender: "Мужчина",
         birthDate: "",
-        region: "Ташкент",
-        city: "Ташкент",
-        district: "Юнусабад",
-        address: "г. Ташкент, Юнусабад",
+        region: defaultCity,
+        city: defaultCity,
+        district: defaultDistrict,
+        address: defaultAddress,
         avatar: DentistImg,
     });
 
@@ -86,17 +90,18 @@ const PatientProfilePage = () => {
 
         if (patientProfile) {
             setUserData({
-                name: patientProfile.full_name || user?.full_name || "Пациент",
+                name: patientProfile.full_name || user?.full_name || t('common.patient'),
                 phone: patientProfile.phone || user?.phone || "+998 (90) 123 45 67",
                 gender: patientProfile.gender === "male" ? "Мужчина" : patientProfile.gender === "female" ? "Женщина" : "Мужчина",
                 birthDate: patientProfile.birth_date ? patientProfile.birth_date.slice(0, 10) : "",
-                region: "Ташкент",
-                city: "Ташкент",
-                district: "Юнусабад",
-                address: patientProfile.address || "г. Ташкент, Юнусабад",
+                region: defaultCity,
+                city: defaultCity,
+                district: defaultDistrict,
+                address: patientProfile.address || defaultAddress,
                 avatar: DentistImg,
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [patientProfile, user]);
 
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -140,12 +145,12 @@ const PatientProfilePage = () => {
                     address: newData.address,
                 });
 
-                toast.success("Профиль успешно обновлён!");
+                toast.success(t("doctor_edit.toast_profile_success"));
             }
             setIsEditModalOpen(false);
         } catch (error: any) {
             console.error("Error updating profile:", error);
-            toast.error(error.response?.data?.detail || "Ошибка при обновлении профиля");
+            toast.error(error.response?.data?.detail || t("doctor_edit.toast_profile_error"));
         }
     };
 
@@ -233,12 +238,12 @@ const PatientProfilePage = () => {
                                         </p>
                                     </div>
                                     <div className="text-left">
-                                        <p className="text-[10px] font-black uppercase tracking-widest text-gray-300">Дата рождения</p>
-                                        <p className="mt-1 text-sm font-bold text-[#1D1D2B]">{formatBirthDate(userData.birthDate)}</p>
+                                        <p className="text-[10px] font-black uppercase tracking-widest text-gray-300">{t('patient_pages.dentist.birth_date')}</p>
+                                        <p className="mt-1 text-sm font-bold text-[#1D1D2B]">{userData.birthDate ? formatBirthDate(userData.birthDate) : t('patient_pages.dentist.not_specified')}</p>
                                     </div>
                                 </div>
                                 <div className="pt-2 text-left">
-                                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-300">Местоположение</p>
+                                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-300">{t('patient_pages.profile_pat.location')}</p>
                                     <p className="mt-1 text-sm font-bold text-[#1D1D2B]">{userData.region}, {userData.city}</p>
                                     <p className="mt-0.5 text-xs font-semibold text-gray-500">{userData.district}</p>
                                 </div>

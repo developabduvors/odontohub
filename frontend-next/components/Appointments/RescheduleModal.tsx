@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface RescheduleModalProps {
     isOpen: boolean;
@@ -16,6 +17,7 @@ const RescheduleModal: React.FC<RescheduleModalProps> = ({
     onConfirm,
     currentStartTime
 }) => {
+    const t = useTranslations();
     const currentDate = new Date(currentStartTime);
     const [date, setDate] = useState(currentDate.toISOString().split('T')[0]);
     const [time, setTime] = useState(
@@ -45,7 +47,7 @@ const RescheduleModal: React.FC<RescheduleModalProps> = ({
                 className="bg-white w-full max-w-[500px] rounded-[24px] shadow-2xl animate-in zoom-in-95 duration-300 p-8"
             >
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-black text-[#1a1f36]">Перенести приём</h2>
+                    <h2 className="text-2xl font-black text-[#1a1f36]">{t('appointments.reschedule.title')}</h2>
                     <button
                         onClick={onClose}
                         className="p-2 hover:bg-gray-100 rounded-full transition-colors"
@@ -56,7 +58,7 @@ const RescheduleModal: React.FC<RescheduleModalProps> = ({
 
                 <div className="space-y-6">
                     <div>
-                        <label className="block text-gray-600 font-bold mb-2">Дата</label>
+                        <label className="block text-gray-600 font-bold mb-2">{t('appointments.reschedule.date')}</label>
                         <input
                             type="date"
                             value={date}
@@ -66,7 +68,7 @@ const RescheduleModal: React.FC<RescheduleModalProps> = ({
                     </div>
 
                     <div>
-                        <label className="block text-gray-600 font-bold mb-2">Время</label>
+                        <label className="block text-gray-600 font-bold mb-2">{t('appointments.reschedule.time')}</label>
                         <input
                             type="time"
                             value={time}
@@ -80,13 +82,13 @@ const RescheduleModal: React.FC<RescheduleModalProps> = ({
                             onClick={onClose}
                             className="flex-1 py-4 bg-gray-100 text-gray-600 text-lg font-black rounded-[16px] hover:bg-gray-200 transition-all active:scale-[0.98]"
                         >
-                            Отмена
+                            {t('common.cancel')}
                         </button>
                         <button
                             onClick={handleConfirm}
                             className="flex-1 py-4 bg-[#feb019] text-white text-lg font-black rounded-[16px] shadow-lg shadow-[#feb019]/30 hover:bg-[#e09d15] transition-all active:scale-[0.98]"
                         >
-                            Перенести
+                            {t('appointments.actions.reschedule')}
                         </button>
                     </div>
                 </div>

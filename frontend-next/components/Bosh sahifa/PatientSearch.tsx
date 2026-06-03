@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react';
 import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { useAllPatients } from '@/api/profile';
 
@@ -10,6 +11,7 @@ interface PatientSearchProps {
 }
 
 export default function PatientSearch({ searchQuery }: PatientSearchProps) {
+  const t = useTranslations();
   const { data: patients, isLoading } = useAllPatients();
 
   const filteredPatients = useMemo(() => {
@@ -38,9 +40,9 @@ export default function PatientSearch({ searchQuery }: PatientSearchProps) {
   if (filteredPatients.length === 0) {
     return (
       <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-4 sm:mb-8 shadow-sm">
-        <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Результаты поиска</h2>
+        <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">{t('dashboard.search.results_title')}</h2>
         <p className="text-gray-500 text-center py-6 sm:py-8 text-sm sm:text-base">
-          Пациенты не найдены по запросу &quot;{searchQuery}&quot;
+          {t('dashboard.search.not_found', { query: searchQuery })}
         </p>
       </div>
     );
@@ -49,7 +51,7 @@ export default function PatientSearch({ searchQuery }: PatientSearchProps) {
   return (
     <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-4 sm:mb-8 shadow-sm">
       <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
-        Результаты поиска
+        {t('dashboard.search.results_title')}
         <span className="bg-black text-white text-xs sm:text-sm px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-semibold">
           {filteredPatients.length}
         </span>
@@ -64,11 +66,11 @@ export default function PatientSearch({ searchQuery }: PatientSearchProps) {
           >
             <div className="flex items-start gap-3 sm:gap-4">
               <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-base sm:text-xl shrink-0">
-                {patient.full_name?.charAt(0) || 'П'}
+                {patient.full_name?.charAt(0) || t('common.patient').charAt(0)}
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-semibold text-gray-900 text-base sm:text-lg truncate">
-                  {patient.full_name || 'Без имени'}
+                  {patient.full_name || t('common.no_name')}
                 </p>
                 <div className="space-y-0.5 sm:space-y-1 text-xs sm:text-sm text-gray-600 mt-1 sm:mt-2">
                   {patient.phone && (

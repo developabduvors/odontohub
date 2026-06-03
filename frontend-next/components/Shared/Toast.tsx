@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AlertCircle, Info, X, ShieldCheck, AlertTriangle } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export type ToastType = "success" | "error" | "warning" | "info";
 
@@ -40,33 +41,30 @@ const styles = {
         icon: <ShieldCheck size={24} className="text-emerald-500" />,
         bar: "bg-emerald-500",
         title: "text-emerald-900",
-        label: "Успешно"
     },
     error: {
         bg: "bg-white/95 border-red-100",
         icon: <AlertCircle size={24} className="text-red-500" />,
         bar: "bg-red-500",
         title: "text-red-900",
-        label: "Ошибка"
     },
     warning: {
         bg: "bg-white/95 border-amber-100",
         icon: <AlertTriangle size={24} className="text-amber-500" />,
         bar: "bg-amber-500",
         title: "text-amber-900",
-        label: "Внимание"
     },
     info: {
         bg: "bg-white/95 border-blue-100",
         icon: <Info size={24} className="text-blue-500" />,
         bar: "bg-blue-500",
         title: "text-blue-900",
-        label: "Инфо"
     },
 };
 
 function ToastCard({ item, onClose }: { item: ToastItem; onClose: () => void }) {
     const [visible, setVisible] = useState(false);
+    const t = useTranslations("toast");
     const style = styles[item.type];
 
     useEffect(() => {
@@ -95,7 +93,7 @@ function ToastCard({ item, onClose }: { item: ToastItem; onClose: () => void }) 
 
                 <div className="flex-1 pt-1">
                     <h4 className={`text-xs font-bold uppercase tracking-wider mb-0.5 opacity-60 ${style.title}`}>
-                        {style.label}
+                        {t(item.type)}
                     </h4>
                     <p className="text-[15px] font-semibold text-gray-800 leading-tight">
                         {item.message}

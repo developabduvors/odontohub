@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { FaArrowLeft } from "react-icons/fa";
+import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import DoctorInfoCard from "@/components/PatientAppointmentDetail/DoctorInfoCard";
 import AppointmentDetailsCard from "@/components/PatientAppointmentDetail/AppointmentDetailsCard";
@@ -10,33 +11,34 @@ import ReviewModal from "@/components/PatientAppointmentDetail/ReviewModal";
 
 const DentistImg = "/assets/img/photos/Dentist.png";
 
-const FALLBACK_APPOINTMENT = {
-    title: "Осмотр",
-    date: "25 сентябрь",
-    time: "16:00",
-    doctor: {
-        name: "Махмуд Пулатов",
-        direction: "Ортодонтия",
-        experience: "3 года",
-        rating: "4.7",
-        image: DentistImg
-    },
-    details: {
-        status: "завершён",
-        date: "25.10.2025",
-        duration: "20 минут",
-        tip: "Пусто",
-        notes: ""
-    },
-    price: "20.000сум"
-};
-
 const CheckupBookingPreview = () => {
     const router = useRouter();
+    const t = useTranslations();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const fallbackAppointment = {
+        title: t('patient_pages.checkup.fallback_title'),
+        date: t('patient_pages.checkup.fallback_date'),
+        time: "16:00",
+        doctor: {
+            name: t('common.doctor'),
+            direction: t('patient_pages.checkup.fallback_direction'),
+            experience: t('patient_pages.checkup.fallback_experience'),
+            rating: "4.7",
+            image: DentistImg
+        },
+        details: {
+            status: t('patient_pages.appt_detail.status_completed'),
+            date: "25.10.2025",
+            duration: `20 ${t('patient_pages.appt_detail.minutes_suffix')}`,
+            tip: t('patient_pages.checkup.empty'),
+            notes: ""
+        },
+        price: `20.000 ${t('patient_pages.checkup.currency_sum')}`
+    };
+
     // Read + clear the gosmile:checkup_preview handoff (Vite mock = absent-value fallback)
-    const [appointment, setAppointment] = useState<any>(FALLBACK_APPOINTMENT);
+    const [appointment, setAppointment] = useState<any>(fallbackAppointment);
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
@@ -83,7 +85,7 @@ const CheckupBookingPreview = () => {
                     onClick={() => setIsModalOpen(true)}
                     className="w-full bg-[#FBBC05] text-white text-lg md:text-xl font-bold py-4 rounded-2xl shadow-md hover:bg-[#e0a800] transition-colors"
                 >
-                    Оценить и оставить отзыв
+                    {t('patient_pages.checkup.rate_review')}
                 </button>
             </div>
 

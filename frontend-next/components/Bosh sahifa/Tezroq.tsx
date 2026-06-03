@@ -53,7 +53,7 @@ const Tezroq: React.FC = () => {
       id: Date.now(),
       text: note,
       date: new Date().toISOString(),
-      createdBy: 'Врач',
+      createdBy: t('common.doctor'),
     });
 
     localStorage.setItem(notesKey, JSON.stringify(notes));
@@ -73,7 +73,7 @@ const Tezroq: React.FC = () => {
               <p className="font-semibold text-gray-900 text-xs sm:text-base">{t(action.titleKey)}</p>
               {action.action === 'message' && (
                 <span className="absolute top-1 right-1 sm:top-2 sm:right-2 text-[10px] sm:text-xs bg-yellow-100 text-yellow-700 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full font-medium">
-                  В разработке
+                  {t('common.in_development')}
                 </span>
               )}
             </button>

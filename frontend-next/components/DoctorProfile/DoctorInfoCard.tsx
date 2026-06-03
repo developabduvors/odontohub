@@ -33,8 +33,8 @@ const DoctorInfoCard: FC<DoctorInfoCardProps> = ({ name, gender, birthDate, expe
                 <h2 className="mb-3 break-words text-lg font-bold tracking-tight sm:text-xl">{name}</h2>
                 <div className="space-y-1 text-xs text-blue-50 sm:text-[13px]">
                     <p>{t('patient_profile.gender')}: <span className="font-medium text-white">{gender}</span></p>
-                    <p>Дата рождения: <span className="font-medium text-white">{birthDate || 'Не указано'}</span></p>
-                    <p>Стаж: <span className="font-medium text-white">{experienceYears || 'Не указан'}</span></p>
+                    <p>{t('doctor_profile.birth_date')}: <span className="font-medium text-white">{birthDate || t('common.not_specified')}</span></p>
+                    <p>{t('doctor_profile.experience_label')}: <span className="font-medium text-white">{experienceYears || t('common.not_specified')}</span></p>
                     <p className="break-words">{t('doctor_profile.specialization_label')}: <span className="font-medium text-white">{specialization}</span></p>
                 </div>
             </div>

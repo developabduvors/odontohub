@@ -83,7 +83,8 @@ export default function Sidebar() {
         )}
       </div>
 
-      <nav className="flex-1 space-y-2 px-4 py-4">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
+      <nav className="space-y-2 px-4 py-4">
         {menuItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.path || (item.id === "chats" && pathname.startsWith("/chats"));
@@ -115,7 +116,7 @@ export default function Sidebar() {
         })}
       </nav>
 
-      <div className="mx-5 mb-4 mt-3 shrink-0 overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,#6577ff_0%,#8b7cf6_100%)] p-5 text-white shadow-[0_24px_50px_rgba(90,96,195,0.28)]">
+      <div className="mx-5 mb-4 mt-auto shrink-0 overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,#6577ff_0%,#8b7cf6_100%)] p-5 text-white shadow-[0_24px_50px_rgba(90,96,195,0.28)]">
         <div className="relative z-10 text-center">
           <h3 className="mb-4 font-space text-lg font-bold">{t("sidebar.focus_title")}</h3>
           <div className="space-y-1.5 text-base font-semibold">
@@ -128,6 +129,7 @@ export default function Sidebar() {
             </button>
           </Link>
         </div>
+      </div>
       </div>
     </div>
   );

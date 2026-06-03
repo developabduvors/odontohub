@@ -104,7 +104,7 @@ export const PrivacySettings: React.FC = () => {
                 if (isMounted) {
                     setBackupMessage({
                         type: 'error',
-                        text: getErrorMessage(error, 'Не удалось загрузить резервный номер'),
+                        text: getErrorMessage(error, t('settings.privacy.load_backup_failed')),
                     });
                 }
             } finally {
@@ -151,12 +151,12 @@ export const PrivacySettings: React.FC = () => {
         e.preventDefault();
 
         if (formData.newPassword !== formData.confirmPassword) {
-            setMessage({ type: 'error', text: 'Новые пароли не совпадают' });
+            setMessage({ type: 'error', text: t('settings.privacy.passwords_mismatch') });
             return;
         }
 
         if (formData.newPassword.length < 6) {
-            setMessage({ type: 'error', text: 'Новый пароль должен содержать минимум 6 символов' });
+            setMessage({ type: 'error', text: t('settings.privacy.password_min6') });
             return;
         }
 
@@ -169,12 +169,12 @@ export const PrivacySettings: React.FC = () => {
                 new_password: formData.newPassword,
             });
 
-            setMessage({ type: 'success', text: 'Пароль успешно изменен' });
+            setMessage({ type: 'success', text: t('settings.privacy.password_changed') });
             setFormData({ currentPassword: '', newPassword: '', confirmPassword: '' });
         } catch (error) {
             setMessage({
                 type: 'error',
-                text: getErrorMessage(error, 'Ошибка при смене пароля'),
+                text: getErrorMessage(error, t('settings.privacy.password_change_error')),
             });
         } finally {
             setLoading(false);
@@ -188,17 +188,17 @@ export const PrivacySettings: React.FC = () => {
         const normalizedPrimaryPhone = normalizePhone(primaryPhone);
 
         if (!normalizedBackupPhone) {
-            setBackupMessage({ type: 'error', text: 'Введите резервный номер или очистите поле' });
+            setBackupMessage({ type: 'error', text: t('settings.privacy.enter_or_clear_backup') });
             return;
         }
 
         if (normalizedBackupPhone.length < 7) {
-            setBackupMessage({ type: 'error', text: 'Резервный номер слишком короткий' });
+            setBackupMessage({ type: 'error', text: t('settings.privacy.backup_too_short') });
             return;
         }
 
         if (normalizedPrimaryPhone && normalizedBackupPhone === normalizedPrimaryPhone) {
-            setBackupMessage({ type: 'error', text: 'Резервный номер должен отличаться от основного' });
+            setBackupMessage({ type: 'error', text: t('settings.privacy.backup_must_differ') });
             return;
         }
 
@@ -210,7 +210,7 @@ export const PrivacySettings: React.FC = () => {
             const savedPhone = response.backup_phone || '';
             setBackupPhone(savedPhone);
             setInitialBackupPhone(savedPhone);
-            setBackupMessage({ type: 'success', text: 'Резервный номер сохранен' });
+            setBackupMessage({ type: 'success', text: t('settings.privacy.backup_saved') });
 
             const storedUserData = localStorage.getItem('user_data');
             if (storedUserData) {
@@ -222,7 +222,7 @@ export const PrivacySettings: React.FC = () => {
         } catch (error) {
             setBackupMessage({
                 type: 'error',
-                text: getErrorMessage(error, 'Не удалось сохранить резервный номер'),
+                text: getErrorMessage(error, t('settings.privacy.backup_save_failed')),
             });
         } finally {
             setBackupSaving(false);
@@ -237,7 +237,7 @@ export const PrivacySettings: React.FC = () => {
             await updateBackupPhone({ backup_phone: null });
             setBackupPhone('');
             setInitialBackupPhone('');
-            setBackupMessage({ type: 'success', text: 'Резервный номер удален' });
+            setBackupMessage({ type: 'success', text: t('settings.privacy.backup_deleted') });
 
             const storedUserData = localStorage.getItem('user_data');
             if (storedUserData) {
@@ -249,7 +249,7 @@ export const PrivacySettings: React.FC = () => {
         } catch (error) {
             setBackupMessage({
                 type: 'error',
-                text: getErrorMessage(error, 'Не удалось удалить резервный номер'),
+                text: getErrorMessage(error, t('settings.privacy.backup_delete_failed')),
             });
         } finally {
             setBackupSaving(false);
@@ -271,21 +271,21 @@ export const PrivacySettings: React.FC = () => {
                         <Lock className="w-5 h-5 text-blue-600" />
                     </div>
                     <div>
-                        <h2 className="text-xl font-bold text-[#1E2532]">Смена пароля</h2>
-                        <p className="text-sm text-gray-500">Обновите свой пароль для безопасности</p>
+                        <h2 className="text-xl font-bold text-[#1E2532]">{t('settings.privacy.change_password_title')}</h2>
+                        <p className="text-sm text-gray-500">{t('settings.privacy.change_password_desc')}</p>
                     </div>
                 </div>
 
                 <form onSubmit={handlePasswordSubmit} className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Текущий пароль</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">{t('settings.privacy.current_password')}</label>
                         <div className="relative">
                             <input
                                 type={showPasswords.current ? 'text' : 'password'}
                                 value={formData.currentPassword}
                                 onChange={(e) => setFormData((prev) => ({ ...prev, currentPassword: e.target.value }))}
                                 className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-12"
-                                placeholder="Введите текущий пароль"
+                                placeholder={t('settings.privacy.current_password_ph')}
                                 required
                             />
                             <button
@@ -299,14 +299,14 @@ export const PrivacySettings: React.FC = () => {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Новый пароль</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">{t('settings.privacy.new_password')}</label>
                         <div className="relative">
                             <input
                                 type={showPasswords.new ? 'text' : 'password'}
                                 value={formData.newPassword}
                                 onChange={(e) => setFormData((prev) => ({ ...prev, newPassword: e.target.value }))}
                                 className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-12"
-                                placeholder="Введите новый пароль"
+                                placeholder={t('settings.privacy.new_password_ph')}
                                 required
                                 minLength={6}
                             />
@@ -318,18 +318,18 @@ export const PrivacySettings: React.FC = () => {
                                 {showPasswords.new ? <EyeOff size={20} /> : <Eye size={20} />}
                             </button>
                         </div>
-                        <p className="text-xs text-gray-500 mt-1">Минимум 6 символов</p>
+                        <p className="text-xs text-gray-500 mt-1">{t('auth.login.password_min')}</p>
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Подтвердите новый пароль</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">{t('settings.privacy.confirm_new_password')}</label>
                         <div className="relative">
                             <input
                                 type={showPasswords.confirm ? 'text' : 'password'}
                                 value={formData.confirmPassword}
                                 onChange={(e) => setFormData((prev) => ({ ...prev, confirmPassword: e.target.value }))}
                                 className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-12"
-                                placeholder="Повторите новый пароль"
+                                placeholder={t('settings.privacy.confirm_new_password_ph')}
                                 required
                             />
                             <button
@@ -359,18 +359,18 @@ export const PrivacySettings: React.FC = () => {
                         disabled={loading}
                         className="w-full bg-blue-600 text-white py-3 px-4 rounded-xl font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
-                        {loading ? 'Сохранение...' : 'Изменить пароль'}
+                        {loading ? t('common.saving') : t('settings.privacy.change_password_btn')}
                     </button>
                 </form>
             </div>
 
             <div className="bg-blue-50 rounded-2xl p-6">
-                <h3 className="text-lg font-bold text-[#1E2532] mb-3">Советы по безопасности</h3>
+                <h3 className="text-lg font-bold text-[#1E2532] mb-3">{t('settings.privacy.security_tips_title')}</h3>
                 <ul className="space-y-2 text-sm text-gray-600">
-                    <li>• Используйте отдельный пароль для этого аккаунта.</li>
-                    <li>• Добавляйте цифры, буквы и специальные символы.</li>
-                    <li>• Не используйте основной и резервный номер как один и тот же контакт.</li>
-                    <li>• Периодически обновляйте пароль и резервный номер.</li>
+                    <li>• {t('settings.privacy.tip1')}</li>
+                    <li>• {t('settings.privacy.tip2')}</li>
+                    <li>• {t('settings.privacy.tip3')}</li>
+                    <li>• {t('settings.privacy.tip4')}</li>
                 </ul>
             </div>
 
@@ -387,18 +387,18 @@ export const PrivacySettings: React.FC = () => {
 
                 <form onSubmit={handleBackupPhoneSubmit} className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Основной номер</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">{t('settings.privacy.primary_number')}</label>
                         <input
                             type="text"
                             value={primaryPhone}
                             readOnly
                             className="w-full px-4 py-3 border border-gray-200 bg-gray-50 rounded-xl text-gray-500"
-                            placeholder="Не указан"
+                            placeholder={t('common.not_specified')}
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Резервный номер</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">{t('settings.privacy.backup_number_label')}</label>
                         <input
                             type="tel"
                             value={backupPhone}
@@ -408,7 +408,7 @@ export const PrivacySettings: React.FC = () => {
                             disabled={backupLoading || backupSaving}
                         />
                         <p className="text-xs text-gray-500 mt-1">
-                            Номер используется как дополнительный контакт для восстановления и подтверждения.
+                            {t('settings.privacy.backup_number_hint')}
                         </p>
                     </div>
 
@@ -430,7 +430,7 @@ export const PrivacySettings: React.FC = () => {
                             disabled={backupLoading || backupSaving || backupPhone === initialBackupPhone}
                             className="flex-1 bg-emerald-600 text-white py-3 px-4 rounded-xl font-medium hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
-                            {backupLoading ? 'Загрузка...' : backupSaving ? 'Сохранение...' : 'Сохранить резервный номер'}
+                            {backupLoading ? t('common.loading') : backupSaving ? t('common.saving') : t('settings.privacy.save_backup_btn')}
                         </button>
                         <button
                             type="button"
@@ -438,7 +438,7 @@ export const PrivacySettings: React.FC = () => {
                             disabled={backupLoading || backupSaving || !initialBackupPhone}
                             className="sm:w-auto w-full border border-gray-300 text-gray-700 py-3 px-4 rounded-xl font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
-                            Очистить
+                            {t('settings.privacy.clear')}
                         </button>
                     </div>
                 </form>
@@ -464,23 +464,23 @@ export const PrivacySettings: React.FC = () => {
             {showDeleteModal && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
                     <div className="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl">
-                        <h2 className="text-xl font-bold text-[#1E2532] mb-2">Удаление аккаунта</h2>
+                        <h2 className="text-xl font-bold text-[#1E2532] mb-2">{t('settings.privacy.delete_account_modal_title')}</h2>
                         <p className="text-sm text-gray-500 mb-6">
-                            Вы действительно хотите удалить аккаунт? Это действие нельзя отменить.
+                            {t('settings.privacy.delete_account_confirm')}
                         </p>
                         <div className="flex gap-3">
                             <button
                                 onClick={() => setShowDeleteModal(false)}
                                 className="flex-1 py-3 rounded-2xl border border-gray-200 text-gray-600 font-semibold text-sm hover:bg-gray-50 transition"
                             >
-                                Отмена
+                                {t('common.cancel')}
                             </button>
                             <button
                                 onClick={handleDeleteAccount}
                                 disabled={deleting}
                                 className="flex-1 py-3 rounded-2xl bg-red-600 text-white font-semibold text-sm hover:bg-red-700 transition disabled:opacity-50"
                             >
-                                {deleting ? 'Удаление...' : 'Удалить'}
+                                {deleting ? t('settings.privacy.deleting') : t('settings.privacy.delete')}
                             </button>
                         </div>
                     </div>

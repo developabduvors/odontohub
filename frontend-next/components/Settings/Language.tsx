@@ -26,7 +26,7 @@ const Language = () => {
                 {t('settings.language_title')}
             </h4>
             <p className="mb-5 text-sm text-[#7a84a8]">
-                Выберите язык интерфейса для всей платформы.
+                {t('settings.language_subtitle')}
             </p>
 
             <div className="grid gap-3 sm:grid-cols-2">

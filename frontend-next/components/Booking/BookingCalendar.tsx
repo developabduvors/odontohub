@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useTranslations } from 'next-intl';
 
 interface BookingCalendarProps {
     selectedDate: Date | null;
@@ -9,6 +10,7 @@ interface BookingCalendarProps {
 }
 
 const BookingCalendar: React.FC<BookingCalendarProps> = ({ selectedDate, onDateChange }) => {
+    const t = useTranslations('booking');
     // Basic calendar logic (simplified for this task, can be expanded)
     const currentDate = new Date();
     const [currentMonth, setCurrentMonth] = React.useState(currentDate);
@@ -23,12 +25,9 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({ selectedDate, onDateC
         return day === 0 ? 6 : day - 1;
     };
 
-    const monthNames = [
-        "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
-        "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
-    ];
+    const monthNames = Array.from({ length: 12 }, (_, i) => t(`months.${i}`));
 
-    const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+    const weekDays = Array.from({ length: 7 }, (_, i) => t(`weekdays.${i}`));
 
     const handlePrevMonth = () => {
         setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));

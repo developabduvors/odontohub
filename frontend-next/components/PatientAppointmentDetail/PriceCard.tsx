@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslations } from 'next-intl';
 
 interface PriceCardProps {
     price: string;
@@ -8,6 +9,7 @@ interface PriceCardProps {
 }
 
 const PriceCard: React.FC<PriceCardProps> = ({ price, service }) => {
+    const t = useTranslations('patient.appointment_detail');
     return (
         <div className="bg-gradient-to-br from-[#4D71F8] to-[#3451d1] rounded-[2rem] p-6 md:p-8 text-white shadow-xl shadow-blue-500/30 relative overflow-hidden">
             {/* Background decoration */}
@@ -23,7 +25,7 @@ const PriceCard: React.FC<PriceCardProps> = ({ price, service }) => {
                         </p>
                     </div>
                 )}
-                <p className="text-sm font-semibold text-white/60 mb-1">Стоимость услуги</p>
+                <p className="text-sm font-semibold text-white/60 mb-1">{t('service_cost')}</p>
                 <h2 className="text-3xl md:text-4xl font-black tracking-tight">{price}</h2>
             </div>
         </div>

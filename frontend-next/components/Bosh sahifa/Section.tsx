@@ -44,7 +44,7 @@ const Section: FC = () => {
         const endTime = `${end.getHours().toString().padStart(2, '0')}:${end.getMinutes().toString().padStart(2, '0')}`;
         return {
           id: app.id,
-          name: app.patient_name || 'Пациент',
+          name: app.patient_name || t('common.patient'),
           time: `${startTime}-${endTime}`
         };
       });
@@ -120,8 +120,8 @@ const Section: FC = () => {
         </div>
       ) : (
         <div className="text-center py-8 sm:py-10">
-          <p className="text-gray-400 font-medium text-sm sm:text-base">Нет записей</p>
-          <p className="text-gray-300 text-xs sm:text-sm mt-1">На выбранную дату записей нет</p>
+          <p className="text-gray-400 font-medium text-sm sm:text-base">{t('dashboard.appointments_card.no_records')}</p>
+          <p className="text-gray-300 text-xs sm:text-sm mt-1">{t('dashboard.appointments_card.no_records_desc')}</p>
         </div>
       )}
     </div>

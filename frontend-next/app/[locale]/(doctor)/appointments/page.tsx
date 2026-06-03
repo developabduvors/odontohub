@@ -56,9 +56,9 @@ const AppointmentsPage: React.FC = () => {
                 else if (app.status === 'pending') status = 'pending';
 
                 const serviceLabel = app.service === 'implantation' ? t('modal.services.implantation') :
-                    app.service === 'hygiene' ? 'Гигиена' :
-                        app.service === 'treatment' ? 'Лечение' :
-                            app.service === 'extraction' ? 'Удаление' :
+                    app.service === 'hygiene' ? t('modal.services.hygiene') :
+                        app.service === 'treatment' ? t('modal.services.treatment') :
+                            app.service === 'extraction' ? t('modal.services.extraction') :
                                 app.service || t('modal.services.implantation');
 
                 const date = `${startDate.getDate().toString().padStart(2, '0')}.${(startDate.getMonth() + 1).toString().padStart(2, '0')}.${startDate.getFullYear()}`;
@@ -75,7 +75,7 @@ const AppointmentsPage: React.FC = () => {
                     dateObj: startDate,
                     status,
                     service: serviceLabel,
-                    patientName: app.patient_name || 'Пациент',
+                    patientName: app.patient_name || t('appointments.detail.patient'),
                     notes: app.notes || null,
                     raw: { ...app, price }
                 };
@@ -196,8 +196,8 @@ const AppointmentsPage: React.FC = () => {
                             </div>
                         ) : (
                             <div className="text-center py-40">
-                                <p className="text-gray-400 font-bold text-xl mb-2">Нет записей</p>
-                                <p className="text-gray-300 text-sm">На выбранную дату записей нет</p>
+                                <p className="text-gray-400 font-bold text-xl mb-2">{t('appointments.empty.title')}</p>
+                                <p className="text-gray-300 text-sm">{t('appointments.empty.subtitle')}</p>
                             </div>
                         )}
                     </>

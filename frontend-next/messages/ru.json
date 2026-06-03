@@ -93,7 +93,21 @@
     "no_results": "Ничего не найдено",
     "errors": {
       "something_went_wrong": "Что-то пошло не так"
-    }
+    },
+    "add": "Добавить",
+    "adding": "Добавление...",
+    "view": "Просмотр",
+    "upload": "Загрузить",
+    "initializing": "Инициализация...",
+    "search": "Поиск",
+    "user": "Пользователь",
+    "doctor": "Врач",
+    "patient": "Пациент",
+    "not_specified": "Не указано",
+    "confirm": "Подтвердить",
+    "back": "Назад",
+    "no_name": "Без имени",
+    "in_development": "В разработке"
   },
   "appointments": {
     "title": "Приёмы",
@@ -106,7 +120,8 @@
       "week": "Неделя",
       "month": "Месяц",
       "search_placeholder": "имя или диагноз...",
-      "weekend": "Выходной"
+      "weekend": "Выходной",
+      "weekend_short": "Вых."
     },
     "statuses": {
       "completed": "Завершён",
@@ -123,21 +138,58 @@
       "attach_photo": "Прикрепить фото",
       "schedule_next": "Назначить следующий приём",
       "finish": "Завершить",
-      "add_payment": "Добавить оплату"
+      "add_payment": "Добавить оплату",
+      "visit_primary": "Первичный",
+      "visit_repeat": "Повторный",
+      "no_recipe": "Пока рецепта нет",
+      "no_allergies": "Аллергий нет",
+      "payment_amount": "Сумма оплаты (сум)",
+      "price_ph": "Например: 250000",
+      "finish_note": "После завершения лечения пациент должен оплатить эту сумму. Статус оплаты будет \"Ожидает\".",
+      "confirm": "Подтвердить",
+      "err_price": "Введите цену",
+      "err_patient_id": "ID пациента не найден",
+      "payment_created": "Платёж создан: {amount} сум"
     },
     "detail": {
       "patient": "Пациент",
       "time": "Время",
       "date": "Дата",
       "status": "Статус",
-      "initial": "Начальный"
+      "initial": "Начальный",
+      "info_title": "Детальная информация",
+      "notes_label": "Заметки:",
+      "notes_ph": "Напишите заметку...",
+      "no_notes": "Заметок нет",
+      "online_consult": "Онлайн консультация",
+      "sum": "сум"
     },
     "actions": {
-      "start": "Начать приём"
+      "start": "Начать приём",
+      "reschedule": "Перенести",
+      "cancel": "Отменить",
+      "finish_appointment": "Завершить приём",
+      "finish_treatment": "Завершить лечение"
     },
     "toasts": {
       "started": "Приём начался",
-      "notes_saved": "Заметка сохранена"
+      "notes_saved": "Заметка сохранена",
+      "error": "Что-то пошло не так",
+      "cancel_confirm": "Вы уверены что хотите отменить этот приём?",
+      "cancelled": "Приём успешно отменён",
+      "cancel_error": "Ошибка при отмене приёма",
+      "rescheduled": "Приём успешно перенесён",
+      "reschedule_error": "Ошибка при переносе приёма",
+      "appointment_finished": "Приём завершён"
+    },
+    "reschedule": {
+      "title": "Перенести приём",
+      "date": "Дата",
+      "time": "Время"
+    },
+    "empty": {
+      "title": "Нет записей",
+      "subtitle": "На выбранную дату записей нет"
     }
   },
   "modal": {
@@ -152,12 +204,29 @@
     "record": "Добавить",
     "services": {
       "implantation": "Имплантация",
-      "consultation": "Консультация"
+      "consultation": "Консультация",
+      "checkup": "Осмотр",
+      "xray": "Рентген",
+      "hygiene": "Гигиена",
+      "filling": "Пломба",
+      "treatment": "Лечение",
+      "extraction": "Удаление"
     },
     "patient_statuses": {
       "primary": "Первичный",
       "recurring": "Повторный"
-    }
+    },
+    "quick_add_title": "Быстрое добавление пациента",
+    "create_select": "Создать и выбрать",
+    "add_new_named": "Добавить: \"{term}\"",
+    "unnamed_patient": "Без имени",
+    "no_phone": "Без номера",
+    "empty_patients": "В вашем списке нет пациентов",
+    "toast_patient_added": "Новый пациент добавлен",
+    "toast_not_found": "Пациент не найден. Введите номер телефона.",
+    "select_patient": "Выберите пациента",
+    "no_dentist": "Данные врача не найдены. Войдите снова.",
+    "saved": "Приём успешно сохранён"
   },
   "settings": {
     "title": "Настройки",
@@ -190,7 +259,42 @@
       "backup_number_desc": "Используется только для безопасности",
       "delete_account_title": "Удалить аккаунт",
       "delete_account_desc": "Полностью удаляются все данные этого аккаунта",
-      "logout": "Выйти"
+      "logout": "Выйти",
+      "load_backup_failed": "Не удалось загрузить резервный номер",
+      "passwords_mismatch": "Новые пароли не совпадают",
+      "password_min6": "Новый пароль должен содержать минимум 6 символов",
+      "password_changed": "Пароль успешно изменен",
+      "password_change_error": "Ошибка при смене пароля",
+      "enter_or_clear_backup": "Введите резервный номер или очистите поле",
+      "backup_too_short": "Резервный номер слишком короткий",
+      "backup_must_differ": "Резервный номер должен отличаться от основного",
+      "backup_saved": "Резервный номер сохранен",
+      "backup_save_failed": "Не удалось сохранить резервный номер",
+      "backup_deleted": "Резервный номер удален",
+      "backup_delete_failed": "Не удалось удалить резервный номер",
+      "change_password_title": "Смена пароля",
+      "change_password_desc": "Обновите свой пароль для безопасности",
+      "current_password": "Текущий пароль",
+      "current_password_ph": "Введите текущий пароль",
+      "new_password": "Новый пароль",
+      "new_password_ph": "Введите новый пароль",
+      "confirm_new_password": "Подтвердите новый пароль",
+      "confirm_new_password_ph": "Повторите новый пароль",
+      "change_password_btn": "Изменить пароль",
+      "security_tips_title": "Советы по безопасности",
+      "tip1": "Используйте отдельный пароль для этого аккаунта.",
+      "tip2": "Добавляйте цифры, буквы и специальные символы.",
+      "tip3": "Не используйте основной и резервный номер как один и тот же контакт.",
+      "tip4": "Периодически обновляйте пароль и резервный номер.",
+      "primary_number": "Основной номер",
+      "backup_number_label": "Резервный номер",
+      "backup_number_hint": "Номер используется как дополнительный контакт для восстановления и подтверждения.",
+      "save_backup_btn": "Сохранить резервный номер",
+      "clear": "Очистить",
+      "delete_account_modal_title": "Удаление аккаунта",
+      "delete_account_confirm": "Вы действительно хотите удалить аккаунт? Это действие нельзя отменить.",
+      "deleting": "Удаление...",
+      "delete": "Удалить"
     },
     "support_items": {
       "contact": "Связаться с поддержкой",
@@ -210,7 +314,8 @@
       "badge": "Settings",
       "accent": "Профиль и безопасность",
       "description": "Настройте уведомления, конфиденциальность, язык интерфейса и вспомогательные параметры в том же визуальном стиле, что и экраны входа."
-    }
+    },
+    "language_subtitle": "Выберите язык интерфейса для всей платформы."
   },
   "patient_profile": {
     "not_found": "Пациент не найден",
@@ -365,7 +470,8 @@
       "diagnosis": "Диагноз",
       "status": "Статус",
       "age_label": "лет",
-      "not_found": "Ничего не найдено"
+      "not_found": "Ничего не найдено",
+      "actions": "Действия"
     },
     "statuses": {
       "treating": "ЛЕЧИТСЯ",
@@ -392,7 +498,9 @@
       "add": "Добавить",
       "error_required": "Пожалуйста, введите имя и номер телефона",
       "success_added": "Пациент успешно добавлен"
-    }
+    },
+    "delete_confirm": "Вы уверены, что хотите удалить пациента \"{name}\"?",
+    "delete_error": "Ошибка при удалении пациента"
   },
   "doctor_profile": {
     "save": "Сохранить",
@@ -427,7 +535,11 @@
     "specialization_label": "Специализация",
     "age_label": "Возраст",
     "address_placeholder": "Введите адрес",
-    "no_services": "Услуги еще не добавлены"
+    "no_services": "Услуги еще не добавлены",
+    "experience_suffix": "лет",
+    "birth_date": "Дата рождения",
+    "experience_label": "Стаж",
+    "default_education": "ТашПМИ"
   },
   "dashboard": {
     "search_placeholder": "Пациент",
@@ -489,7 +601,9 @@
         "4": "Четверг",
         "5": "Пятница",
         "6": "Суббота"
-      }
+      },
+      "no_records": "Нет записей",
+      "no_records_desc": "На выбранную дату записей нет"
     },
     "quick_actions": {
       "title": "Быстрые действия",
@@ -530,6 +644,10 @@
       "badge": "Dashboard",
       "accent": "Рабочее пространство",
       "description": "Главный экран врача с быстрым доступом к пациентам, аналитике, уведомлениям и ежедневным задачам."
+    },
+    "search": {
+      "results_title": "Результаты поиска",
+      "not_found": "Пациенты не найдены по запросу \"{query}\""
     }
   },
   "analytics": {
@@ -662,7 +780,10 @@
       "time_day": "день",
       "time_hours": "ч",
       "time_minutes": "мин",
-      "time_seconds": "сек"
+      "time_seconds": "сек",
+      "short_days": "д",
+      "short_hours": "ч",
+      "short_mins": "м"
     },
     "chats": {
       "title": "Сообщения",
@@ -724,7 +845,34 @@
       "review_success": "Ваша оценка принята!",
       "thanks_review": "Спасибо за ваш отзыв",
       "placeholder_review": "Напишите ваш отзыв (по желанию)...",
-      "send_review": "Отправить отзыв"
+      "send_review": "Отправить отзыв",
+      "service_cost": "Стоимость услуги",
+      "review_placeholder": "Отзыв",
+      "send": "Отправить",
+      "rating_1": "Плохо",
+      "rating_2": "Удовлетворительно",
+      "rating_3": "Хорошо",
+      "rating_4": "Очень хорошо",
+      "rating_5": "Отлично!",
+      "direction": "Направление",
+      "work_experience": "Опыт работы",
+      "rating": "Оценка",
+      "go_to": "Перейти",
+      "cancel_failed": "Отменить не удалось",
+      "reschedule_failed": "Ошибка при переносе",
+      "online_consultation": "Онлайн консультация",
+      "contact": "Связаться",
+      "reschedule": "Перенести",
+      "cannot_undo": "Это действие нельзя отменить",
+      "reschedule_title": "Перенести приём",
+      "select_new_datetime": "Выберите новую дату и время",
+      "contact_doctor": "Связаться с врачом",
+      "choose_contact_method": "Выберите удобный способ связи",
+      "phone_not_specified": "Номер не указан",
+      "copied": "Скопировано!",
+      "copy": "Копировать",
+      "call": "Позвонить",
+      "complain": "Пожаловаться на врача"
     },
     "appointments": {
       "title": "Приёмы",
@@ -862,6 +1010,15 @@
           "followup": "Повторный"
         }
       }
+    },
+    "doctor_card": {
+      "default_city": "Ташкент",
+      "address_unspecified": "Адрес не указан",
+      "direction_label": "Направление",
+      "experience_label": "Опыт",
+      "book": "Записаться",
+      "on_map": "На карте",
+      "reviews_suffix": "отзывов"
     }
   },
   "finance": {
@@ -878,5 +1035,376 @@
       "accent": "Карточки и поиск",
       "description": "Просматривайте базу пациентов, применяйте фильтры и добавляйте новые карточки в едином интерфейсе врача."
     }
+  },
+  "patients_modals": {
+    "statuses": {
+      "pending": "Ожидает",
+      "confirmed": "Подтверждён",
+      "completed": "Завершён",
+      "cancelled": "Отменён",
+      "moved": "Перенесён"
+    },
+    "appointment": {
+      "title": "Добавить приём",
+      "start_time": "Время начала *",
+      "end_time": "Время окончания *",
+      "service": "Услуга",
+      "service_ph": "Например: Консультация",
+      "price": "Цена (сум)",
+      "price_ph": "Например: 250000",
+      "visit_type": "Тип приёма",
+      "visit_primary": "Первичный приём",
+      "visit_followup": "Повторный приём",
+      "notes": "Примечания",
+      "notes_ph": "Дополнительная информация...",
+      "err_time": "Укажите время начала и окончания",
+      "err_save": "Не удалось добавить приём"
+    },
+    "payment": {
+      "title": "Добавить платёж",
+      "service": "Название услуги *",
+      "service_ph": "Например: Лечение кариеса",
+      "amount": "Сумма *",
+      "status": "Статус *",
+      "status_paid": "Оплачено",
+      "status_partial": "Частично",
+      "status_unpaid": "Не оплачено",
+      "notes": "Примечания",
+      "notes_ph": "Дополнительная информация...",
+      "err_amount": "Введите корректную сумму",
+      "err_service": "Введите название услуги",
+      "err_save": "Не удалось добавить платёж"
+    },
+    "photo": {
+      "title": "Добавить фотографию",
+      "name": "Название *",
+      "name_ph": "Например: Рентген зуба 16",
+      "file": "Выберите файл *",
+      "file_hint": "Максимальный размер: 5 МБ. Форматы: JPG, PNG, GIF",
+      "preview": "Предпросмотр:",
+      "category": "Категория *",
+      "cat_xray": "Рентген",
+      "cat_treatment": "Лечение",
+      "cat_before": "До",
+      "cat_after": "После",
+      "cat_other": "Другое",
+      "description": "Описание",
+      "description_ph": "Дополнительная информация...",
+      "err_image": "Пожалуйста, выберите изображение",
+      "err_size": "Размер файла не должен превышать 5 МБ",
+      "err_file": "Выберите файл для загрузки",
+      "err_title": "Введите название фотографии",
+      "err_save": "Не удалось добавить фотографию"
+    },
+    "note": {
+      "title": "Новая заметка",
+      "patient": "Пациент",
+      "patient_ph": "Выберите пациента...",
+      "no_patient": "Пациент не найден",
+      "add_new": "Добавить нового",
+      "quick_add_title": "Добавить нового пациента",
+      "phone_ph": "Номер телефона",
+      "note_label": "Заметка",
+      "note_ph": "Напишите заметку...",
+      "no_phone": "Без номера",
+      "submit": "Добавить",
+      "toast_added": "Новый пациент добавлен",
+      "toast_error": "Произошла ошибка",
+      "toast_not_found": "Пациент не найден. Введите номер телефона.",
+      "toast_select": "Пожалуйста, выберите пациента и введите заметку",
+      "toast_note_added": "Заметка успешно добавлена"
+    },
+    "appointments_section": {
+      "title": "История приёмов",
+      "add": "Добавить приём",
+      "load_error": "Не удалось загрузить приёмы",
+      "empty": "Нет записей о приёмах",
+      "default_service": "Приём"
+    },
+    "payments_section": {
+      "title": "Оплаты",
+      "add": "Добавить платёж",
+      "update_error": "Не удалось обновить статус платежа",
+      "paid": "Оплачено",
+      "debt": "Задолженность",
+      "total": "Всего",
+      "empty": "Нет записей об оплатах",
+      "paid_of": "Оплачено: {paid} из {amount} сум",
+      "sum": "сум",
+      "partial": "Частично",
+      "unpaid": "Не оплачено",
+      "updating": "Обновление...",
+      "mark_paid": "Отметить оплаченным"
+    },
+    "photos_section": {
+      "title": "Фотографии и документы",
+      "upload": "Загрузить",
+      "load_error": "Не удалось загрузить фотографии",
+      "cat_all": "Все",
+      "cat_xray": "Рентгены",
+      "cat_treatment": "Лечение",
+      "cat_other": "Другое",
+      "empty": "Нет загруженных файлов",
+      "empty_hint": "Загрузите рентгены, фото лечения или другие документы",
+      "view": "Просмотр"
+    }
+  },
+  "doctor_edit": {
+    "title": "Редактирование",
+    "specialization": "Специализация",
+    "not_selected": "Не выбрано",
+    "birth_date": "Дата рождения",
+    "experience": "Стаж",
+    "gender": "Пол",
+    "gender_male": "Мужской",
+    "gender_female": "Женский",
+    "phone": "Телефонный номер",
+    "address": "Адрес",
+    "address_ph": "Выбрать на карте",
+    "open_map": "Открыть карту",
+    "clinic": "Клиника",
+    "clinic_ph": "Клиника",
+    "schedule": "График работы",
+    "work_time": "Время работы",
+    "diploma_title": "Ваш диплом",
+    "diploma_not_uploaded": "Диплом еще не загружен",
+    "diploma_upload_new": "Загрузить новый диплом",
+    "diploma_add": "Добавить копию диплома",
+    "toast_uploading_diploma": "Загрузка диплома...",
+    "toast_diploma_success": "Диплом успешно загружен и отправлен на проверку!",
+    "toast_diploma_error": "Ошибка при загрузке диплома",
+    "toast_profile_success": "Профиль успешно обновлён!",
+    "toast_profile_error": "Ошибка при сохранении профиля",
+    "specs": {
+      "surgeon": "Хирург",
+      "therapist": "Терапевт",
+      "orthodontist": "Ортодонт",
+      "orthopedist": "Ортопед",
+      "periodontist": "Пародонтолог",
+      "implantologist": "Имплантолог",
+      "general": "Общая стоматология"
+    },
+    "schedules": {
+      "everyday": "Каждый день",
+      "weekdays": "Будние дни",
+      "weekends": "Выходные",
+      "mon_fri": "Понедельник - Пятница",
+      "custom": "Индивидуальный график"
+    }
+  },
+  "patient_pages": {
+    "book": "Записаться",
+    "doctors_intro": {
+      "welcome": "Добро пожаловать! 👋",
+      "subtitle": "Выберите стоматолога из списка ниже для записи на приём"
+    },
+    "cases": {
+      "title": "Кейсы",
+      "before": "До",
+      "after": "После",
+      "before_alt": "До лечения",
+      "after_alt": "После лечения",
+      "empty": "Кейсы пока не добавлены"
+    },
+    "treatments": {
+      "title": "Лечения",
+      "range": "Промежуток:",
+      "status": "Статус:",
+      "appointments": "Приёмов:",
+      "payment": "Оплата:"
+    },
+    "services_page": {
+      "title": "Услуги",
+      "load_error": "Не удалось загрузить список услуг",
+      "mock_consultation": "Консультация",
+      "mock_caries": "Лечение кариеса",
+      "mock_cleaning": "Чистка зубов"
+    },
+    "calendar": {
+      "appointment_default": "Приём у врача",
+      "doctor_default": "Доктор",
+      "specialty": "Стоматолог",
+      "empty": "У вас пока нет приёмов"
+    },
+    "dentist": {
+      "title": "Профиль стоматолога",
+      "default_name": "Врач",
+      "not_specified": "Не указано",
+      "gender_male": "Мужской",
+      "gender_female": "Женский",
+      "default_specialty": "Стоматолог",
+      "diploma_uploaded": "Диплом загружен",
+      "gender": "Пол",
+      "birth_date": "Дата рождения",
+      "experience": "Стаж",
+      "services": "Услуги",
+      "cases": "Кейсы",
+      "online_consult": "Онлайн консультация",
+      "phone": "Тел.номер",
+      "address": "Адрес",
+      "clinic": "Клиника",
+      "specialty": "Специальность",
+      "work_hours": "Часы работы",
+      "complaint": "Пожаловаться на врача"
+    },
+    "profile_pat": {
+      "location": "Местоположение",
+      "default_city": "Ташкент",
+      "default_district": "Юнусабад",
+      "default_address": "г. Ташкент, Юнусабад"
+    },
+    "checkup": {
+      "rate_review": "Оценить и оставить отзыв",
+      "fallback_title": "Осмотр",
+      "fallback_date": "25 сентября",
+      "fallback_direction": "Ортодонтия",
+      "fallback_experience": "3 года",
+      "empty": "Пусто",
+      "currency_sum": "сум"
+    },
+    "appt_detail": {
+      "default_service": "Консультация",
+      "default_doctor": "Доктор",
+      "default_direction": "Стоматология",
+      "no_tip": "Нет подсказок",
+      "no_notes": "Нету заметок",
+      "minutes_suffix": "минут",
+      "status_planned": "запланирован",
+      "status_completed": "завершён",
+      "status_cancelled": "отменён",
+      "status_upcoming": "Предстоит",
+      "finished": "Приём завершён",
+      "cancelled_msg": "Приём отменён",
+      "default_experience": "5 лет"
+    }
+  },
+  "booking": {
+    "title": "Новая запись",
+    "select_date_time": "Выберите дату и время",
+    "dentist": "Стоматолог",
+    "dentist_ph": "Выберите стоматолога",
+    "service": "Услуга",
+    "service_ph": "Выберите услугу",
+    "comment": "Комментарий к записи",
+    "submitting": "Отправка...",
+    "select_patient": "Для создания записи необходимо выбрать пациента",
+    "created": "Запись успешно создана!",
+    "slot_taken": "В это время врач занят. Выберите другое время.",
+    "create_error": "Ошибка при создании записи",
+    "default_service": "Осмотр",
+    "default_doctor": "Врач",
+    "default_specialty": "Стоматолог",
+    "status_planned": "запланирован",
+    "duration_1h": "1 час",
+    "empty": "Пусто",
+    "pick_time": "Укажите время",
+    "comment_placeholder": "Комментарии врачу",
+    "search": "Поиск",
+    "my_doctor": "Мой врач",
+    "no_results": "Нет результатов",
+    "months": {
+      "0": "Январь",
+      "1": "Февраль",
+      "2": "Март",
+      "3": "Апрель",
+      "4": "Май",
+      "5": "Июнь",
+      "6": "Июль",
+      "7": "Август",
+      "8": "Сентябрь",
+      "9": "Октябрь",
+      "10": "Ноябрь",
+      "11": "Декабрь"
+    },
+    "weekdays": {
+      "0": "Пн",
+      "1": "Вт",
+      "2": "Ср",
+      "3": "Чт",
+      "4": "Пт",
+      "5": "Сб",
+      "6": "Вс"
+    }
+  },
+  "auth": {
+    "login": {
+      "welcome": "Добро пожаловать",
+      "subtitle": "Войдите в свой аккаунт и продолжайте работу в цифровой стоматологической платформе GoSmile.",
+      "heading": "Вход в аккаунт",
+      "phone": "Номер телефона",
+      "phone_required": "Введите номер телефона",
+      "phone_invalid": "Неверный формат номера",
+      "password": "Пароль",
+      "password_ph": "Введите пароль",
+      "password_required": "Введите пароль",
+      "password_min": "Минимум 6 символов",
+      "submit": "Войти",
+      "no_account": "Нет аккаунта?",
+      "register": "Зарегистрироваться",
+      "server_error": "Ошибка подключения к серверу"
+    },
+    "register": {
+      "error": "Ошибка регистрации",
+      "welcome": "Создайте аккаунт",
+      "subtitle": "Выберите роль, заполните данные и начните пользоваться GoSmile в нужном режиме.",
+      "eyebrow": "Регистрация",
+      "heading": "Регистрация",
+      "choose_role": "Выберите роль",
+      "full_name": "Полное имя",
+      "full_name_ph": "Иван Иванов",
+      "full_name_required": "Введите полное имя",
+      "name_min": "Минимум 2 символа",
+      "optional": "(необязательно)",
+      "submitting": "Регистрация...",
+      "have_account": "Уже есть аккаунт?"
+    }
+  },
+  "role_page": {
+    "welcome": "Добро пожаловать!",
+    "subtitle": "Выберите вашу роль в системе GoSmile",
+    "im_doctor": "Я врач",
+    "im_patient": "Я пациент",
+    "tagline": "OdontoHub — ваша современная стоматология"
+  },
+  "toast": {
+    "success": "Успешно",
+    "error": "Ошибка",
+    "warning": "Внимание",
+    "info": "Инфо"
+  },
+  "edit_profile": {
+    "title": "Профиль",
+    "change_photo": "Изменить фото",
+    "delete_photo": "Удалить фото",
+    "full_name": "Ф.И.О.",
+    "birth_date": "Дата рождения",
+    "region": "Регион",
+    "default_region": "г. Ташкент",
+    "phone_confirm_label": "Подтверждение номера",
+    "old_number": "Старый номер:",
+    "phone_changed_warning": "Вы изменили номер телефона. Требуется подтверждение.",
+    "phone_unchanged": "Номер не изменён",
+    "change_password": "Сменить пароль"
+  },
+  "map_modal": {
+    "enter_address_first": "Сначала введите адрес",
+    "not_found": "Адрес не найден. Уточните адрес и попробуйте снова.",
+    "search_failed": "Не удалось найти адрес. Проверьте интернет и попробуйте снова.",
+    "find_first": "Сначала найдите адрес через кнопку \"Найти\".",
+    "title": "Выберите адрес на карте",
+    "address": "Адрес",
+    "address_ph": "Введите адрес",
+    "searching": "Поиск...",
+    "find": "Найти",
+    "coordinates": "Координаты"
+  },
+  "service_modal": {
+    "save_failed": "Не удалось сохранить услугу",
+    "edit_title": "Редактировать услугу",
+    "add_title": "Добавить услугу",
+    "name_label": "Название услуги",
+    "name_ph": "Например: Чистка зубов",
+    "price_label": "Цена (UZS)",
+    "create": "Создать"
   }
 }

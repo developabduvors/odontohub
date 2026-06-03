@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { usePatientAppointments, type Appointment } from '@/api/appointments';
 import AddAppointmentModal from './AddAppointmentModal';
@@ -9,14 +10,6 @@ interface AppointmentsSectionProps {
   patientId: number;
   dentistId: number;
 }
-
-const statusLabels: Record<string, string> = {
-  pending: 'Ожидает',
-  confirmed: 'Подтверждён',
-  completed: 'Завершён',
-  cancelled: 'Отменён',
-  moved: 'Перенесён',
-};
 
 const statusColors: Record<string, string> = {
   pending: 'bg-yellow-100 text-yellow-800',
@@ -27,8 +20,17 @@ const statusColors: Record<string, string> = {
 };
 
 const AppointmentsSection = ({ patientId, dentistId }: AppointmentsSectionProps) => {
+  const t = useTranslations();
   const [showAddModal, setShowAddModal] = useState(false);
   const { data: appointments = [], isLoading, error } = usePatientAppointments(patientId);
+
+  const statusLabels: Record<string, string> = {
+    pending: t('patients_modals.statuses.pending'),
+    confirmed: t('patients_modals.statuses.confirmed'),
+    completed: t('patients_modals.statuses.completed'),
+    cancelled: t('patients_modals.statuses.cancelled'),
+    moved: t('patients_modals.statuses.moved'),
+  };
 
   const formatDate = (dateString: string) => {
     const utcString = dateString.endsWith('Z') || dateString.includes('+') ? dateString : dateString + 'Z';
@@ -45,17 +47,17 @@ const AppointmentsSection = ({ patientId, dentistId }: AppointmentsSectionProps)
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold text-gray-800">История приёмов</h2>
+        <h2 className="text-xl font-bold text-gray-800">{t('patients_modals.appointments_section.title')}</h2>
         <button
           onClick={() => setShowAddModal(true)}
           className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
         >
-          + Добавить приём
+          + {t('patients_modals.appointments_section.add')}
         </button>
       </div>
 
       {error && (
-        <div className="bg-red-50 text-red-600 p-4 rounded-lg">Не удалось загрузить приёмы</div>
+        <div className="bg-red-50 text-red-600 p-4 rounded-lg">{t('patients_modals.appointments_section.load_error')}</div>
       )}
 
       {isLoading ? (
@@ -77,7 +79,7 @@ const AppointmentsSection = ({ patientId, dentistId }: AppointmentsSectionProps)
               d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
             />
           </svg>
-          <p className="text-gray-500">Нет записей о приёмах</p>
+          <p className="text-gray-500">{t('patients_modals.appointments_section.empty')}</p>
         </div>
       ) : (
         <div className="space-y-3">
@@ -88,7 +90,7 @@ const AppointmentsSection = ({ patientId, dentistId }: AppointmentsSectionProps)
             >
               <div className="flex justify-between items-start">
                 <div className="flex-1">
-                  <div className="font-semibold text-gray-900">{appointment.service || 'Приём'}</div>
+                  <div className="font-semibold text-gray-900">{appointment.service || t('patients_modals.appointments_section.default_service')}</div>
                   <div className="text-sm text-gray-600 mt-1">{formatDate(appointment.start_time)}</div>
                   {appointment.notes && (
                     <div className="text-sm text-gray-500 mt-1">{appointment.notes}</div>

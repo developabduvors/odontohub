@@ -1,6 +1,7 @@
 'use client';
 
 import { type FC, useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 
 const DentistImg = "/assets/img/photos/Dentist.png";
 
@@ -14,6 +15,7 @@ interface EditProfileModalProps {
 }
 
 const EditProfileModal: FC<EditProfileModalProps> = ({ isOpen, onClose, initialData, onSave, avatar, triggerAvatarUpload }) => {
+    const t = useTranslations();
     const [formData, setFormData] = useState(initialData || {});
     const [originalPhone, setOriginalPhone] = useState('');
     const [phoneChanged, setPhoneChanged] = useState(false);
@@ -57,7 +59,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ isOpen, onClose, initialD
                                 <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="#1D1D2B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </button>
-                        <h2 className="text-2xl md:text-3xl font-black text-[#1D1D2B]">Профиль</h2>
+                        <h2 className="text-2xl md:text-3xl font-black text-[#1D1D2B]">{t('edit_profile.title')}</h2>
                     </div>
 
                     {/* Avatar Section */}
@@ -76,12 +78,12 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ isOpen, onClose, initialD
                                     onClick={triggerAvatarUpload}
                                     className="bg-white text-[#4D71F8] font-bold py-3 px-8 rounded-[20px] shadow-sm hover:shadow-md transition-all active:scale-95 text-sm"
                                 >
-                                    Изменить фото
+                                    {t('edit_profile.change_photo')}
                                 </button>
                                 <button
                                     className="bg-white text-red-600 font-bold py-3 px-8 rounded-[20px] shadow-sm hover:shadow-md transition-all active:scale-95 text-sm"
                                 >
-                                    Удалить фото
+                                    {t('edit_profile.delete_photo')}
                                 </button>
                             </div>
                         </div>
@@ -91,7 +93,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ isOpen, onClose, initialD
                     <div className="px-6 space-y-6">
                         {/* F.I.O. */}
                         <div className="space-y-2">
-                            <label className="text-[14px] font-black text-[#1D1D2B] px-4">Ф.И.О.</label>
+                            <label className="text-[14px] font-black text-[#1D1D2B] px-4">{t('edit_profile.full_name')}</label>
                             <input
                                 type="text"
                                 value={formData.name || ''}
@@ -102,7 +104,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ isOpen, onClose, initialD
 
                         {/* Birth Date */}
                         <div className="space-y-2">
-                            <label className="text-[14px] font-black text-[#1D1D2B] px-4">Дата рождения</label>
+                            <label className="text-[14px] font-black text-[#1D1D2B] px-4">{t('edit_profile.birth_date')}</label>
                             <input
                                 type="date"
                                 value={formData.birthDate || ''}
@@ -113,7 +115,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ isOpen, onClose, initialD
 
                         {/* Phone */}
                         <div className="space-y-2">
-                            <label className="text-[14px] font-black text-[#1D1D2B] px-4">Номер телефона</label>
+                            <label className="text-[14px] font-black text-[#1D1D2B] px-4">{t('auth.login.phone')}</label>
                             <input
                                 type="text"
                                 value={formData.phone || ''}
@@ -124,10 +126,10 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ isOpen, onClose, initialD
 
                         {/* Region */}
                         <div className="space-y-2">
-                            <label className="text-[14px] font-black text-[#1D1D2B] px-4">Регион</label>
+                            <label className="text-[14px] font-black text-[#1D1D2B] px-4">{t('edit_profile.region')}</label>
                             <input
                                 type="text"
-                                value={formData.address || 'г. Ташкент'}
+                                value={formData.address || t('edit_profile.default_region')}
                                 onChange={(e) => handleChange('address', e.target.value)}
                                 className="w-full bg-[#D9D9D9] border-none rounded-[20px] py-4 px-6 text-lg font-black text-[#1D1D2B] focus:ring-2 focus:ring-blue-500/20"
                             />
@@ -135,18 +137,18 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ isOpen, onClose, initialD
 
                         {/* Confirmation */}
                         <div className="space-y-2">
-                            <label className="text-[14px] font-black text-[#1D1D2B] px-4">Подтверждение номера</label>
+                            <label className="text-[14px] font-black text-[#1D1D2B] px-4">{t('edit_profile.phone_confirm_label')}</label>
                             {phoneChanged ? (
                                 <div className="w-full bg-[#FFF3CD] border-2 border-[#FFC107] rounded-[20px] py-4 px-6">
-                                    <p className="text-sm font-bold text-[#856404] mb-2">Старый номер:</p>
+                                    <p className="text-sm font-bold text-[#856404] mb-2">{t('edit_profile.old_number')}</p>
                                     <p className="text-lg font-black text-[#1D1D2B]">{originalPhone}</p>
                                     <p className="text-xs font-semibold text-[#856404] mt-2">
-                                        Вы изменили номер телефона. Требуется подтверждение.
+                                        {t('edit_profile.phone_changed_warning')}
                                     </p>
                                 </div>
                             ) : (
                                 <div className="w-full bg-[#D9D9D9] border-none rounded-[20px] py-4 px-6 flex items-center justify-center">
-                                    <p className="text-sm font-bold text-gray-500">Номер не изменён</p>
+                                    <p className="text-sm font-bold text-gray-500">{t('edit_profile.phone_unchanged')}</p>
                                 </div>
                             )}
                         </div>
@@ -155,13 +157,13 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ isOpen, onClose, initialD
                     {/* Footer Buttons */}
                     <div className="px-10 mt-12 space-y-4">
                         <button className="w-full bg-[#4D71F8] text-white font-black py-4 rounded-[20px] text-lg shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 transition-all active:scale-[0.98]">
-                            Сменить пароль
+                            {t('edit_profile.change_password')}
                         </button>
                         <button
                             onClick={() => onSave(formData)}
                             className="w-full bg-[#11D76A] text-white font-black py-4 rounded-[20px] text-lg shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/40 transition-all active:scale-[0.98]"
                         >
-                            Сохранить
+                            {t('common.save')}
                         </button>
                     </div>
                 </div>

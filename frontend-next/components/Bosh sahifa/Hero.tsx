@@ -17,7 +17,10 @@ interface HeroProps {
   onSearch?: (query: string) => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ onSearch }) => {
+const 
+
+
+Hero: React.FC<HeroProps> = ({ onSearch }) => {
   const t = useTranslations();
   const router = useRouter();
   const user = useSelector((state: RootState) => state.user.user);

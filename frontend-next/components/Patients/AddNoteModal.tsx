@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { X, Loader2, ChevronDown, Plus, Phone } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useAllPatients, useCreatePatient } from '@/api/profile';
 import { toast } from '@/components/Shared/Toast';
 
@@ -12,6 +13,7 @@ interface AddNoteModalProps {
 }
 
 const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess }) => {
+    const t = useTranslations();
     const [selectedPatientId, setSelectedPatientId] = useState<number | ''>('');
     const [searchTerm, setSearchTerm] = useState('');
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -51,12 +53,6 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
         });
     }, [patients, searchTerm]);
 
-    const selectedPatientName = useMemo(() => {
-        if (!selectedPatientId || !patients || !Array.isArray(patients)) return '';
-        const patient = patients.find((p: any) => p.id === selectedPatientId);
-        return patient?.full_name || '';
-    }, [selectedPatientId, patients]);
-
     // Ensure dropdown stays open while typing
     useEffect(() => {
         if (searchTerm.length > 0 && !selectedPatientId && !showQuickAdd) {
@@ -75,9 +71,9 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
             setSearchTerm(patient.full_name);
             setShowQuickAdd(false);
             setIsDropdownOpen(false);
-            toast.success('Янги бемор қўшилди');
+            toast.success(t('patients_modals.note.toast_added'));
         } catch (error: any) {
-            toast.error(error?.response?.data?.detail || 'Хатолик юз берди');
+            toast.error(error?.response?.data?.detail || t('patients_modals.note.toast_error'));
         }
     };
 
@@ -96,9 +92,9 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
         if (!finalId || !note.trim()) {
             if (!finalId && searchTerm.trim()) {
                 setShowQuickAdd(true);
-                toast.info('Бемор топилмади. Телефон рақам киритинг.');
+                toast.info(t('patients_modals.note.toast_not_found'));
             } else {
-                toast.warning('Илтимос, беморни танланг ва эслатмани киритинг');
+                toast.warning(t('patients_modals.note.toast_select'));
             }
             return;
         }
@@ -110,9 +106,9 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
             setSearchTerm('');
             setNote('');
             onClose();
-            toast.success('Заметка муваффақиятли қўшилди');
+            toast.success(t('patients_modals.note.toast_note_added'));
         } catch (error) {
-            toast.error("Хатолик юз берди");
+            toast.error(t('patients_modals.note.toast_error'));
         } finally {
             setIsSubmitting(false);
         }
@@ -137,19 +133,19 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
                 </button>
 
                 <h2 className="text-2xl md:text-3xl font-black text-[#1a1f36] mb-8">
-                    Новая заметка
+                    {t('patients_modals.note.title')}
                 </h2>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Patient Selection Row */}
                     <div className="relative" ref={dropdownRef}>
                         <label className="block text-sm font-bold text-gray-600 mb-2 ml-1">
-                            Пациент <span className="text-red-500">*</span>
+                            {t('patients_modals.note.patient')} <span className="text-red-500">*</span>
                         </label>
                         <div className="relative">
                             <input
                                 type="text"
-                                placeholder="Беморни танланг..."
+                                placeholder={t('patients_modals.note.patient_ph')}
                                 value={searchTerm}
                                 onChange={(e) => {
                                     setSearchTerm(e.target.value);
@@ -190,13 +186,13 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
                                             </div>
                                             <div className="flex-1 min-w-0">
                                                 <p className="font-bold text-[#1a1f36] truncate">{p.full_name}</p>
-                                                <p className="text-xs text-gray-400">{p.phone || 'Рақамсиз'}</p>
+                                                <p className="text-xs text-gray-400">{p.phone || t('patients_modals.note.no_phone')}</p>
                                             </div>
                                         </div>
                                     ))
                                 ) : (
                                     <div className="px-6 py-6 text-center">
-                                        <p className="text-gray-400 font-bold mb-3">Бемор топилмади</p>
+                                        <p className="text-gray-400 font-bold mb-3">{t('patients_modals.note.no_patient')}</p>
                                         {searchTerm.trim().length > 0 && (
                                             <button
                                                 type="button"
@@ -204,7 +200,7 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
                                                 className="w-full py-3 bg-[#4f6bff] text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#3d56d5] transition-all"
                                             >
                                                 <Plus size={18} />
-                                                Янги қўшиш
+                                                {t('patients_modals.note.add_new')}
                                             </button>
                                         )}
                                     </div>
@@ -215,13 +211,13 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
                         {showQuickAdd && (
                             <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-[24px] shadow-2xl border border-gray-100 z-100 p-6 animate-in slide-in-from-top-2 duration-200">
                                 <h3 className="font-bold text-[#1a1f36] mb-4 flex items-center gap-2">
-                                    <Plus size={18} /> Янги бемор қўшиш
+                                    <Plus size={18} /> {t('patients_modals.note.quick_add_title')}
                                 </h3>
                                 <div className="space-y-4">
                                     <div className="relative">
                                         <input
                                             type="tel"
-                                            placeholder="Telefon raqami"
+                                            placeholder={t('patients_modals.note.phone_ph')}
                                             value={newPatientPhone}
                                             onChange={(e) => setNewPatientPhone(e.target.value)}
                                             className="w-full h-14 bg-[#efefef] rounded-[15px] px-10 text-lg font-bold text-[#1a1f36] border-none focus:ring-2 focus:ring-[#4f6bff]/20 outline-none"
@@ -234,7 +230,7 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
                                             onClick={() => setShowQuickAdd(false)}
                                             className="flex-1 py-3 bg-gray-100 text-gray-500 font-bold rounded-[15px] hover:bg-gray-200"
                                         >
-                                            Bekor qilish
+                                            {t('common.cancel')}
                                         </button>
                                         <button
                                             type="button"
@@ -243,7 +239,7 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
                                             className="flex-2 py-3 bg-[#4f6bff] text-white font-bold rounded-[15px] hover:bg-[#3d56d5] disabled:opacity-50 flex items-center justify-center gap-2"
                                         >
                                             {createPatient.isPending && <Loader2 size={18} className="animate-spin" />}
-                                            Qo&apos;shish
+                                            {t('common.add')}
                                         </button>
                                     </div>
                                 </div>
@@ -254,12 +250,12 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
                     {/* Note */}
                     <div>
                         <label className="block text-sm font-bold text-gray-600 mb-2 ml-1">
-                            Эслатма <span className="text-red-500">*</span>
+                            {t('patients_modals.note.note_label')} <span className="text-red-500">*</span>
                         </label>
                         <textarea
                             value={note}
                             onChange={(e) => setNote(e.target.value)}
-                            placeholder="Заметка ёзинг..."
+                            placeholder={t('patients_modals.note.note_ph')}
                             rows={5}
                             className="w-full bg-[#efefef] rounded-[20px] p-5 text-base font-bold text-[#1a1f36] border-none focus:ring-2 focus:ring-[#4f6bff]/20 outline-none resize-none"
                             required
@@ -273,7 +269,7 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
                             onClick={onClose}
                             className="flex-1 py-4 bg-gray-100 text-gray-500 font-black rounded-[20px] hover:bg-gray-200 transition-all cursor-pointer"
                         >
-                            Беkor қилиш
+                            {t('common.cancel')}
                         </button>
                         <button
                             type="submit"
@@ -281,7 +277,7 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
                             className="flex-2 py-4 bg-[#00e396] text-white text-lg font-black rounded-[20px] shadow-lg shadow-[#00e396]/20 hover:bg-[#00d08a] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
                         >
                             {isSubmitting && <Loader2 className="w-5 h-5 animate-spin" />}
-                            Қўшиш
+                            {t('patients_modals.note.submit')}
                         </button>
                     </div>
                 </form>

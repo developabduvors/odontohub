@@ -50,22 +50,22 @@ const DoctorProfilePage: FC = () => {
     const [profileData, setProfileData] = useState<ProfileData>({
         phone: user?.phone || '+998 (93) 123 45 67',
         email: user?.email || 'example@gmail.com',
-        address: t('doctor_profile.address_placeholder') || 'Не указано',
-        education: 'ТашПМИ',
+        address: t('doctor_profile.address_placeholder'),
+        education: t('doctor_profile.default_education'),
         clinic: 'OdontoHub',
-        specialization: t('patient.specialties.items.surgeon.name') || 'Хирург',
+        specialization: t('patient.specialties.items.surgeon.name'),
         telegram: '@stom',
         instagram: 'stomatolog.uz',
         whatsapp: user?.phone || '+998 90 123 45 67',
-        schedule: t('doctor_profile.every_day') || 'Каждый день',
+        schedule: t('doctor_profile.every_day'),
         workStart: '08',
         startMinute: '00',
         workEnd: '16',
         endMinute: '00',
-        gender: t('patient_profile.male') || 'Мужчина',
+        gender: t('patient_profile.male'),
         birthDate: '',
         experienceYears: '',
-        name: user?.full_name || 'Врач',
+        name: user?.full_name || t('common.doctor'),
     });
 
     useEffect(() => {
@@ -91,7 +91,7 @@ const DoctorProfilePage: FC = () => {
             workEnd: endHour,
             endMinute,
             birthDate: formatDate(dentistData.birth_date),
-            experienceYears: dentistData.experience_years != null ? `${dentistData.experience_years} лет` : '',
+            experienceYears: dentistData.experience_years != null ? `${dentistData.experience_years} ${t('doctor_profile.experience_suffix')}` : '',
             gender: dentistData.gender === 'male'
                 ? t('patient_profile.male')
                 : dentistData.gender === 'female'

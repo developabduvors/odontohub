@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { MapContainer, TileLayer, CircleMarker, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -47,6 +48,7 @@ export default function MapModal({
   initialLng,
   initialAddress,
 }: MapModalProps) {
+  const t = useTranslations();
   const [coordinates, setCoordinates] = useState({ lat: initialLat, lng: initialLng });
   const [mapAddress, setMapAddress] = useState(initialAddress);
   const [mapLoading, setMapLoading] = useState(false);
@@ -72,7 +74,7 @@ export default function MapModal({
   const handleSearchAddress = async () => {
     const query = mapAddress.trim();
     if (!query) {
-      setMapError('Сначала введите адрес');
+      setMapError(t('map_modal.enter_address_first'));
       return;
     }
 
@@ -84,7 +86,7 @@ export default function MapModal({
       );
       const data = await response.json();
       if (!Array.isArray(data) || data.length === 0) {
-        setMapError('Адрес не найден. Уточните адрес и попробуйте снова.');
+        setMapError(t('map_modal.not_found'));
         return;
       }
 
@@ -94,7 +96,7 @@ export default function MapModal({
       });
       setMapAddress(data[0].display_name || query);
     } catch {
-      setMapError('Не удалось найти адрес. Проверьте интернет и попробуйте снова.');
+      setMapError(t('map_modal.search_failed'));
     } finally {
       setMapLoading(false);
     }
@@ -115,7 +117,7 @@ export default function MapModal({
     }
 
     if (!finalAddress) {
-      setMapError('Сначала найдите адрес через кнопку "Найти".');
+      setMapError(t('map_modal.find_first'));
       return;
     }
 
@@ -126,7 +128,7 @@ export default function MapModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
       <div className="w-full max-w-2xl overflow-hidden rounded-3xl bg-white shadow-2xl">
         <div className="flex items-center justify-between border-b p-4">
-          <h2 className="text-xl font-bold">Выберите адрес на карте</h2>
+          <h2 className="text-xl font-bold">{t('map_modal.title')}</h2>
           <button onClick={onClose} className="rounded-full p-2 transition-colors hover:bg-gray-100">
             <X className="h-5 w-5" />
           </button>
@@ -145,25 +147,25 @@ export default function MapModal({
         </div>
 
         <div className="border-t p-4">
-          <label className="mb-2 block text-sm text-gray-600">Адрес</label>
+          <label className="mb-2 block text-sm text-gray-600">{t('map_modal.address')}</label>
           <div className="flex gap-2">
             <input
               type="text"
               value={mapAddress}
               onChange={(e) => setMapAddress(e.target.value)}
               className="h-12 w-full rounded-2xl border-2 border-gray-200 bg-gray-50 px-4 text-base font-semibold focus:border-blue-400 focus:outline-none"
-              placeholder="Введите адрес"
+              placeholder={t('map_modal.address_ph')}
             />
             <button
               onClick={handleSearchAddress}
               disabled={mapLoading}
               className="h-12 rounded-2xl bg-blue-600 px-4 text-sm font-bold text-white transition-colors hover:bg-blue-700 disabled:opacity-60"
             >
-              {mapLoading ? 'Поиск...' : 'Найти'}
+              {mapLoading ? t('map_modal.searching') : t('map_modal.find')}
             </button>
           </div>
           {mapError ? <p className="mt-2 text-xs text-red-500">{mapError}</p> : null}
-          <p className="mt-2 text-xs text-gray-500">Координаты: {coordinates.lat.toFixed(6)}, {coordinates.lng.toFixed(6)}</p>
+          <p className="mt-2 text-xs text-gray-500">{t('map_modal.coordinates')}: {coordinates.lat.toFixed(6)}, {coordinates.lng.toFixed(6)}</p>
         </div>
 
         <div className="flex gap-3 border-t p-4">
@@ -171,13 +173,13 @@ export default function MapModal({
             onClick={onClose}
             className="flex-1 rounded-2xl bg-gray-100 px-6 py-2.5 font-bold text-gray-700 transition-colors hover:bg-gray-200"
           >
-            Отмена
+            {t('common.cancel')}
           </button>
           <button
             onClick={handleConfirm}
             className="flex-1 rounded-2xl bg-blue-600 px-6 py-2.5 font-bold text-white transition-colors hover:bg-blue-700"
           >
-            Подтвердить
+            {t('common.confirm')}
           </button>
         </div>
       </div>

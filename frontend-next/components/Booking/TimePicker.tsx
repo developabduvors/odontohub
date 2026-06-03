@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslations } from 'next-intl';
 
 interface TimePickerProps {
     selectedTime: string;
@@ -10,6 +11,7 @@ interface TimePickerProps {
 const TimePicker: React.FC<TimePickerProps> = ({ selectedTime, onTimeChange }) => {
     // Mock time logic - mimicking the visual of two inputs or a single time input stylized
     // The screenshot shows "___ : ___", implying Hour : Minute selection.
+    const t = useTranslations('booking');
 
     const [hour, setHour] = React.useState("");
     const [minute, setMinute] = React.useState("");
@@ -42,7 +44,7 @@ const TimePicker: React.FC<TimePickerProps> = ({ selectedTime, onTimeChange }) =
 
     return (
         <div>
-            <h2 className="text-lg font-bold mb-2">Укажите время</h2>
+            <h2 className="text-lg font-bold mb-2">{t('pick_time')}</h2>
             <div className="bg-white rounded-3xl p-4 h-20 shadow-sm flex items-center justify-center gap-1">
                 <input
                     type="text"

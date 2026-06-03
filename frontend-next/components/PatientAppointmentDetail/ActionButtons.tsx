@@ -40,7 +40,7 @@ const ActionButtons = ({ phone, doctorName }: { phone?: string; doctorName?: str
                 const { default: api } = await import('@/api/api');
                 await api.patch(`/appointments/${id}`, { status: 'cancelled' });
             } catch (e) {
-                toast.error('Отменить не удалось');
+                toast.error(t('patient.appointment_detail.cancel_failed'));
                 setShowCancelModal(false);
                 return;
             }
@@ -80,7 +80,7 @@ const ActionButtons = ({ phone, doctorName }: { phone?: string; doctorName?: str
                     });
                 });
             } catch (e) {
-                toast.error('Ошибка при переносе');
+                toast.error(t('patient.appointment_detail.reschedule_failed'));
                 setShowRescheduleModal(false);
                 return;
             }
@@ -100,27 +100,27 @@ const ActionButtons = ({ phone, doctorName }: { phone?: string; doctorName?: str
                     className="w-full bg-[#4E70FF] text-white py-3 sm:py-4 lg:py-5 rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] text-sm sm:text-base lg:text-2xl font-bold shadow-lg shadow-blue-500/20 hover:bg-[#3d5ce0] transition-all active:scale-95 flex items-center justify-center gap-2"
                 >
                     <Video size={20} />
-                    Онлайн консультация
+                    {t('patient.appointment_detail.online_consultation')}
                 </button>
                 <div className="flex gap-3 sm:gap-4 lg:gap-5">
                     <button
                         onClick={() => setShowContactModal(true)}
                         className="flex-1 bg-[#11D76A] text-white py-3 sm:py-4 lg:py-5 rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] text-sm sm:text-base lg:text-2xl font-bold shadow-lg shadow-green-500/20 hover:bg-[#0fc460] transition-all active:scale-95 flex items-center justify-center"
                     >
-                        Связаться
+                        {t('patient.appointment_detail.contact')}
                     </button>
                     <button
                         onClick={() => setShowRescheduleModal(true)}
                         className="flex-1 bg-[#FBBC05] text-white py-3 sm:py-4 lg:py-5 rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] text-sm sm:text-base lg:text-2xl font-bold shadow-lg shadow-yellow-500/20 hover:bg-[#e0a800] transition-all active:scale-95"
                     >
-                        Перенести
+                        {t('patient.appointment_detail.reschedule')}
                     </button>
                 </div>
                 <button
                     onClick={() => setShowCancelModal(true)}
                     className="w-full bg-[#EA4335] hover:bg-[#c0392b] text-white py-3 sm:py-4 lg:py-5 rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] text-sm sm:text-base lg:text-2xl font-bold transition-all active:scale-95 shadow-lg shadow-red-500/30"
                 >
-                    Отменить
+                    {t('patient.appointment_detail.cancel_btn')}
                 </button>
             </div>
 
@@ -136,7 +136,7 @@ const ActionButtons = ({ phone, doctorName }: { phone?: string; doctorName?: str
                                 {t("patient.appointment_detail.cancel_confirm")}
                             </h3>
                             <p className="text-gray-400 text-sm font-medium">
-                                Это действие нельзя отменить
+                                {t('patient.appointment_detail.cannot_undo')}
                             </p>
                         </div>
                         <div className="flex gap-3 mt-8">
@@ -144,13 +144,13 @@ const ActionButtons = ({ phone, doctorName }: { phone?: string; doctorName?: str
                                 onClick={() => setShowCancelModal(false)}
                                 className="flex-1 bg-gray-100 text-gray-700 py-3.5 rounded-2xl font-bold hover:bg-gray-200 transition-all active:scale-95"
                             >
-                                Назад
+                                {t('common.back')}
                             </button>
                             <button
                                 onClick={confirmCancel}
                                 className="flex-1 bg-[#EA4335] text-white py-3.5 rounded-2xl font-bold hover:bg-[#d63b2f] transition-all active:scale-95 shadow-lg shadow-red-500/20"
                             >
-                                Отменить
+                                {t('patient.appointment_detail.cancel_btn')}
                             </button>
                         </div>
                     </div>
@@ -161,10 +161,10 @@ const ActionButtons = ({ phone, doctorName }: { phone?: string; doctorName?: str
             {showRescheduleModal && (
                 <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
                     <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl animate-in fade-in zoom-in duration-200">
-                        <h3 className="text-2xl font-black text-gray-900 mb-6">Перенести приём</h3>
+                        <h3 className="text-2xl font-black text-gray-900 mb-6">{t('patient.appointment_detail.reschedule_title')}</h3>
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-sm font-bold text-gray-500 mb-2">Выберите новую дату и время</label>
+                                <label className="block text-sm font-bold text-gray-500 mb-2">{t('patient.appointment_detail.select_new_datetime')}</label>
                                 <input
                                     type="datetime-local"
                                     value={newDate}
@@ -177,13 +177,13 @@ const ActionButtons = ({ phone, doctorName }: { phone?: string; doctorName?: str
                                     onClick={() => setShowRescheduleModal(false)}
                                     className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-xl font-bold hover:bg-gray-200 transition-all"
                                 >
-                                    Отмена
+                                    {t('common.cancel')}
                                 </button>
                                 <button
                                     onClick={confirmReschedule}
                                     className="flex-1 bg-[#FBBC05] text-white py-3 rounded-xl font-bold hover:bg-[#e0a800] transition-all"
                                 >
-                                    Подтвердить
+                                    {t('common.confirm')}
                                 </button>
                             </div>
                         </div>
@@ -195,16 +195,16 @@ const ActionButtons = ({ phone, doctorName }: { phone?: string; doctorName?: str
             {showContactModal && (
                 <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
                     <div className="bg-white rounded-[32px] p-8 max-w-md w-full shadow-2xl animate-in fade-in zoom-in duration-300">
-                        <h3 className="text-2xl font-black text-gray-900 mb-2">Связаться с врачом</h3>
-                        <p className="text-gray-500 mb-6 font-medium">Выберите удобный способ связи</p>
+                        <h3 className="text-2xl font-black text-gray-900 mb-2">{t('patient.appointment_detail.contact_doctor')}</h3>
+                        <p className="text-gray-500 mb-6 font-medium">{t('patient.appointment_detail.choose_contact_method')}</p>
                         <div className="space-y-4">
                             <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100 flex items-center justify-between">
-                                <span className="text-xl font-bold text-gray-900">{phone || "Номер не указан"}</span>
+                                <span className="text-xl font-bold text-gray-900">{phone || t('patient.appointment_detail.phone_not_specified')}</span>
                                 <button
                                     onClick={handleCopy}
                                     className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${copied ? 'bg-green-100 text-green-600' : 'bg-blue-100 text-blue-600 hover:bg-blue-200'}`}
                                 >
-                                    {copied ? "Скопировано!" : "Копировать"}
+                                    {copied ? t('patient.appointment_detail.copied') : t('patient.appointment_detail.copy')}
                                 </button>
                             </div>
                             <div className="flex gap-3 pt-2">
@@ -212,14 +212,14 @@ const ActionButtons = ({ phone, doctorName }: { phone?: string; doctorName?: str
                                     onClick={() => setShowContactModal(false)}
                                     className="flex-1 bg-gray-100 text-gray-700 py-4 rounded-2xl font-bold hover:bg-gray-200 transition-all active:scale-95"
                                 >
-                                    Отмена
+                                    {t('common.cancel')}
                                 </button>
                                 {phone && (
                                     <a
                                         href={`tel:${phone}`}
                                         className="flex-[3] bg-[#11D76A] text-white py-4 rounded-2xl font-bold hover:bg-[#0fc460] transition-all active:scale-95 flex items-center justify-center shadow-lg shadow-green-500/20 text-lg"
                                     >
-                                        Позвонить
+                                        {t('patient.appointment_detail.call')}
                                     </a>
                                 )}
                             </div>

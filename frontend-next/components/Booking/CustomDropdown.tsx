@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { FaChevronDown, FaSearch } from "react-icons/fa";
+import { useTranslations } from 'next-intl';
 
 interface CustomDropdownProps {
     value: string;
@@ -18,6 +19,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
     placeholder = "Select...",
     type = 'default'
 }) => {
+    const t = useTranslations('booking');
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -69,7 +71,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
                                 <input
                                     type="text"
                                     className="flex-1 outline-none text-gray-700 placeholder-gray-400 bg-transparent"
-                                    placeholder="Поиск"
+                                    placeholder={t('search')}
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                     autoFocus
@@ -93,13 +95,13 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
                                             <span className="font-semibold text-base">{option.label}</span>
                                             {value === option.value && (
                                                 <span className="text-sm font-medium bg-white/20 px-3 py-1 rounded-lg">
-                                                    Мой врач
+                                                    {t('my_doctor')}
                                                 </span>
                                             )}
                                         </div>
                                     ))
                                 ) : (
-                                    <div className="text-center text-gray-500 py-4">Нет результатов</div>
+                                    <div className="text-center text-gray-500 py-4">{t('no_results')}</div>
                                 )}
                             </div>
                         </div>
