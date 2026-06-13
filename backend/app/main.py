@@ -35,6 +35,7 @@ app.add_middleware(
         "https://odontohub-app.netlify.app",
         "https://statuesque-bonbon-133025.netlify.app",
         "https://gosmile.netlify.app",
+        "https://odontohubb.netlify.app",
         "https://odontohub-frontend.vercel.app",
     ],
     # Vercel generates a unique subdomain per preview deployment; allow them all.
@@ -59,6 +60,7 @@ ALLOWED_ORIGINS = [
     "https://odontohub-app.netlify.app",
     "https://statuesque-bonbon-133025.netlify.app",
     "https://gosmile.netlify.app",
+    "https://odontohubb.netlify.app",
     "https://odontohub-frontend.vercel.app",
 ]
 
