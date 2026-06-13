@@ -234,7 +234,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ onBack }) => {
                                 {day.isWeekend ? (
                                     <div className="text-center text-white font-medium text-[8px] md:text-sm leading-tight">
                                         <span className="hidden md:inline">{t('appointments.month_view.weekend')}</span>
-                                        <span className="md:hidden">Вых.</span>
+                                        <span className="md:hidden">{t('appointments.month_view.weekend_short')}</span>
                                     </div>
                                 ) : (
                                     (day.isCurrentMonth || day.isNextMonth) && !day.isWeekend && day.appointments > 0 ? (

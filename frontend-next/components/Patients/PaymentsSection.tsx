@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import {
   usePatientPayments,
@@ -15,6 +16,7 @@ interface PaymentsSectionProps {
 }
 
 const PaymentsSection = ({ patientId }: PaymentsSectionProps) => {
+  const t = useTranslations();
   const [showAddModal, setShowAddModal] = useState(false);
   const [updatingPaymentId, setUpdatingPaymentId] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -26,6 +28,7 @@ const PaymentsSection = ({ patientId }: PaymentsSectionProps) => {
   const payments = paymentsQuery.data ?? [];
   const stats = statsQuery.data ?? { total_amount: 0, total_paid: 0, total_debt: 0 };
   const loading = paymentsQuery.isLoading || statsQuery.isLoading;
+  const sum = t('patients_modals.payments_section.sum');
 
   const handleMarkAsPaid = async (payment: Payment) => {
     try {
@@ -37,7 +40,7 @@ const PaymentsSection = ({ patientId }: PaymentsSectionProps) => {
       });
     } catch (err) {
       console.error('Error updating payment:', err);
-      setError('Не удалось обновить статус платежа');
+      setError(t('patients_modals.payments_section.update_error'));
     } finally {
       setUpdatingPaymentId(null);
     }
@@ -56,12 +59,12 @@ const PaymentsSection = ({ patientId }: PaymentsSectionProps) => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold text-gray-800">Оплаты</h2>
+        <h2 className="text-xl font-bold text-gray-800">{t('patients_modals.payments_section.title')}</h2>
         <button
           onClick={() => setShowAddModal(true)}
           className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
         >
-          + Добавить платёж
+          + {t('patients_modals.payments_section.add')}
         </button>
       </div>
 
@@ -69,21 +72,21 @@ const PaymentsSection = ({ patientId }: PaymentsSectionProps) => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4">
-          <div className="text-sm text-green-700 font-medium mb-1">Оплачено</div>
+          <div className="text-sm text-green-700 font-medium mb-1">{t('patients_modals.payments_section.paid')}</div>
           <div className="text-2xl font-bold text-green-900">
-            {stats.total_paid.toLocaleString()} сум
+            {stats.total_paid.toLocaleString()} {sum}
           </div>
         </div>
         <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-4">
-          <div className="text-sm text-red-700 font-medium mb-1">Задолженность</div>
+          <div className="text-sm text-red-700 font-medium mb-1">{t('patients_modals.payments_section.debt')}</div>
           <div className="text-2xl font-bold text-red-900">
-            {stats.total_debt.toLocaleString()} сум
+            {stats.total_debt.toLocaleString()} {sum}
           </div>
         </div>
         <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4">
-          <div className="text-sm text-blue-700 font-medium mb-1">Всего</div>
+          <div className="text-sm text-blue-700 font-medium mb-1">{t('patients_modals.payments_section.total')}</div>
           <div className="text-2xl font-bold text-blue-900">
-            {stats.total_amount.toLocaleString()} сум
+            {stats.total_amount.toLocaleString()} {sum}
           </div>
         </div>
       </div>
@@ -107,7 +110,7 @@ const PaymentsSection = ({ patientId }: PaymentsSectionProps) => {
               d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
             />
           </svg>
-          <p className="text-gray-500">Нет записей об оплатах</p>
+          <p className="text-gray-500">{t('patients_modals.payments_section.empty')}</p>
         </div>
       ) : (
         <div className="space-y-3">
@@ -138,8 +141,10 @@ const PaymentsSection = ({ patientId }: PaymentsSectionProps) => {
                   )}
                   {payment.paid_amount > 0 && payment.paid_amount < payment.amount && (
                     <div className="text-xs text-yellow-600 mt-1">
-                      Оплачено: {payment.paid_amount.toLocaleString()} из{' '}
-                      {payment.amount.toLocaleString()} сум
+                      {t('patients_modals.payments_section.paid_of', {
+                        paid: payment.paid_amount.toLocaleString(),
+                        amount: payment.amount.toLocaleString(),
+                      })}
                     </div>
                   )}
                 </div>
@@ -154,14 +159,14 @@ const PaymentsSection = ({ patientId }: PaymentsSectionProps) => {
                             : 'text-red-600'
                       }`}
                     >
-                      {payment.amount.toLocaleString()} сум
+                      {payment.amount.toLocaleString()} {sum}
                     </div>
                     <div className="text-xs text-gray-500 mt-1">
                       {payment.status === 'paid'
-                        ? 'Оплачено'
+                        ? t('patients_modals.payments_section.paid')
                         : payment.status === 'partial'
-                          ? 'Частично'
-                          : 'Не оплачено'}
+                          ? t('patients_modals.payments_section.partial')
+                          : t('patients_modals.payments_section.unpaid')}
                     </div>
                   </div>
                   {payment.status !== 'paid' && (
@@ -170,7 +175,7 @@ const PaymentsSection = ({ patientId }: PaymentsSectionProps) => {
                       disabled={updatingPaymentId === payment.id}
                       className="px-3 py-1 bg-green-500 text-white text-xs rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50"
                     >
-                      {updatingPaymentId === payment.id ? 'Обновление...' : 'Отметить оплаченным'}
+                      {updatingPaymentId === payment.id ? t('patients_modals.payments_section.updating') : t('patients_modals.payments_section.mark_paid')}
                     </button>
                   )}
                 </div>

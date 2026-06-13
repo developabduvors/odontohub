@@ -70,7 +70,21 @@
     "no_results": "No results",
     "errors": {
       "something_went_wrong": "Something went wrong"
-    }
+    },
+    "add": "Add",
+    "adding": "Adding...",
+    "view": "View",
+    "upload": "Upload",
+    "initializing": "Initializing...",
+    "search": "Search",
+    "user": "User",
+    "doctor": "Doctor",
+    "patient": "Patient",
+    "not_specified": "Not specified",
+    "confirm": "Confirm",
+    "back": "Back",
+    "no_name": "No name",
+    "in_development": "In development"
   },
   "appointments": {
     "title": "Appointments",
@@ -83,7 +97,8 @@
       "week": "Week",
       "month": "Month",
       "search_placeholder": "name or diagnosis...",
-      "weekend": "Weekend"
+      "weekend": "Weekend",
+      "weekend_short": "Off"
     },
     "statuses": {
       "completed": "Completed",
@@ -100,21 +115,58 @@
       "attach_photo": "Attach Photo",
       "schedule_next": "Schedule Next Appointment",
       "finish": "Finish",
-      "add_payment": "Add Payment"
+      "add_payment": "Add Payment",
+      "visit_primary": "Primary",
+      "visit_repeat": "Repeat",
+      "no_recipe": "No prescription yet",
+      "no_allergies": "No allergies",
+      "payment_amount": "Payment amount (sum)",
+      "price_ph": "E.g.: 250000",
+      "finish_note": "After the treatment is finished, the patient must pay this amount. Payment status will be set to \"Pending\".",
+      "confirm": "Confirm",
+      "err_price": "Enter price",
+      "err_patient_id": "Patient ID not found",
+      "payment_created": "Payment created: {amount} sum"
     },
     "detail": {
       "patient": "Patient",
       "time": "Time",
       "date": "Date",
       "status": "Status",
-      "initial": "Initial"
+      "initial": "Initial",
+      "info_title": "Detailed information",
+      "notes_label": "Notes:",
+      "notes_ph": "Write a note...",
+      "no_notes": "No notes",
+      "online_consult": "Online consultation",
+      "sum": "sum"
     },
     "actions": {
-      "start": "Start appointment"
+      "start": "Start appointment",
+      "reschedule": "Reschedule",
+      "cancel": "Cancel",
+      "finish_appointment": "Finish appointment",
+      "finish_treatment": "Finish treatment"
     },
     "toasts": {
       "notes_saved": "Note saved",
-      "started": "Appointment started"
+      "started": "Appointment started",
+      "error": "Something went wrong",
+      "cancel_confirm": "Are you sure you want to cancel this appointment?",
+      "cancelled": "Appointment cancelled",
+      "cancel_error": "Error cancelling appointment",
+      "rescheduled": "Appointment rescheduled",
+      "reschedule_error": "Error rescheduling appointment",
+      "appointment_finished": "Appointment completed"
+    },
+    "reschedule": {
+      "title": "Reschedule appointment",
+      "date": "Date",
+      "time": "Time"
+    },
+    "empty": {
+      "title": "No appointments",
+      "subtitle": "No appointments for the selected date"
     }
   },
   "modal": {
@@ -128,13 +180,30 @@
     "notes_placeholder": "Write notes or comments",
     "services": {
       "implantation": "Implantation",
-      "consultation": "Consultation"
+      "consultation": "Consultation",
+      "checkup": "Checkup",
+      "xray": "X-ray",
+      "hygiene": "Hygiene",
+      "filling": "Filling",
+      "treatment": "Treatment",
+      "extraction": "Extraction"
     },
     "patient_statuses": {
       "primary": "Primary",
       "recurring": "Recurring"
     },
-    "record": "Add"
+    "record": "Add",
+    "quick_add_title": "Quick add patient",
+    "create_select": "Create and select",
+    "add_new_named": "Add new: \"{term}\"",
+    "unnamed_patient": "Unnamed patient",
+    "no_phone": "No number",
+    "empty_patients": "No patients in your list",
+    "toast_patient_added": "New patient added",
+    "toast_not_found": "Patient not found. Enter a phone number.",
+    "select_patient": "Select a patient",
+    "no_dentist": "Doctor data not found. Please log in again.",
+    "saved": "Appointment saved successfully"
   },
   "settings": {
     "title": "Settings",
@@ -167,7 +236,42 @@
       "backup_number_desc": "Used only for security",
       "delete_account_title": "Delete Account",
       "delete_account_desc": "All data of this account will be permanently deleted",
-      "logout": "Logout"
+      "logout": "Logout",
+      "load_backup_failed": "Failed to load backup number",
+      "passwords_mismatch": "New passwords do not match",
+      "password_min6": "New password must be at least 6 characters",
+      "password_changed": "Password changed successfully",
+      "password_change_error": "Error changing password",
+      "enter_or_clear_backup": "Enter a backup number or clear the field",
+      "backup_too_short": "Backup number is too short",
+      "backup_must_differ": "Backup number must differ from the primary one",
+      "backup_saved": "Backup number saved",
+      "backup_save_failed": "Failed to save backup number",
+      "backup_deleted": "Backup number deleted",
+      "backup_delete_failed": "Failed to delete backup number",
+      "change_password_title": "Change password",
+      "change_password_desc": "Update your password for security",
+      "current_password": "Current password",
+      "current_password_ph": "Enter current password",
+      "new_password": "New password",
+      "new_password_ph": "Enter new password",
+      "confirm_new_password": "Confirm new password",
+      "confirm_new_password_ph": "Repeat new password",
+      "change_password_btn": "Change password",
+      "security_tips_title": "Security tips",
+      "tip1": "Use a separate password for this account.",
+      "tip2": "Add numbers, letters, and special characters.",
+      "tip3": "Do not use the primary and backup number as the same contact.",
+      "tip4": "Periodically update your password and backup number.",
+      "primary_number": "Primary number",
+      "backup_number_label": "Backup number",
+      "backup_number_hint": "The number is used as an additional contact for recovery and confirmation.",
+      "save_backup_btn": "Save backup number",
+      "clear": "Clear",
+      "delete_account_modal_title": "Delete account",
+      "delete_account_confirm": "Do you really want to delete your account? This action cannot be undone.",
+      "deleting": "Deleting...",
+      "delete": "Delete"
     },
     "support_items": {
       "contact": "Contact Support",
@@ -187,7 +291,8 @@
       "badge": "Settings",
       "accent": "Profile and security",
       "description": "Configure notifications, privacy, interface language, and auxiliary settings in the same visual style as the login screens."
-    }
+    },
+    "language_subtitle": "Choose the interface language for the entire platform."
   },
   "patient_profile": {
     "not_found": "Patient not found",
@@ -343,7 +448,8 @@
       "diagnosis": "Diagnosis",
       "status": "Status",
       "age_label": "years",
-      "not_found": "Nothing found"
+      "not_found": "Nothing found",
+      "actions": "Actions"
     },
     "statuses": {
       "treating": "TREATING",
@@ -370,7 +476,9 @@
       "add": "Add",
       "error_required": "Please enter name and phone number",
       "success_added": "Patient added successfully"
-    }
+    },
+    "delete_confirm": "Are you sure you want to delete patient \"{name}\"?",
+    "delete_error": "Error deleting patient"
   },
   "doctor_profile": {
     "save": "Save",
@@ -405,7 +513,11 @@
     "specialization_label": "Specialization",
     "age_label": "Age",
     "address_placeholder": "Enter address",
-    "no_services": "No services added yet"
+    "no_services": "No services added yet",
+    "experience_suffix": "years",
+    "birth_date": "Date of birth",
+    "experience_label": "Experience",
+    "default_education": "TashPMI"
   },
   "dashboard": {
     "search_placeholder": "Search patients, services...",
@@ -467,7 +579,9 @@
         "4": "Thursday",
         "5": "Friday",
         "6": "Saturday"
-      }
+      },
+      "no_records": "No appointments",
+      "no_records_desc": "No appointments for the selected date"
     },
     "quick_actions": {
       "title": "Quick Actions",
@@ -508,6 +622,10 @@
       "badge": "Dashboard",
       "accent": "Workspace",
       "description": "The doctor's main screen with quick access to patients, analytics, notifications, and daily tasks."
+    },
+    "search": {
+      "results_title": "Search results",
+      "not_found": "No patients found for \"{query}\""
     }
   },
   "analytics": {
@@ -640,7 +758,10 @@
       "time_day": "day",
       "time_hours": "h",
       "time_minutes": "min",
-      "time_seconds": "sec"
+      "time_seconds": "sec",
+      "short_days": "d",
+      "short_hours": "h",
+      "short_mins": "m"
     },
     "chats": {
       "title": "Messages",
@@ -702,7 +823,34 @@
       "review_success": "Your rating has been submitted!",
       "send_review": "Send review",
       "thanks_review": "Thank you for your review",
-      "cancel_confirm": "Confirm appointment cancellation"
+      "cancel_confirm": "Confirm appointment cancellation",
+      "service_cost": "Service cost",
+      "review_placeholder": "Review",
+      "send": "Send",
+      "rating_1": "Bad",
+      "rating_2": "Fair",
+      "rating_3": "Good",
+      "rating_4": "Very good",
+      "rating_5": "Excellent!",
+      "direction": "Specialty",
+      "work_experience": "Experience",
+      "rating": "Rating",
+      "go_to": "Go to",
+      "cancel_failed": "Failed to cancel",
+      "reschedule_failed": "Failed to reschedule",
+      "online_consultation": "Online consultation",
+      "contact": "Contact",
+      "reschedule": "Reschedule",
+      "cannot_undo": "This action cannot be undone",
+      "reschedule_title": "Reschedule appointment",
+      "select_new_datetime": "Select new date and time",
+      "contact_doctor": "Contact the doctor",
+      "choose_contact_method": "Choose a convenient contact method",
+      "phone_not_specified": "Number not specified",
+      "copied": "Copied!",
+      "copy": "Copy",
+      "call": "Call",
+      "complain": "Report the doctor"
     },
     "appointments": {
       "title": "Appointments",
@@ -840,6 +988,15 @@
           "followup": "Follow-up"
         }
       }
+    },
+    "doctor_card": {
+      "default_city": "Tashkent",
+      "address_unspecified": "Address not specified",
+      "direction_label": "Specialty",
+      "experience_label": "Experience",
+      "book": "Book",
+      "on_map": "On map",
+      "reviews_suffix": "reviews"
     }
   },
   "finance": {
@@ -856,5 +1013,376 @@
       "accent": "Cards and search",
       "description": "Browse the patient database, apply filters, and add new cards in a unified doctor interface."
     }
+  },
+  "patients_modals": {
+    "statuses": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "moved": "Rescheduled"
+    },
+    "appointment": {
+      "title": "Add appointment",
+      "start_time": "Start time *",
+      "end_time": "End time *",
+      "service": "Service",
+      "service_ph": "E.g.: Consultation",
+      "price": "Price (sum)",
+      "price_ph": "E.g.: 250000",
+      "visit_type": "Visit type",
+      "visit_primary": "First visit",
+      "visit_followup": "Follow-up",
+      "notes": "Notes",
+      "notes_ph": "Additional information...",
+      "err_time": "Specify start and end time",
+      "err_save": "Failed to add appointment"
+    },
+    "payment": {
+      "title": "Add payment",
+      "service": "Service name *",
+      "service_ph": "E.g.: Caries treatment",
+      "amount": "Amount *",
+      "status": "Status *",
+      "status_paid": "Paid",
+      "status_partial": "Partial",
+      "status_unpaid": "Unpaid",
+      "notes": "Notes",
+      "notes_ph": "Additional information...",
+      "err_amount": "Enter a valid amount",
+      "err_service": "Enter service name",
+      "err_save": "Failed to add payment"
+    },
+    "photo": {
+      "title": "Add photo",
+      "name": "Title *",
+      "name_ph": "E.g.: X-ray of tooth 16",
+      "file": "Choose file *",
+      "file_hint": "Max size: 5 MB. Formats: JPG, PNG, GIF",
+      "preview": "Preview:",
+      "category": "Category *",
+      "cat_xray": "X-ray",
+      "cat_treatment": "Treatment",
+      "cat_before": "Before",
+      "cat_after": "After",
+      "cat_other": "Other",
+      "description": "Description",
+      "description_ph": "Additional information...",
+      "err_image": "Please select an image",
+      "err_size": "File size must not exceed 5 MB",
+      "err_file": "Select a file to upload",
+      "err_title": "Enter photo title",
+      "err_save": "Failed to add photo"
+    },
+    "note": {
+      "title": "New note",
+      "patient": "Patient",
+      "patient_ph": "Select a patient...",
+      "no_patient": "Patient not found",
+      "add_new": "Add new",
+      "quick_add_title": "Add new patient",
+      "phone_ph": "Phone number",
+      "note_label": "Note",
+      "note_ph": "Write a note...",
+      "no_phone": "No number",
+      "submit": "Add",
+      "toast_added": "New patient added",
+      "toast_error": "An error occurred",
+      "toast_not_found": "Patient not found. Enter a phone number.",
+      "toast_select": "Please select a patient and enter a note",
+      "toast_note_added": "Note added successfully"
+    },
+    "appointments_section": {
+      "title": "Appointment history",
+      "add": "Add appointment",
+      "load_error": "Failed to load appointments",
+      "empty": "No appointment records",
+      "default_service": "Appointment"
+    },
+    "payments_section": {
+      "title": "Payments",
+      "add": "Add payment",
+      "update_error": "Failed to update payment status",
+      "paid": "Paid",
+      "debt": "Debt",
+      "total": "Total",
+      "empty": "No payment records",
+      "paid_of": "Paid: {paid} of {amount} sum",
+      "sum": "sum",
+      "partial": "Partial",
+      "unpaid": "Unpaid",
+      "updating": "Updating...",
+      "mark_paid": "Mark as paid"
+    },
+    "photos_section": {
+      "title": "Photos and documents",
+      "upload": "Upload",
+      "load_error": "Failed to load photos",
+      "cat_all": "All",
+      "cat_xray": "X-rays",
+      "cat_treatment": "Treatment",
+      "cat_other": "Other",
+      "empty": "No uploaded files",
+      "empty_hint": "Upload X-rays, treatment photos or other documents",
+      "view": "View"
+    }
+  },
+  "doctor_edit": {
+    "title": "Edit",
+    "specialization": "Specialization",
+    "not_selected": "Not selected",
+    "birth_date": "Date of birth",
+    "experience": "Experience",
+    "gender": "Gender",
+    "gender_male": "Male",
+    "gender_female": "Female",
+    "phone": "Phone number",
+    "address": "Address",
+    "address_ph": "Choose on map",
+    "open_map": "Open map",
+    "clinic": "Clinic",
+    "clinic_ph": "Clinic",
+    "schedule": "Work schedule",
+    "work_time": "Working hours",
+    "diploma_title": "Your diploma",
+    "diploma_not_uploaded": "Diploma not uploaded yet",
+    "diploma_upload_new": "Upload new diploma",
+    "diploma_add": "Add diploma copy",
+    "toast_uploading_diploma": "Uploading diploma...",
+    "toast_diploma_success": "Diploma uploaded successfully and sent for review!",
+    "toast_diploma_error": "Error uploading diploma",
+    "toast_profile_success": "Profile updated successfully!",
+    "toast_profile_error": "Error saving profile",
+    "specs": {
+      "surgeon": "Surgeon",
+      "therapist": "Therapist",
+      "orthodontist": "Orthodontist",
+      "orthopedist": "Orthopedist",
+      "periodontist": "Periodontist",
+      "implantologist": "Implantologist",
+      "general": "General dentistry"
+    },
+    "schedules": {
+      "everyday": "Every day",
+      "weekdays": "Weekdays",
+      "weekends": "Weekends",
+      "mon_fri": "Monday - Friday",
+      "custom": "Custom schedule"
+    }
+  },
+  "patient_pages": {
+    "book": "Book",
+    "doctors_intro": {
+      "welcome": "Welcome! 👋",
+      "subtitle": "Choose a dentist from the list below to book an appointment"
+    },
+    "cases": {
+      "title": "Cases",
+      "before": "Before",
+      "after": "After",
+      "before_alt": "Before treatment",
+      "after_alt": "After treatment",
+      "empty": "No cases added yet"
+    },
+    "treatments": {
+      "title": "Treatments",
+      "range": "Period:",
+      "status": "Status:",
+      "appointments": "Appointments:",
+      "payment": "Payment:"
+    },
+    "services_page": {
+      "title": "Services",
+      "load_error": "Failed to load services list",
+      "mock_consultation": "Consultation",
+      "mock_caries": "Caries treatment",
+      "mock_cleaning": "Teeth cleaning"
+    },
+    "calendar": {
+      "appointment_default": "Doctor's appointment",
+      "doctor_default": "Doctor",
+      "specialty": "Dentist",
+      "empty": "You have no appointments yet"
+    },
+    "dentist": {
+      "title": "Dentist profile",
+      "default_name": "Doctor",
+      "not_specified": "Not specified",
+      "gender_male": "Male",
+      "gender_female": "Female",
+      "default_specialty": "Dentist",
+      "diploma_uploaded": "Diploma uploaded",
+      "gender": "Gender",
+      "birth_date": "Date of birth",
+      "experience": "Experience",
+      "services": "Services",
+      "cases": "Cases",
+      "online_consult": "Online consultation",
+      "phone": "Phone",
+      "address": "Address",
+      "clinic": "Clinic",
+      "specialty": "Specialty",
+      "work_hours": "Working hours",
+      "complaint": "Report the doctor"
+    },
+    "profile_pat": {
+      "location": "Location",
+      "default_city": "Tashkent",
+      "default_district": "Yunusabad",
+      "default_address": "Tashkent, Yunusabad"
+    },
+    "checkup": {
+      "rate_review": "Rate and leave a review",
+      "fallback_title": "Examination",
+      "fallback_date": "September 25",
+      "fallback_direction": "Orthodontics",
+      "fallback_experience": "3 years",
+      "empty": "Empty",
+      "currency_sum": "UZS"
+    },
+    "appt_detail": {
+      "default_service": "Consultation",
+      "default_doctor": "Doctor",
+      "default_direction": "Dentistry",
+      "no_tip": "No tips",
+      "no_notes": "No notes",
+      "minutes_suffix": "minutes",
+      "status_planned": "scheduled",
+      "status_completed": "completed",
+      "status_cancelled": "cancelled",
+      "status_upcoming": "Upcoming",
+      "finished": "Appointment completed",
+      "cancelled_msg": "Appointment cancelled",
+      "default_experience": "5 years"
+    }
+  },
+  "booking": {
+    "title": "New appointment",
+    "select_date_time": "Choose date and time",
+    "dentist": "Dentist",
+    "dentist_ph": "Select a dentist",
+    "service": "Service",
+    "service_ph": "Select a service",
+    "comment": "Appointment comment",
+    "submitting": "Submitting...",
+    "select_patient": "You must select a patient to create an appointment",
+    "created": "Appointment created successfully!",
+    "slot_taken": "The doctor is busy at this time. Choose another time.",
+    "create_error": "Error creating appointment",
+    "default_service": "Checkup",
+    "default_doctor": "Doctor",
+    "default_specialty": "Dentist",
+    "status_planned": "scheduled",
+    "duration_1h": "1 hour",
+    "empty": "Empty",
+    "pick_time": "Select time",
+    "comment_placeholder": "Comment to doctor",
+    "search": "Search",
+    "my_doctor": "My doctor",
+    "no_results": "No results",
+    "months": {
+      "0": "January",
+      "1": "February",
+      "2": "March",
+      "3": "April",
+      "4": "May",
+      "5": "June",
+      "6": "July",
+      "7": "August",
+      "8": "September",
+      "9": "October",
+      "10": "November",
+      "11": "December"
+    },
+    "weekdays": {
+      "0": "Mo",
+      "1": "Tu",
+      "2": "We",
+      "3": "Th",
+      "4": "Fr",
+      "5": "Sa",
+      "6": "Su"
+    }
+  },
+  "auth": {
+    "login": {
+      "welcome": "Welcome",
+      "subtitle": "Log in to your account and continue working on the GoSmile digital dentistry platform.",
+      "heading": "Account login",
+      "phone": "Phone number",
+      "phone_required": "Enter your phone number",
+      "phone_invalid": "Invalid number format",
+      "password": "Password",
+      "password_ph": "Enter password",
+      "password_required": "Enter password",
+      "password_min": "At least 6 characters",
+      "submit": "Log in",
+      "no_account": "No account?",
+      "register": "Sign up",
+      "server_error": "Server connection error"
+    },
+    "register": {
+      "error": "Registration error",
+      "welcome": "Create an account",
+      "subtitle": "Choose a role, fill in your details, and start using GoSmile in the mode you need.",
+      "eyebrow": "Register",
+      "heading": "Registration",
+      "choose_role": "Choose a role",
+      "full_name": "Full name",
+      "full_name_ph": "John Smith",
+      "full_name_required": "Enter your full name",
+      "name_min": "At least 2 characters",
+      "optional": "(optional)",
+      "submitting": "Registering...",
+      "have_account": "Already have an account?"
+    }
+  },
+  "role_page": {
+    "welcome": "Welcome!",
+    "subtitle": "Choose your role in the GoSmile system",
+    "im_doctor": "I'm a doctor",
+    "im_patient": "I'm a patient",
+    "tagline": "OdontoHub — your modern dentistry"
+  },
+  "toast": {
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Info"
+  },
+  "edit_profile": {
+    "title": "Profile",
+    "change_photo": "Change photo",
+    "delete_photo": "Delete photo",
+    "full_name": "Full name",
+    "birth_date": "Date of birth",
+    "region": "Region",
+    "default_region": "Tashkent",
+    "phone_confirm_label": "Number confirmation",
+    "old_number": "Old number:",
+    "phone_changed_warning": "You changed your phone number. Confirmation is required.",
+    "phone_unchanged": "Number not changed",
+    "change_password": "Change password"
+  },
+  "map_modal": {
+    "enter_address_first": "Enter an address first",
+    "not_found": "Address not found. Refine the address and try again.",
+    "search_failed": "Failed to find the address. Check your internet and try again.",
+    "find_first": "First find the address using the \"Find\" button.",
+    "title": "Select an address on the map",
+    "address": "Address",
+    "address_ph": "Enter address",
+    "searching": "Searching...",
+    "find": "Find",
+    "coordinates": "Coordinates"
+  },
+  "service_modal": {
+    "save_failed": "Failed to save service",
+    "edit_title": "Edit service",
+    "add_title": "Add service",
+    "name_label": "Service name",
+    "name_ph": "For example: Teeth cleaning",
+    "price_label": "Price (UZS)",
+    "create": "Create"
   }
 }

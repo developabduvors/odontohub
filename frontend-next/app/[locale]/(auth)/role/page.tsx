@@ -2,12 +2,14 @@
 
 import { useEffect } from 'react';
 import { Stethoscope, User } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
 import { paths } from '@/lib/paths';
 import { useAppSelector } from '@/store/hooks';
 
 export default function RolePage() {
   const router = useRouter();
+  const t = useTranslations();
   const role = useAppSelector((s) => s.user.role);
 
   useEffect(() => {
@@ -41,9 +43,9 @@ export default function RolePage() {
         <img src="/assets/img/icons/logo1.png" alt="GoSmile" className="h-20" />
       </div>
 
-      <h1 className="font-heading mb-2 text-3xl font-bold">Добро пожаловать!</h1>
+      <h1 className="font-heading mb-2 text-3xl font-bold">{t('role_page.welcome')}</h1>
       <p className="font-railway mb-12 opacity-80">
-        Выберите вашу роль в системе GoSmile
+        {t('role_page.subtitle')}
       </p>
 
       <div className="grid w-full max-w-md grid-cols-1 gap-4 sm:grid-cols-2">
@@ -55,7 +57,7 @@ export default function RolePage() {
           <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white text-blue-600 shadow-lg transition-transform group-hover:scale-110">
             <Stethoscope size={32} />
           </div>
-          <span className="text-xl font-bold">Я врач</span>
+          <span className="text-xl font-bold">{t('role_page.im_doctor')}</span>
         </button>
 
         <button
@@ -66,12 +68,12 @@ export default function RolePage() {
           <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white text-blue-600 shadow-lg transition-transform group-hover:scale-110">
             <User size={32} />
           </div>
-          <span className="text-xl font-bold">Я пациент</span>
+          <span className="text-xl font-bold">{t('role_page.im_patient')}</span>
         </button>
       </div>
 
       <p className="mt-12 text-sm opacity-60">
-        OdontoHub — ваша современная стоматология
+        {t('role_page.tagline')}
       </p>
     </div>
   );

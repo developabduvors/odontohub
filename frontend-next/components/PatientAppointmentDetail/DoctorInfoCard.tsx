@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { FaArrowRight } from "react-icons/fa";
+import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
 import { paths } from '@/lib/paths';
 import type { Doctor } from "@/types/patient";
@@ -12,6 +13,7 @@ interface DoctorInfoCardProps {
 
 const DoctorInfoCard: React.FC<DoctorInfoCardProps> = ({ doctor }) => {
     const router = useRouter();
+    const t = useTranslations('patient.appointment_detail');
 
     const handleNavigate = () => {
         if (typeof window !== 'undefined') sessionStorage.setItem('gosmile:preview_doctor', JSON.stringify(doctor));
@@ -34,16 +36,16 @@ const DoctorInfoCard: React.FC<DoctorInfoCardProps> = ({ doctor }) => {
             <div className="flex-1 z-10 min-w-0">
                 <h3 className="text-lg sm:text-2xl lg:text-4xl font-bold mb-2 sm:mb-3 lg:mb-4 truncate">{doctor.name}</h3>
                 <div className="space-y-1 sm:space-y-2 lg:space-y-3 text-sm sm:text-base lg:text-2xl opacity-90">
-                    <p className="truncate">Направление: {doctor.direction}</p>
-                    <p className="truncate">Опыт работы: {doctor.experience}</p>
-                    <p>Оценка: {doctor.rating}</p>
+                    <p className="truncate">{t('direction')}: {doctor.direction}</p>
+                    <p className="truncate">{t('work_experience')}: {doctor.experience}</p>
+                    <p>{t('rating')}: {doctor.rating}</p>
                 </div>
 
                 <button
                     onClick={handleNavigate}
                     className="mt-3 sm:mt-5 lg:mt-8 bg-white text-black text-xs sm:text-sm lg:text-xl font-bold py-2 sm:py-3 lg:py-4 px-4 sm:px-6 lg:px-10 rounded-full flex items-center gap-2 lg:gap-3 hover:bg-gray-100 transition-colors active:scale-95"
                 >
-                    Перейти <FaArrowRight size={10} className="sm:size-[12px] lg:size-[18px]" />
+                    {t('go_to')} <FaArrowRight size={10} className="sm:size-[12px] lg:size-[18px]" />
                 </button>
             </div>
         </div>

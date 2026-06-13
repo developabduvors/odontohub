@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Eye, EyeOff, LockKeyhole, Mail, Phone, Stethoscope, User, UserRound } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Link, useRouter } from '@/i18n/navigation';
 import api from '@/api/api';
@@ -24,6 +25,7 @@ interface RegisterFormData {
 
 export default function RegisterView({ role }: RegisterViewProps) {
   const router = useRouter();
+  const t = useTranslations();
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -73,7 +75,7 @@ export default function RegisterView({ role }: RegisterViewProps) {
       }
     } catch (err: any) {
       const detail = err?.response?.data?.detail;
-      toast.error(detail || 'Ошибка регистрации');
+      toast.error(detail || t('auth.register.error'));
     } finally {
       setIsLoading(false);
     }
@@ -103,10 +105,10 @@ export default function RegisterView({ role }: RegisterViewProps) {
               </h1>
               <div className="mx-auto mt-3 h-px w-44 bg-white/80 xl:mx-0" />
               <p className="mt-4 text-4xl leading-none text-white/95" style={{ fontFamily: '"Great Vibes", cursive' }}>
-                Создайте аккаунт
+                {t('auth.register.welcome')}
               </p>
               <p className="mx-auto mt-6 max-w-md text-base leading-7 text-white/82 xl:mx-0" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>
-                Выберите роль, заполните данные и начните пользоваться GoSmile в нужном режиме.
+                {t('auth.register.subtitle')}
               </p>
             </section>
 
@@ -114,17 +116,17 @@ export default function RegisterView({ role }: RegisterViewProps) {
               <div className="rounded-[32px] border border-white/20 bg-white/92 p-6 text-[#18213d] shadow-[0_18px_50px_rgba(27,31,92,0.22)] sm:p-8">
                 <div className="mb-6">
                   <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#7080ff]" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>
-                    Register
+                    {t('auth.register.eyebrow')}
                   </p>
                   <h2 className="mt-2 text-3xl font-bold text-[#141b33]" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>
-                    Регистрация
+                    {t('auth.register.heading')}
                   </h2>
                 </div>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                   <div>
                     <label className="mb-2 block text-sm font-medium text-[#3d4a73]" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>
-                      Выберите роль
+                      {t('auth.register.choose_role')}
                     </label>
                     <div className="grid grid-cols-2 gap-3">
                       <button
@@ -138,7 +140,7 @@ export default function RegisterView({ role }: RegisterViewProps) {
                       >
                         <Stethoscope size={24} className="mb-3" />
                         <p className="text-base font-semibold" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>
-                          Врач
+                          {t('common.doctor')}
                         </p>
                       </button>
 
@@ -153,7 +155,7 @@ export default function RegisterView({ role }: RegisterViewProps) {
                       >
                         <User size={24} className="mb-3" />
                         <p className="text-base font-semibold" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>
-                          Пациент
+                          {t('common.patient')}
                         </p>
                       </button>
                     </div>
@@ -161,18 +163,18 @@ export default function RegisterView({ role }: RegisterViewProps) {
 
                   <div>
                     <label className="mb-2 block text-sm font-medium text-[#3d4a73]" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>
-                      Полное имя
+                      {t('auth.register.full_name')}
                     </label>
                     <div className={`flex items-center rounded-2xl border bg-white px-4 ${errors.full_name ? 'border-red-400' : 'border-[#d9def7]'}`}>
                       <UserRound size={18} className="mr-3 text-[#7080ff]" />
                       <input
                         type="text"
-                        placeholder="Иван Иванов"
+                        placeholder={t('auth.register.full_name_ph')}
                         className="w-full bg-transparent py-3.5 text-base text-[#18213d] outline-none placeholder:text-[#99a2c7]"
                         style={{ fontFamily: '"Space Grotesk", sans-serif' }}
                         {...register('full_name', {
-                          required: 'Введите полное имя',
-                          minLength: { value: 2, message: 'Минимум 2 символа' },
+                          required: t('auth.register.full_name_required'),
+                          minLength: { value: 2, message: t('auth.register.name_min') },
                         })}
                       />
                     </div>
@@ -181,7 +183,7 @@ export default function RegisterView({ role }: RegisterViewProps) {
 
                   <div>
                     <label className="mb-2 block text-sm font-medium text-[#3d4a73]" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>
-                      Номер телефона
+                      {t('auth.login.phone')}
                     </label>
                     <div className={`flex items-center rounded-2xl border bg-white px-4 ${errors.phone ? 'border-red-400' : 'border-[#d9def7]'}`}>
                       <Phone size={18} className="mr-3 text-[#7080ff]" />
@@ -191,10 +193,10 @@ export default function RegisterView({ role }: RegisterViewProps) {
                         className="w-full bg-transparent py-3.5 text-base text-[#18213d] outline-none placeholder:text-[#99a2c7]"
                         style={{ fontFamily: '"Space Grotesk", sans-serif' }}
                         {...register('phone', {
-                          required: 'Введите номер телефона',
+                          required: t('auth.login.phone_required'),
                           validate: (value) => {
                             const cleaned = value.replace(/\s+/g, '');
-                            return /^\+998\d{9}$/.test(cleaned) || 'Неверный формат номера';
+                            return /^\+998\d{9}$/.test(cleaned) || t('auth.login.phone_invalid');
                           },
                         })}
                       />
@@ -204,7 +206,7 @@ export default function RegisterView({ role }: RegisterViewProps) {
 
                   <div>
                     <label className="mb-2 block text-sm font-medium text-[#3d4a73]" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>
-                      Email <span className="text-[#99a2c7]">(необязательно)</span>
+                      Email <span className="text-[#99a2c7]">{t('auth.register.optional')}</span>
                     </label>
                     <div className="flex items-center rounded-2xl border border-[#d9def7] bg-white px-4">
                       <Mail size={18} className="mr-3 text-[#7080ff]" />
@@ -220,18 +222,18 @@ export default function RegisterView({ role }: RegisterViewProps) {
 
                   <div>
                     <label className="mb-2 block text-sm font-medium text-[#3d4a73]" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>
-                      Пароль
+                      {t('auth.login.password')}
                     </label>
                     <div className={`flex items-center rounded-2xl border bg-white px-4 ${errors.password ? 'border-red-400' : 'border-[#d9def7]'}`}>
                       <LockKeyhole size={18} className="mr-3 text-[#7080ff]" />
                       <input
                         type={showPassword ? 'text' : 'password'}
-                        placeholder="Введите пароль"
+                        placeholder={t('auth.login.password_ph')}
                         className="w-full bg-transparent py-3.5 text-base text-[#18213d] outline-none placeholder:text-[#99a2c7]"
                         style={{ fontFamily: '"Space Grotesk", sans-serif' }}
                         {...register('password', {
-                          required: 'Введите пароль',
-                          minLength: { value: 6, message: 'Минимум 6 символов' },
+                          required: t('auth.login.password_required'),
+                          minLength: { value: 6, message: t('auth.login.password_min') },
                         })}
                       />
                       <button
@@ -251,14 +253,14 @@ export default function RegisterView({ role }: RegisterViewProps) {
                     className="w-full rounded-full bg-[linear-gradient(135deg,#ffffff_0%,#eef1ff_100%)] px-6 py-3.5 text-xl font-bold text-[#5667ff] shadow-[0_16px_40px_rgba(30,35,94,0.12)] transition-transform duration-200 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
                     style={{ fontFamily: '"Space Grotesk", sans-serif' }}
                   >
-                    {isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
+                    {isLoading ? t('auth.register.submitting') : t('auth.login.register')}
                   </button>
                 </form>
 
                 <p className="mt-6 text-center text-sm text-[#5f6a92]" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>
-                  Уже есть аккаунт?{' '}
+                  {t('auth.register.have_account')}{' '}
                   <Link href={paths.login} className="font-semibold text-[#5667ff] transition hover:text-[#3f52ff]">
-                    Войти
+                    {t('auth.login.submit')}
                   </Link>
                 </p>
               </div>

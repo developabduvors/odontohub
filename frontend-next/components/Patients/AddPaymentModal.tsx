@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { useCreatePayment } from '@/api/payments';
 
@@ -11,6 +12,7 @@ interface AddPaymentModalProps {
 }
 
 const AddPaymentModal = ({ patientId, onClose, onSuccess }: AddPaymentModalProps) => {
+  const t = useTranslations();
   const createPayment = useCreatePayment(patientId);
   const [formData, setFormData] = useState({
     amount: '',
@@ -25,12 +27,12 @@ const AddPaymentModal = ({ patientId, onClose, onSuccess }: AddPaymentModalProps
     e.preventDefault();
 
     if (!formData.amount || parseFloat(formData.amount) <= 0) {
-      setError('Введите корректную сумму');
+      setError(t('patients_modals.payment.err_amount'));
       return;
     }
 
     if (!formData.service_name.trim()) {
-      setError('Введите название услуги');
+      setError(t('patients_modals.payment.err_service'));
       return;
     }
 
@@ -49,14 +51,14 @@ const AddPaymentModal = ({ patientId, onClose, onSuccess }: AddPaymentModalProps
       onSuccess();
     } catch (err) {
       console.error('Error creating payment:', err);
-      setError('Не удалось добавить платёж');
+      setError(t('patients_modals.payment.err_save'));
     }
   };
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl p-6 w-full max-w-md">
-        <h2 className="text-xl font-bold text-gray-800 mb-4">Добавить платёж</h2>
+        <h2 className="text-xl font-bold text-gray-800 mb-4">{t('patients_modals.payment.title')}</h2>
 
         {error && (
           <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm">{error}</div>
@@ -65,20 +67,20 @@ const AddPaymentModal = ({ patientId, onClose, onSuccess }: AddPaymentModalProps
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Название услуги *
+              {t('patients_modals.payment.service')}
             </label>
             <input
               type="text"
               value={formData.service_name}
               onChange={(e) => setFormData({ ...formData, service_name: e.target.value })}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="Например: Лечение кариеса"
+              placeholder={t('patients_modals.payment.service_ph')}
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Сумма *</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t('patients_modals.payment.amount')}</label>
             <input
               type="number"
               step="0.01"
@@ -91,26 +93,26 @@ const AddPaymentModal = ({ patientId, onClose, onSuccess }: AddPaymentModalProps
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Статус *</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t('patients_modals.payment.status')}</label>
             <select
               value={formData.status}
               onChange={(e) => setFormData({ ...formData, status: e.target.value })}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
-              <option value="paid">Оплачено</option>
-              <option value="partial">Частично</option>
-              <option value="unpaid">Не оплачено</option>
+              <option value="paid">{t('patients_modals.payment.status_paid')}</option>
+              <option value="partial">{t('patients_modals.payment.status_partial')}</option>
+              <option value="unpaid">{t('patients_modals.payment.status_unpaid')}</option>
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Примечания</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t('patients_modals.payment.notes')}</label>
             <textarea
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               rows={3}
-              placeholder="Дополнительная информация..."
+              placeholder={t('patients_modals.payment.notes_ph')}
             />
           </div>
 
@@ -121,14 +123,14 @@ const AddPaymentModal = ({ patientId, onClose, onSuccess }: AddPaymentModalProps
               className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
               disabled={createPayment.isPending}
             >
-              Отмена
+              {t('common.cancel')}
             </button>
             <button
               type="submit"
               className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50"
               disabled={createPayment.isPending}
             >
-              {createPayment.isPending ? 'Добавление...' : 'Добавить'}
+              {createPayment.isPending ? t('common.adding') : t('common.add')}
             </button>
           </div>
         </form>

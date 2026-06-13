@@ -3,6 +3,7 @@
 import { useRouter } from "@/i18n/navigation";
 import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import api from "@/api/api";
 import { toast } from "@/components/Shared/Toast";
 import { paths } from "@/lib/paths";
@@ -17,6 +18,7 @@ interface Service {
 
 const DoctorServicesPage = () => {
     const router = useRouter();
+    const t = useTranslations();
     const [dentist_id, setDentistId] = useState<number | undefined>(undefined);
     const [services, setServices] = useState<Service[]>([]);
     const [loading, setLoading] = useState(true);
@@ -45,11 +47,11 @@ const DoctorServicesPage = () => {
             setServices(response.data);
         } catch (error) {
             console.error('Error fetching services:', error);
-            toast.error('Не удалось загрузить список услуг');
+            toast.error(t('patient_pages.services_page.load_error'));
             setServices([
-                { id: 1, name: "Консультация", price: 50000, currency: "UZS" },
-                { id: 2, name: "Лечение кариеса", price: 150000, currency: "UZS" },
-                { id: 3, name: "Чистка зубов", price: 100000, currency: "UZS" },
+                { id: 1, name: t('patient_pages.services_page.mock_consultation'), price: 50000, currency: "UZS" },
+                { id: 2, name: t('patient_pages.services_page.mock_caries'), price: 150000, currency: "UZS" },
+                { id: 3, name: t('patient_pages.services_page.mock_cleaning'), price: 100000, currency: "UZS" },
             ]);
         } finally {
             setLoading(false);
@@ -71,7 +73,7 @@ const DoctorServicesPage = () => {
                         <ArrowLeft size={24} strokeWidth={2.5} />
                     </button>
                     <h1 className="text-xl md:text-2xl font-black text-[#1D1D2B] text-center flex-1 pr-8">
-                        Услуги
+                        {t('patient_pages.services_page.title')}
                     </h1>
                 </div>
 
@@ -100,7 +102,7 @@ const DoctorServicesPage = () => {
                                             onClick={() => router.push(paths.booking)}
                                             className="bg-[#11D76A] text-white font-bold py-2 px-6 rounded-full text-sm hover:bg-[#0fc460] transition-all active:scale-95"
                                         >
-                                            Записаться
+                                            {t('patient_pages.book')}
                                         </button>
                                     )}
                                 </div>

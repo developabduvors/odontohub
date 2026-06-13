@@ -3,6 +3,7 @@
 import { useRouter } from "@/i18n/navigation";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface CaseItem {
     id: number;
@@ -14,6 +15,7 @@ interface CaseItem {
 
 const DoctorCasesPage = () => {
     const router = useRouter();
+    const t = useTranslations();
 
     // Demo images - in real app, these would come from API
     const [cases] = useState<CaseItem[]>([]);
@@ -29,7 +31,7 @@ const DoctorCasesPage = () => {
                         <ArrowLeft size={24} strokeWidth={2.5} />
                     </button>
                     <h1 className="text-xl md:text-2xl font-black text-[#1D1D2B] text-center flex-1 pr-8">
-                        Кейсы
+                        {t('patient_pages.cases.title')}
                     </h1>
                 </div>
 
@@ -49,23 +51,23 @@ const DoctorCasesPage = () => {
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
                                     <p className="text-xs font-bold text-gray-500 mb-2 uppercase">
-                                        До
+                                        {t('patient_pages.cases.before')}
                                     </p>
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
                                         src={caseItem.beforeImage}
-                                        alt="До лечения"
+                                        alt={t('patient_pages.cases.before_alt')}
                                         className="w-full h-40 object-cover rounded-[16px]"
                                     />
                                 </div>
                                 <div>
                                     <p className="text-xs font-bold text-gray-500 mb-2 uppercase">
-                                        После
+                                        {t('patient_pages.cases.after')}
                                     </p>
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
                                         src={caseItem.afterImage}
-                                        alt="После лечения"
+                                        alt={t('patient_pages.cases.after_alt')}
                                         className="w-full h-40 object-cover rounded-[16px]"
                                     />
                                 </div>
@@ -76,7 +78,7 @@ const DoctorCasesPage = () => {
                     {cases.length === 0 && (
                         <div className="text-center py-12">
                             <p className="text-gray-500 text-lg">
-                                Кейсы пока не добавлены
+                                {t('patient_pages.cases.empty')}
                             </p>
                         </div>
                     )}

@@ -46,13 +46,13 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
     if (!isOpen || !appointment) return null;
 
     const handleCancel = async () => {
-        if (confirm('Вы уверены что хотите отменить этот приём?')) {
+        if (confirm(t('appointments.toasts.cancel_confirm'))) {
             try {
                 await cancelMutation.mutateAsync({ id: appointment.id });
-                onSuccess?.('Приём успешно отменён', 'success');
+                onSuccess?.(t('appointments.toasts.cancelled'), 'success');
                 onClose();
             } catch (error) {
-                onSuccess?.('Ошибка при отмене приёма', 'error');
+                onSuccess?.(t('appointments.toasts.cancel_error'), 'error');
             }
         }
     };
@@ -64,11 +64,11 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
                 start_time: startTime,
                 end_time: endTime
             });
-            onSuccess?.('Приём успешно перенесён', 'success');
+            onSuccess?.(t('appointments.toasts.rescheduled'), 'success');
             setIsRescheduleOpen(false);
             onClose();
         } catch (error) {
-            onSuccess?.('Ошибка при переносе приёма', 'error');
+            onSuccess?.(t('appointments.toasts.reschedule_error'), 'error');
         }
     };
 
@@ -81,7 +81,7 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
             setIsEditingNotes(false);
             toast.success(t('appointments.toasts.notes_saved'));
         } catch (error) {
-            toast.error('Хатолик юз берди');
+            toast.error(t('appointments.toasts.error'));
         }
     };
 
@@ -95,7 +95,7 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
             onClose();
             // Transitions to InProgressView happens via appointments page logic
         } catch (error) {
-            toast.error('Хатолик юз берди');
+            toast.error(t('appointments.toasts.error'));
         }
     };
 
@@ -121,7 +121,7 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
             >
                 {/* Header with Close */}
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-black text-[#1a1f36]">Детальная информация</h2>
+                    <h2 className="text-2xl font-black text-[#1a1f36]">{t('appointments.detail.info_title')}</h2>
                     <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
                         <X size={24} className="text-gray-400" />
                     </button>
@@ -154,7 +154,7 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
                     {/* Notes Section */}
                     <div className="pt-6 border-t border-gray-100">
                         <div className="flex justify-between items-center mb-3">
-                            <span className="text-gray-500 font-bold">Эслатмалар (Заметки):</span>
+                            <span className="text-gray-500 font-bold">{t('appointments.detail.notes_label')}</span>
                             {!isEditingNotes && (
                                 <button
                                     onClick={() => setIsEditingNotes(true)}
@@ -170,7 +170,7 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
                                 <textarea
                                     value={notes}
                                     onChange={(e) => setNotes(e.target.value)}
-                                    placeholder="Заметка ёзинг..."
+                                    placeholder={t('appointments.detail.notes_ph')}
                                     className="w-full h-32 bg-amber-50/50 rounded-2xl p-4 text-[#1a1f36] font-medium border-none focus:ring-2 focus:ring-[#fdbc31]/20 outline-none resize-none"
                                     autoFocus
                                 />
@@ -179,7 +179,7 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
                                         onClick={() => setIsEditingNotes(false)}
                                         className="flex-1 py-3 bg-gray-100 text-gray-500 font-bold rounded-xl hover:bg-gray-200 transition-colors"
                                     >
-                                        Бекор қилиш
+                                        {t('common.cancel')}
                                     </button>
                                     <button
                                         onClick={handleSaveNotes}
@@ -187,13 +187,13 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
                                         className="flex-2 py-3 bg-[#fdbc31] text-white font-black rounded-xl shadow-lg shadow-[#fdbc31]/20 hover:bg-[#e09d15] transition-all flex items-center justify-center gap-2"
                                     >
                                         {updateMutation.isPending ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
-                                        Сақлаш
+                                        {t('common.save')}
                                     </button>
                                 </div>
                             </div>
                         ) : (
                             <p className={`text-[#1a1f36] font-medium italic ${!notes ? 'text-gray-300' : ''}`}>
-                                {notes || "Эслатмалар йўқ"}
+                                {notes || t('appointments.detail.no_notes')}
                             </p>
                         )}
                     </div>
@@ -208,7 +208,7 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
                         </div>
                         {appointment.raw?.price && (
                             <div className="pt-4 border-t border-white/20">
-                                <span className="text-2xl font-black">{appointment.raw.price.toLocaleString()} <span className="text-sm">сум</span></span>
+                                <span className="text-2xl font-black">{appointment.raw.price.toLocaleString()} <span className="text-sm">{t('appointments.detail.sum')}</span></span>
                             </div>
                         )}
                     </div>
@@ -225,7 +225,7 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
                             className="w-full py-5 bg-[#4E70FF] text-white text-xl font-black rounded-[24px] shadow-lg shadow-blue-500/30 hover:bg-[#3d5ce0] transition-all active:scale-[0.98] flex items-center justify-center gap-3"
                         >
                             <Video size={22} />
-                            Онлайн консультация
+                            {t('appointments.detail.online_consult')}
                         </button>
                     )}
 
@@ -246,13 +246,13 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
                                     onClick={() => setIsRescheduleOpen(true)}
                                     className="flex-1 py-5 bg-[#feb019] text-white text-xl font-black rounded-[24px] shadow-lg shadow-[#feb019]/30 hover:bg-[#e09d15] transition-all active:scale-[0.98]"
                                 >
-                                    Перенести
+                                    {t('appointments.actions.reschedule')}
                                 </button>
                                 <button
                                     onClick={handleCancel}
                                     className="flex-1 py-5 bg-[#ff4560] text-white text-xl font-black rounded-[24px] shadow-lg shadow-[#ff4560]/30 hover:bg-[#e03d54] transition-all active:scale-[0.98]"
                                 >
-                                    Отменить
+                                    {t('appointments.actions.cancel')}
                                 </button>
                             </>
                         )}

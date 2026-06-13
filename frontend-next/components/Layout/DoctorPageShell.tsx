@@ -35,28 +35,28 @@ export default function DoctorPageShell({
       <div className="relative z-10 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         <div className="mx-auto max-w-[1440px] rounded-[40px] border border-white/25 bg-white/10 px-4 py-4 shadow-[0_30px_90px_rgba(39,45,116,0.35)] backdrop-blur-[18px] sm:px-6 sm:py-6 lg:px-8 lg:py-8">
           <div className="grid gap-6 xl:grid-cols-[320px_minmax(0,1fr)] xl:items-start">
-            <section className="rounded-[32px] border border-white/18 bg-white/10 p-6 backdrop-blur-md sm:p-7 xl:sticky xl:top-8">
+            <section className="rounded-[28px] border border-white/18 bg-white/10 p-5 backdrop-blur-md sm:rounded-[32px] sm:p-7 xl:sticky xl:top-8">
               <p
-                className="text-sm font-semibold uppercase tracking-[0.22em] text-white/80"
+                className="text-xs font-semibold uppercase tracking-[0.22em] text-white/80 sm:text-sm"
                 style={{ fontFamily: '"Space Grotesk", sans-serif' }}
               >
                 {badge}
               </p>
               <h1
-                className="mt-4 text-4xl font-bold leading-tight text-white sm:text-5xl"
+                className="mt-3 text-3xl font-bold leading-tight text-white sm:mt-4 sm:text-4xl xl:text-5xl"
                 style={{ fontFamily: '"Space Grotesk", sans-serif' }}
               >
                 {title}
               </h1>
               <p
-                className="mt-3 text-3xl leading-none text-white/95"
+                className="mt-2 text-2xl leading-none text-white/95 sm:mt-3 sm:text-3xl"
                 style={{ fontFamily: '"Great Vibes", cursive' }}
               >
                 {accent}
               </p>
-              <div className="mt-5 h-px w-32 bg-white/70" />
+              <div className="mt-4 h-px w-24 bg-white/70 sm:mt-5 sm:w-32" />
               <p
-                className="mt-5 max-w-sm text-sm leading-7 text-white/82 sm:text-base"
+                className="mt-4 max-w-sm text-sm leading-7 text-white/82 sm:mt-5 sm:text-base"
                 style={{ fontFamily: '"Space Grotesk", sans-serif' }}
               >
                 {description}

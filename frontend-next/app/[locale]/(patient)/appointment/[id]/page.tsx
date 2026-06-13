@@ -40,6 +40,20 @@ const PatientAppointmentDetail = () => {
 
     let appointment: AppointmentDetail;
     let isActive = false;
+    let statusCode: 'planned' | 'completed' | 'cancelled' = 'planned';
+    const statusLabel = (code: 'planned' | 'completed' | 'cancelled') =>
+        code === 'completed' ? t('patient_pages.appt_detail.status_completed') :
+        code === 'cancelled' ? t('patient_pages.appt_detail.status_cancelled') :
+        t('patient_pages.appt_detail.status_planned');
+
+    const defaultService = t('patient_pages.appt_detail.default_service');
+    const defaultDoctor = t('patient_pages.appt_detail.default_doctor');
+    const defaultDirection = t('patient_pages.appt_detail.default_direction');
+    const defaultExperience = t('patient_pages.appt_detail.default_experience');
+    const noTip = t('patient_pages.appt_detail.no_tip');
+    const noNotes = t('patient_pages.appt_detail.no_notes');
+    const minutesSuffix = t('patient_pages.appt_detail.minutes_suffix');
+    const notSpecified = t('common.not_specified');
 
     if (isLocalMode) {
         const appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
@@ -53,15 +67,16 @@ const PatientAppointmentDetail = () => {
             const isPast = appDate < today;
 
             isActive = local.status === 'upcoming' && !isPast;
+            statusCode = local.status === "upcoming" ? 'planned' : 'completed';
             appointment = {
-                title: local.service || "Консультация",
+                title: local.service || defaultService,
                 date: local.date,
                 time: local.time,
                 doctor: {
                     id: local.doctor_id,
-                    name: dentist?.full_name || local.doctor_name || "Доктор",
-                    direction: dentist?.specialization || "Стоматология",
-                    experience: "5 лет",
+                    name: dentist?.full_name || local.doctor_name || defaultDoctor,
+                    direction: dentist?.specialization || defaultDirection,
+                    experience: defaultExperience,
                     rating: "4.7",
                     image: DentistImg,
                     phone: dentist?.phone || "+998901234567",
@@ -73,21 +88,22 @@ const PatientAppointmentDetail = () => {
                     work_hours: dentist?.work_hours,
                 },
                 details: {
-                    status: local.status === "upcoming" ? "запланирован" : "завершён",
+                    status: statusLabel(statusCode),
                     date: local.date,
-                    duration: "40 минут",
-                    tip: local.comment || "Нет подсказок",
-                    notes: local.comment || "Нету заметок"
+                    duration: `40 ${minutesSuffix}`,
+                    tip: local.comment || noTip,
+                    notes: local.comment || noNotes
                 },
-                price: local.price ? `${local.price.toLocaleString('ru-RU')} UZS` : "Не указано"
+                price: local.price ? `${local.price.toLocaleString('ru-RU')} UZS` : notSpecified
             };
         } else {
             isActive = false;
+            statusCode = 'completed';
             appointment = {
-                title: "Консультация", date: "", time: "",
-                doctor: { name: "Доктор", direction: "Стоматология", experience: "5 лет", rating: "4.7", image: DentistImg, phone: "" },
-                details: { status: "завершён", date: "", duration: "", tip: "", notes: "" },
-                price: "Не указано"
+                title: defaultService, date: "", time: "",
+                doctor: { name: defaultDoctor, direction: defaultDirection, experience: defaultExperience, rating: "4.7", image: DentistImg, phone: "" },
+                details: { status: statusLabel(statusCode), date: "", duration: "", tip: "", notes: "" },
+                price: notSpecified
             };
         }
     } else if (appointmentData) {
@@ -97,36 +113,37 @@ const PatientAppointmentDetail = () => {
         const now = new Date();
         const isPast = endDate < now;
         isActive = (appointmentData.status === "pending" || appointmentData.status === "confirmed") && !isPast;
+        statusCode = appointmentData.status === "completed" ? 'completed' :
+            appointmentData.status === "cancelled" ? 'cancelled' : 'planned';
         appointment = {
-            title: appointmentData.service || "Консультация",
+            title: appointmentData.service || defaultService,
             date: startDate.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' }),
             time: startDate.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
             doctor: {
-                name: appointmentData.dentist_name || "Доктор",
-                direction: "Стоматология",
-                experience: "5 лет",
+                name: appointmentData.dentist_name || defaultDoctor,
+                direction: defaultDirection,
+                experience: defaultExperience,
                 rating: "4.7",
                 image: DentistImg,
                 phone: "+998901234567"
             },
             details: {
-                status: appointmentData.status === "pending" ? "запланирован" :
-                    appointmentData.status === "completed" ? "завершён" :
-                        appointmentData.status === "cancelled" ? "отменён" : "запланирован",
+                status: statusLabel(statusCode),
                 date: startDate.toLocaleDateString('ru-RU'),
-                duration: `${duration} минут`,
-                tip: appointmentData.notes || "Нет подсказок",
-                notes: appointmentData.notes || "Нету заметок"
+                duration: `${duration} ${minutesSuffix}`,
+                tip: appointmentData.notes || noTip,
+                notes: appointmentData.notes || noNotes
             },
-            price: appointmentData.price ? `${appointmentData.price.toLocaleString('ru-RU')} UZS` : "Не указано"
+            price: appointmentData.price ? `${appointmentData.price.toLocaleString('ru-RU')} UZS` : notSpecified
         };
     } else {
         isActive = false;
+        statusCode = 'completed';
         appointment = {
-            title: "Консультация", date: "", time: "",
-            doctor: { name: "Доктор", direction: "Стоматология", experience: "5 лет", rating: "4.7", image: DentistImg, phone: "" },
-            details: { status: "завершён", date: "", duration: "", tip: "", notes: "" },
-            price: "Не указано"
+            title: defaultService, date: "", time: "",
+            doctor: { name: defaultDoctor, direction: defaultDirection, experience: defaultExperience, rating: "4.7", image: DentistImg, phone: "" },
+            details: { status: statusLabel(statusCode), date: "", duration: "", tip: "", notes: "" },
+            price: notSpecified
         };
     }
 
@@ -153,7 +170,7 @@ const PatientAppointmentDetail = () => {
                 <div className="hidden md:block">
                     <span className={`px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest ${isActive ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-500'
                         }`}>
-                        {isActive ? 'Предстоит' : appointment.details.status}
+                        {isActive ? t('patient_pages.appt_detail.status_upcoming') : appointment.details.status}
                     </span>
                 </div>
             </div>
@@ -174,7 +191,7 @@ const PatientAppointmentDetail = () => {
                         <div>
                             {isActive ? (
                                 <ActionButtons phone={appointment.doctor.phone} doctorName={appointment.doctor.name} />
-                            ) : (appointment.details.status === "завершён" || (appointmentData && new Date(appointmentData.end_time) < new Date() && appointmentData.status !== "cancelled")) ? (
+                            ) : (statusCode === "completed" || (appointmentData && new Date(appointmentData.end_time) < new Date() && appointmentData.status !== "cancelled")) ? (
                                 <div className="space-y-6">
                                     <div className="bg-white rounded-[2.5rem] p-8 shadow-sm border border-gray-50 animate-in fade-in slide-in-from-bottom-4 duration-500">
                                         <h3 className="text-2xl font-black text-[#1D1D2B] mb-2 text-center">{t('patient.appointment_detail.rate_quality')}</h3>
@@ -185,12 +202,12 @@ const PatientAppointmentDetail = () => {
                                         onClick={() => setIsComplaintModalOpen(true)}
                                         className="w-full py-4 rounded-[20px] text-base font-bold transition-all active:scale-95 flex items-center justify-center gap-2 text-red-500 bg-white border border-red-100 hover:bg-red-50 shadow-sm"
                                     >
-                                        Shifokor ustidan shikoyat qilish
+                                        {t('patient.appointment_detail.complain')}
                                     </button>
                                 </div>
                             ) : (
                                 <div className="bg-white rounded-4xl p-6 text-center border border-gray-100 italic text-gray-400 font-bold">
-                                    {appointment.details.status === "отменён" ? "Qabul bekor qilingan" : "Qabul yakunlangan"}
+                                    {statusCode === "cancelled" ? t('patient_pages.appt_detail.cancelled_msg') : t('patient_pages.appt_detail.finished')}
                                 </div>
                             )}
                         </div>
@@ -202,7 +219,7 @@ const PatientAppointmentDetail = () => {
                 isOpen={isComplaintModalOpen}
                 onClose={() => setIsComplaintModalOpen(false)}
                 dentistId={appointmentData?.dentist_id || appointment.doctor.id || 0}
-                dentistName={appointmentData?.dentist_name || appointment.doctor.name || "Доктор"}
+                dentistName={appointmentData?.dentist_name || appointment.doctor.name || defaultDoctor}
             />
         </div>
     );

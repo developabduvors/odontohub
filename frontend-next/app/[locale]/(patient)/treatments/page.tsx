@@ -2,6 +2,7 @@
 
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 interface TreatmentDetail {
     name: string;
@@ -14,6 +15,7 @@ interface TreatmentDetail {
 
 const TreatmentsListPage = () => {
     const router = useRouter();
+    const t = useTranslations();
 
     // Treatments will be loaded from API in future
     const treatments: TreatmentDetail[] = [];
@@ -42,7 +44,7 @@ const TreatmentsListPage = () => {
                     >
                         <ArrowLeft size={24} className="sm:size-[28px] lg:size-[32px]" strokeWidth={2.5} />
                     </button>
-                    <h1 className="text-2xl sm:text-3xl lg:text-5xl font-black text-blue-900 tracking-tight">Лечения</h1>
+                    <h1 className="text-2xl sm:text-3xl lg:text-5xl font-black text-blue-900 tracking-tight">{t('patient_pages.treatments.title')}</h1>
                 </div>
 
                 {/* Treatments List */}
@@ -61,21 +63,21 @@ const TreatmentsListPage = () => {
                             {/* Details Grid */}
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
                                 <div>
-                                    <p className="text-[10px] sm:text-xs lg:text-sm font-bold text-gray-500 mb-1 sm:mb-2">Промежуток:</p>
+                                    <p className="text-[10px] sm:text-xs lg:text-sm font-bold text-gray-500 mb-1 sm:mb-2">{t('patient_pages.treatments.range')}</p>
                                     <p className="text-xs sm:text-sm lg:text-lg font-bold text-gray-900">{treatment.dateRange}</p>
                                 </div>
                                 <div>
-                                    <p className="text-[10px] sm:text-xs lg:text-sm font-bold text-gray-500 mb-1 sm:mb-2">Статус:</p>
+                                    <p className="text-[10px] sm:text-xs lg:text-sm font-bold text-gray-500 mb-1 sm:mb-2">{t('patient_pages.treatments.status')}</p>
                                     <span className={`inline-block px-2 sm:px-3 lg:px-4 py-0.5 sm:py-1 lg:py-1.5 rounded-lg sm:rounded-xl text-[10px] sm:text-xs lg:text-sm font-black ${getStatusColor(treatment.status)}`}>
                                         {treatment.status}
                                     </span>
                                 </div>
                                 <div>
-                                    <p className="text-[10px] sm:text-xs lg:text-sm font-bold text-gray-500 mb-1 sm:mb-2">Приёмов:</p>
+                                    <p className="text-[10px] sm:text-xs lg:text-sm font-bold text-gray-500 mb-1 sm:mb-2">{t('patient_pages.treatments.appointments')}</p>
                                     <p className="text-xs sm:text-sm lg:text-lg font-bold text-gray-900">{treatment.appointments}</p>
                                 </div>
                                 <div>
-                                    <p className="text-[10px] sm:text-xs lg:text-sm font-bold text-gray-500 mb-1 sm:mb-2">Оплата:</p>
+                                    <p className="text-[10px] sm:text-xs lg:text-sm font-bold text-gray-500 mb-1 sm:mb-2">{t('patient_pages.treatments.payment')}</p>
                                     <p className="text-xs sm:text-sm lg:text-lg font-bold text-gray-900">{treatment.payment}</p>
                                 </div>
                             </div>

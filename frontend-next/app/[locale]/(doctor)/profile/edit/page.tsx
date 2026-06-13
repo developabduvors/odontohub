@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { ArrowLeft, MapPin, ChevronDown } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import { useTranslations } from 'next-intl';
 
 import { useRouter } from '@/i18n/navigation';
 import { useDentistProfile, useUpdateDentistProfile, useUploadDiploma } from '@/api/profile';
@@ -11,6 +12,7 @@ import { toast } from '@/components/Shared/Toast';
 const MapModal = dynamic(() => import('@/components/EditDoctorProfile/MapModal'), { ssr: false });
 
 export default function EditDoctorProfilePage() {
+  const t = useTranslations();
   const router = useRouter();
   const { data: dentist, refetch } = useDentistProfile();
   const updateProfile = useUpdateDentistProfile();
@@ -71,8 +73,23 @@ export default function EditDoctorProfilePage() {
     }
   }, [dentist]);
 
-  const specializations = ['Хирург', 'Терапевт', 'Ортодонт', 'Ортопед', 'Пародонтолог', 'Имплантолог', 'Общая стоматология'];
-  const scheduleOptions = ['Каждый день', 'Будние дни', 'Выходные', 'Понедельник - Пятница', 'Индивидуальный график'];
+  // value = stored DB string (kept stable across locales); label = translated display text
+  const specializations = [
+    { value: 'Хирург', label: t('doctor_edit.specs.surgeon') },
+    { value: 'Терапевт', label: t('doctor_edit.specs.therapist') },
+    { value: 'Ортодонт', label: t('doctor_edit.specs.orthodontist') },
+    { value: 'Ортопед', label: t('doctor_edit.specs.orthopedist') },
+    { value: 'Пародонтолог', label: t('doctor_edit.specs.periodontist') },
+    { value: 'Имплантолог', label: t('doctor_edit.specs.implantologist') },
+    { value: 'Общая стоматология', label: t('doctor_edit.specs.general') },
+  ];
+  const scheduleOptions = [
+    { value: 'Каждый день', label: t('doctor_edit.schedules.everyday') },
+    { value: 'Будние дни', label: t('doctor_edit.schedules.weekdays') },
+    { value: 'Выходные', label: t('doctor_edit.schedules.weekends') },
+    { value: 'Понедельник - Пятница', label: t('doctor_edit.schedules.mon_fri') },
+    { value: 'Индивидуальный график', label: t('doctor_edit.schedules.custom') },
+  ];
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -84,14 +101,14 @@ export default function EditDoctorProfilePage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    toast.success('Загрузка диплома...');
+    toast.success(t('doctor_edit.toast_uploading_diploma'));
     try {
       await uploadDiploma.mutateAsync(file);
       await refetch();
-      toast.success('Диплом успешно загружен и отправлен на проверку!');
+      toast.success(t('doctor_edit.toast_diploma_success'));
     } catch (error) {
       console.error('Failed to upload diploma:', error);
-      toast.error('Ошибка при загрузке диплома');
+      toast.error(t('doctor_edit.toast_diploma_error'));
     }
   };
 
@@ -126,11 +143,11 @@ export default function EditDoctorProfilePage() {
 
       await updateProfile.mutateAsync(payload);
       await refetch();
-      toast.success('Профиль успешно обновлён!');
+      toast.success(t('doctor_edit.toast_profile_success'));
       setTimeout(() => router.push('/profile'), 1200);
     } catch (error) {
       console.error('Failed to update profile:', error);
-      toast.error('Ошибка при сохранении профиля');
+      toast.error(t('doctor_edit.toast_profile_error'));
     }
   };
 
@@ -144,22 +161,22 @@ export default function EditDoctorProfilePage() {
           >
             <ArrowLeft className="h-6 w-6" />
           </button>
-          <h1 className="text-3xl font-bold">Редактирование</h1>
+          <h1 className="text-3xl font-bold">{t('doctor_edit.title')}</h1>
         </div>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <div className="space-y-6">
             <div>
-              <label className="mb-2 block text-sm text-gray-600">Специализация</label>
+              <label className="mb-2 block text-sm text-gray-600">{t('doctor_edit.specialization')}</label>
               <div className="relative">
                 <select
                   value={formData.specialization}
                   onChange={(e) => setFormData({ ...formData, specialization: e.target.value })}
                   className="h-14 w-full appearance-none rounded-2xl border-2 border-blue-200 bg-white px-4 text-lg font-semibold focus:border-blue-400 focus:outline-none"
                 >
-                  <option value="">Не выбрано</option>
+                  <option value="">{t('doctor_edit.not_selected')}</option>
                   {specializations.map((spec) => (
-                    <option key={spec} value={spec}>{spec}</option>
+                    <option key={spec.value} value={spec.value}>{spec.label}</option>
                   ))}
                 </select>
                 <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
@@ -168,7 +185,7 @@ export default function EditDoctorProfilePage() {
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               <div>
-                <label className="mb-2 block text-sm text-gray-600">Дата рождения</label>
+                <label className="mb-2 block text-sm text-gray-600">{t('doctor_edit.birth_date')}</label>
                 <input
                   type="date"
                   value={formData.birthDate}
@@ -177,7 +194,7 @@ export default function EditDoctorProfilePage() {
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm text-gray-600">Стаж</label>
+                <label className="mb-2 block text-sm text-gray-600">{t('doctor_edit.experience')}</label>
                 <input
                   type="number"
                   min="0"
@@ -189,16 +206,16 @@ export default function EditDoctorProfilePage() {
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm text-gray-600">Пол</label>
+                <label className="mb-2 block text-sm text-gray-600">{t('doctor_edit.gender')}</label>
                 <div className="relative">
                   <select
                     value={formData.gender}
                     onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
                     className="h-14 w-full appearance-none rounded-2xl border-2 border-blue-200 bg-white px-4 text-lg font-semibold focus:border-blue-400 focus:outline-none"
                   >
-                    <option value="">Не выбрано</option>
-                    <option value="male">Мужской</option>
-                    <option value="female">Женский</option>
+                    <option value="">{t('doctor_edit.not_selected')}</option>
+                    <option value="male">{t('doctor_edit.gender_male')}</option>
+                    <option value="female">{t('doctor_edit.gender_female')}</option>
                   </select>
                   <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                 </div>
@@ -206,7 +223,7 @@ export default function EditDoctorProfilePage() {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm text-gray-600">Телефонный номер</label>
+              <label className="mb-2 block text-sm text-gray-600">{t('doctor_edit.phone')}</label>
               <input
                 type="tel"
                 value={formData.phone}
@@ -217,34 +234,34 @@ export default function EditDoctorProfilePage() {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm text-gray-600">Адрес</label>
+              <label className="mb-2 block text-sm text-gray-600">{t('doctor_edit.address')}</label>
               <div className="group relative">
                 <input
                   type="text"
                   value={formData.address}
                   onClick={() => setIsMapModalOpen(true)}
                   className="h-14 w-full cursor-pointer rounded-2xl border-2 border-blue-200 bg-white px-4 pr-28 text-lg font-semibold transition-colors group-hover:border-blue-300 focus:border-blue-400 focus:outline-none"
-                  placeholder="Выбрать на карте"
+                  placeholder={t('doctor_edit.address_ph')}
                   readOnly
                 />
-                <span className="absolute right-11 top-1/2 -translate-y-1/2 text-xs font-bold text-blue-600">Открыть карту</span>
+                <span className="absolute right-11 top-1/2 -translate-y-1/2 text-xs font-bold text-blue-600">{t('doctor_edit.open_map')}</span>
                 <MapPin className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
               </div>
             </div>
 
             <div>
-              <label className="mb-2 block text-sm text-gray-600">Клиника</label>
+              <label className="mb-2 block text-sm text-gray-600">{t('doctor_edit.clinic')}</label>
               <input
                 type="text"
                 value={formData.clinic}
                 onChange={(e) => setFormData({ ...formData, clinic: e.target.value })}
                 className="h-14 w-full rounded-2xl border-2 border-blue-200 bg-white px-4 text-lg font-semibold focus:border-blue-400 focus:outline-none"
-                placeholder="Клиника"
+                placeholder={t('doctor_edit.clinic_ph')}
               />
             </div>
 
             <div>
-              <label className="mb-2 block text-sm text-gray-600">График работы</label>
+              <label className="mb-2 block text-sm text-gray-600">{t('doctor_edit.schedule')}</label>
               <div className="relative">
                 <select
                   value={formData.schedule}
@@ -252,7 +269,7 @@ export default function EditDoctorProfilePage() {
                   className="h-14 w-full appearance-none rounded-2xl border-2 border-blue-200 bg-white px-4 text-lg font-semibold focus:border-blue-400 focus:outline-none"
                 >
                   {scheduleOptions.map((option) => (
-                    <option key={option} value={option}>{option}</option>
+                    <option key={option.value} value={option.value}>{option.label}</option>
                   ))}
                 </select>
                 <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
@@ -260,7 +277,7 @@ export default function EditDoctorProfilePage() {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm text-gray-600">Время работы</label>
+              <label className="mb-2 block text-sm text-gray-600">{t('doctor_edit.work_time')}</label>
               <div className="flex gap-4">
                 <div className="flex h-14 items-center gap-2 rounded-2xl border-2 border-blue-200 bg-white px-4">
                   <input
@@ -304,12 +321,12 @@ export default function EditDoctorProfilePage() {
               </div>
               <input type="file" ref={fileInputRef} onChange={handleAvatarChange} className="hidden" accept="image/*" />
               <button onClick={() => fileInputRef.current?.click()} className="text-lg font-semibold text-blue-600 hover:underline">
-                Изменить фото
+                {t('doctor_profile.change_photo')}
               </button>
             </div>
 
             <div className="rounded-3xl border-2 border-blue-200 bg-white p-6">
-              <h3 className="mb-4 text-xl font-bold">Ваш диплом</h3>
+              <h3 className="mb-4 text-xl font-bold">{t('doctor_edit.diploma_title')}</h3>
               {dentist?.diploma_photo_url ? (
                 <div className="mb-4">
                   <div className="mb-3 h-48 w-full overflow-hidden rounded-xl border border-gray-200 bg-gray-100">
@@ -319,7 +336,7 @@ export default function EditDoctorProfilePage() {
                 </div>
               ) : (
                 <div className="mb-4 rounded-xl border border-gray-200 bg-gray-50 p-4 text-center text-sm text-gray-500">
-                  Диплом еще не загружен
+                  {t('doctor_edit.diploma_not_uploaded')}
                 </div>
               )}
 
@@ -329,7 +346,7 @@ export default function EditDoctorProfilePage() {
                 disabled={uploadDiploma.isPending}
                 className="w-full rounded-xl bg-blue-50 py-3 font-bold text-blue-600 transition-colors hover:bg-blue-100 disabled:opacity-50"
               >
-                {uploadDiploma.isPending ? 'Загрузка...' : dentist?.diploma_photo_url ? 'Загрузить новый диплом' : 'Добавить копию диплома'}
+                {uploadDiploma.isPending ? t('common.loading') : dentist?.diploma_photo_url ? t('doctor_edit.diploma_upload_new') : t('doctor_edit.diploma_add')}
               </button>
             </div>
 
@@ -374,7 +391,7 @@ export default function EditDoctorProfilePage() {
             disabled={updateProfile.isPending}
             className="rounded-2xl bg-blue-600 px-12 py-4 text-lg font-bold text-white transition-colors hover:bg-blue-700 disabled:opacity-50"
           >
-            {updateProfile.isPending ? 'Сохранение...' : 'Сохранить'}
+            {updateProfile.isPending ? t('common.saving') : t('common.save')}
           </button>
         </div>
       </div>

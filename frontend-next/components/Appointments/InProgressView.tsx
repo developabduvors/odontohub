@@ -55,9 +55,9 @@ const InProgressView: React.FC<InProgressViewProps> = ({ onBack, appointment }) 
         try {
             await updateMutation.mutateAsync({ id: appointment.id, notes });
             setIsEditingNotes(false);
-            toast.success('Заметка сақланди');
+            toast.success(t('appointments.toasts.notes_saved'));
         } catch {
-            toast.error('Хатолик юз берди');
+            toast.error(t('appointments.toasts.error'));
         }
     };
 
@@ -66,7 +66,7 @@ const InProgressView: React.FC<InProgressViewProps> = ({ onBack, appointment }) 
         try {
             await updateMutation.mutateAsync({ id: appointment.id, visit_type: vt });
         } catch {
-            toast.error('Хатолик юз берди');
+            toast.error(t('appointments.toasts.error'));
         }
     };
 
@@ -74,10 +74,10 @@ const InProgressView: React.FC<InProgressViewProps> = ({ onBack, appointment }) 
     const handleFinishAppointment = async () => {
         try {
             await updateMutation.mutateAsync({ id: appointment.id, status: 'completed' });
-            toast.success('Қабул тугатилди');
+            toast.success(t('appointments.toasts.appointment_finished'));
             onBack();
         } catch {
-            toast.error('Хатолик юз берди');
+            toast.error(t('appointments.toasts.error'));
         }
     };
 
@@ -85,11 +85,11 @@ const InProgressView: React.FC<InProgressViewProps> = ({ onBack, appointment }) 
     const handleFinishTreatment = async () => {
         const amount = parseFloat(treatmentPrice);
         if (!amount || amount <= 0) {
-            toast.error('Narxni kiriting');
+            toast.error(t('appointments.progress.err_price'));
             return;
         }
         if (!patientId) {
-            toast.error('Bemor ID topilmadi');
+            toast.error(t('appointments.progress.err_patient_id'));
             return;
         }
         setIsFinishing(true);
@@ -103,11 +103,11 @@ const InProgressView: React.FC<InProgressViewProps> = ({ onBack, appointment }) 
                 status: 'pending',
                 notes: `Davolanish tugallandi: ${appointment.service}`,
             });
-            toast.success(`To'lov yaratildi: ${amount.toLocaleString()} so'm`);
+            toast.success(t('appointments.progress.payment_created', { amount: amount.toLocaleString() }));
             setShowFinishModal(false);
             onBack();
         } catch {
-            toast.error('Хатолик юз берди');
+            toast.error(t('appointments.toasts.error'));
         } finally {
             setIsFinishing(false);
         }
@@ -159,7 +159,7 @@ const InProgressView: React.FC<InProgressViewProps> = ({ onBack, appointment }) 
                                     : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
                             }`}
                         >
-                            Первичный
+                            {t('appointments.progress.visit_primary')}
                         </button>
                         <button
                             onClick={() => handleVisitTypeChange('follow_up')}
@@ -169,7 +169,7 @@ const InProgressView: React.FC<InProgressViewProps> = ({ onBack, appointment }) 
                                     : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
                             }`}
                         >
-                            Повторный
+                            {t('appointments.progress.visit_repeat')}
                         </button>
                     </div>
                 </div>
@@ -192,7 +192,7 @@ const InProgressView: React.FC<InProgressViewProps> = ({ onBack, appointment }) 
                         <h4 className="text-2xl font-black text-[#1a1f36] mb-4">{t('appointments.progress.recipe')}</h4>
                         <div className="flex items-center gap-3 text-lg font-bold text-gray-300 italic">
                             <div className="w-2 h-2 bg-gray-200 rounded-full"></div>
-                            <span>Ҳозирча рецепт йўқ</span>
+                            <span>{t('appointments.progress.no_recipe')}</span>
                         </div>
                         <button className="absolute bottom-6 right-6 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 hover:bg-[#4f6bff] hover:text-white transition-all cursor-pointer">
                             <Plus className="w-5 h-5" />
@@ -217,21 +217,21 @@ const InProgressView: React.FC<InProgressViewProps> = ({ onBack, appointment }) 
                                 <textarea
                                     value={notes}
                                     onChange={(e) => setNotes(e.target.value)}
-                                    placeholder="Заметқа ёзинг..."
+                                    placeholder={t('appointments.detail.notes_ph')}
                                     className="w-full h-24 bg-amber-50/50 rounded-2xl p-4 text-[#1a1f36] font-bold border-none focus:ring-2 focus:ring-[#fdbc31]/20 outline-none resize-none"
                                     autoFocus
                                 />
                             ) : (
                                 <div className="flex items-start gap-3 text-lg font-medium text-[#1a1f36] italic">
                                     <div className="w-2 h-2 bg-[#fdbc31] rounded-full mt-2.5 shrink-0"></div>
-                                    <p className={notes ? "" : "text-gray-300"}>{notes || "Эслатмалар йўқ"}</p>
+                                    <p className={notes ? "" : "text-gray-300"}>{notes || t('appointments.detail.no_notes')}</p>
                                 </div>
                             )}
                         </div>
                         {isEditingNotes && (
                             <div className="mt-4 flex gap-2">
                                 <button onClick={() => setIsEditingNotes(false)} className="px-4 py-2 text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors">
-                                    Бекор қилиш
+                                    {t('common.cancel')}
                                 </button>
                                 <button
                                     onClick={handleSaveNotes}
@@ -239,7 +239,7 @@ const InProgressView: React.FC<InProgressViewProps> = ({ onBack, appointment }) 
                                     className="flex-1 py-3 bg-[#fdbc31] text-white font-black rounded-xl shadow-lg shadow-[#fdbc31]/20 hover:bg-[#e09d15] transition-all flex items-center justify-center gap-2"
                                 >
                                     {updateMutation.isPending ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
-                                    Сақлаш
+                                    {t('common.save')}
                                 </button>
                             </div>
                         )}
@@ -255,7 +255,7 @@ const InProgressView: React.FC<InProgressViewProps> = ({ onBack, appointment }) 
                         <h4 className="text-2xl font-black text-[#ff3b30] mb-4">{t('appointments.progress.allergies')}</h4>
                         <div className="flex items-center gap-3 text-lg font-bold text-gray-300 italic">
                             <div className="w-2 h-2 bg-gray-200 rounded-full"></div>
-                            <span>Аллергия йўқ</span>
+                            <span>{t('appointments.progress.no_allergies')}</span>
                         </div>
                         <button className="absolute bottom-6 right-6 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 hover:bg-[#4f6bff] hover:text-white transition-all cursor-pointer">
                             <Plus className="w-5 h-5" />
@@ -279,11 +279,11 @@ const InProgressView: React.FC<InProgressViewProps> = ({ onBack, appointment }) 
                         <div className="pt-4 border-t border-white/20 flex justify-between items-end">
                             <span className="text-2xl font-black">
                                 {appointment.raw?.price
-                                    ? `${Number(appointment.raw.price).toLocaleString()} сум`
-                                    : '— сум'}
+                                    ? `${Number(appointment.raw.price).toLocaleString()} ${t('appointments.detail.sum')}`
+                                    : `— ${t('appointments.detail.sum')}`}
                             </span>
                             <span className="text-[12px] font-bold opacity-70 italic">
-                                {visitType === 'primary' ? 'Первичный' : 'Повторный'}
+                                {visitType === 'primary' ? t('appointments.progress.visit_primary') : t('appointments.progress.visit_repeat')}
                             </span>
                         </div>
                     </div>
@@ -310,7 +310,7 @@ const InProgressView: React.FC<InProgressViewProps> = ({ onBack, appointment }) 
                     {updateMutation.isPending
                         ? <Loader2 size={20} className="animate-spin" />
                         : <CheckCircle size={20} />}
-                    Завершить приём
+                    {t('appointments.actions.finish_appointment')}
                 </button>
 
                 {/* Завершить лечение */}
@@ -318,7 +318,7 @@ const InProgressView: React.FC<InProgressViewProps> = ({ onBack, appointment }) 
                     onClick={() => setShowFinishModal(true)}
                     className="flex-1 min-w-[200px] h-16 bg-[#10d16d] text-white text-xl font-black rounded-3xl shadow-lg shadow-[#10d16d]/20 hover:bg-[#0eca69] transition-all active:scale-[0.98] cursor-pointer"
                 >
-                    Завершить лечение
+                    {t('appointments.actions.finish_treatment')}
                 </button>
             </div>
 
@@ -334,30 +334,30 @@ const InProgressView: React.FC<InProgressViewProps> = ({ onBack, appointment }) 
                             <X size={20} />
                         </button>
 
-                        <h3 className="text-2xl font-black text-[#1a1f36] mb-1">Завершить лечение</h3>
+                        <h3 className="text-2xl font-black text-[#1a1f36] mb-1">{t('appointments.actions.finish_treatment')}</h3>
                         <p className="text-gray-400 font-medium mb-6">
                             {appointment.service} · {appointment.patientName}
                         </p>
 
                         <label className="block text-sm font-bold text-gray-500 mb-2">
-                            To&apos;lov summasi (so&apos;m)
+                            {t('appointments.progress.payment_amount')}
                         </label>
                         <input
                             type="number"
                             value={treatmentPrice}
                             onChange={(e) => setTreatmentPrice(e.target.value)}
-                            placeholder="Masalan: 250000"
+                            placeholder={t('appointments.progress.price_ph')}
                             className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-5 py-4 text-2xl font-black text-[#1a1f36] outline-none focus:ring-2 focus:ring-[#10d16d]/30 focus:border-[#10d16d] transition-all mb-2"
                             autoFocus
                         />
                         {treatmentPrice && (
                             <p className="text-sm text-gray-400 mb-6">
-                                = {Number(treatmentPrice).toLocaleString()} so&apos;m
+                                = {Number(treatmentPrice).toLocaleString()} {t('appointments.detail.sum')}
                             </p>
                         )}
 
                         <div className="bg-amber-50 border border-amber-100 rounded-2xl px-4 py-3 mb-6 text-sm text-amber-700 font-medium">
-                            Davolanish tugagandan so&apos;ng bemor ushbu summani to&apos;lashi kerak. To&apos;lov holati &quot;Kutilmoqda&quot; bo&apos;lib qo&apos;yiladi.
+                            {t('appointments.progress.finish_note')}
                         </div>
 
                         <button
@@ -366,7 +366,7 @@ const InProgressView: React.FC<InProgressViewProps> = ({ onBack, appointment }) 
                             className="w-full py-5 bg-[#10d16d] text-white text-xl font-black rounded-2xl shadow-lg shadow-[#10d16d]/20 hover:bg-[#0eca69] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
                         >
                             {isFinishing ? <Loader2 size={20} className="animate-spin" /> : <CheckCircle size={20} />}
-                            Tasdiqlash
+                            {t('appointments.progress.confirm')}
                         </button>
                     </div>
                 </div>

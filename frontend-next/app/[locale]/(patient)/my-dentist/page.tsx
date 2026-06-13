@@ -48,15 +48,15 @@ const DoctorProfilePreview = () => {
 
         return {
             id: source.id || 0,
-            name: source.full_name || source.name || "Врач",
-            phone: source.phone || "Не указано",
-            gender: source.gender === "male" ? "Мужской" : source.gender === "female" ? "Женский" : "",
+            name: source.full_name || source.name || t('patient_pages.dentist.default_name'),
+            phone: source.phone || t('patient_pages.dentist.not_specified'),
+            gender: source.gender === "male" ? t('patient_pages.dentist.gender_male') : source.gender === "female" ? t('patient_pages.dentist.gender_female') : "",
             birthDate: formatDate(source.birth_date),
             email: source.email || "",
-            address: source.address || "Не указано",
-            clinic: source.clinic || "Не указано",
-            specialty: source.specialization || source.specialty || source.direction || "Стоматолог",
-            experience: experienceYears != null ? `${experienceYears} лет` : "",
+            address: source.address || t('patient_pages.dentist.not_specified'),
+            clinic: source.clinic || t('patient_pages.dentist.not_specified'),
+            specialty: source.specialization || source.specialty || source.direction || t('patient_pages.dentist.default_specialty'),
+            experience: experienceYears != null ? `${experienceYears} ${t('doctor_profile.experience_suffix')}` : "",
             image: source.image || DentistImg,
             telegram: source.telegram || "",
             instagram: source.instagram || "",
@@ -65,7 +65,7 @@ const DoctorProfilePreview = () => {
             verification_status: source.verification_status || "",
             diploma_photo_url: source.diploma_photo_url || null,
         };
-    }, [dentists, doctorFromState]);
+    }, [dentists, doctorFromState, t]);
 
     const handleBook = async () => {
         if (typeof window !== 'undefined') {
@@ -92,7 +92,7 @@ const DoctorProfilePreview = () => {
                         <ArrowLeft size={24} strokeWidth={2.5} />
                     </button>
                     <h1 className="flex-1 pr-8 text-center text-xl font-black text-[#1D1D2B] md:text-2xl">
-                        Профиль стоматолога
+                        {t('patient_pages.dentist.title')}
                     </h1>
                 </div>
 
@@ -108,7 +108,7 @@ const DoctorProfilePreview = () => {
                             <p className="mt-1 text-xs font-bold text-gray-400">{doctorData.phone}</p>
                             {doctorData.diploma_photo_url && (
                                 <div className="mt-3 inline-flex items-center gap-1.5 rounded-xl border border-[#11D76A]/20 bg-[#E8F8F0] px-3 py-1.5 text-[#11D76A]">
-                                    <span className="text-xs font-black">Диплом загружен</span>
+                                    <span className="text-xs font-black">{t('patient_pages.dentist.diploma_uploaded')}</span>
                                 </div>
                             )}
                         </div>
@@ -117,19 +117,19 @@ const DoctorProfilePreview = () => {
                     <div className="space-y-4 rounded-[24px] bg-white p-6 shadow-sm">
                         {doctorData.gender && (
                             <div>
-                                <p className="text-[10px] font-black uppercase tracking-widest text-gray-300">Пол</p>
+                                <p className="text-[10px] font-black uppercase tracking-widest text-gray-300">{t('patient_pages.dentist.gender')}</p>
                                 <p className="mt-1 text-lg font-black text-[#1D1D2B]">{doctorData.gender}</p>
                             </div>
                         )}
                         {doctorData.birthDate && (
                             <div className="pt-2">
-                                <p className="text-[10px] font-black uppercase tracking-widest text-gray-300">Дата рождения</p>
+                                <p className="text-[10px] font-black uppercase tracking-widest text-gray-300">{t('patient_pages.dentist.birth_date')}</p>
                                 <p className="mt-1 text-lg font-black text-[#1D1D2B]">{doctorData.birthDate}</p>
                             </div>
                         )}
                         {doctorData.experience && (
                             <div className="pt-2">
-                                <p className="text-[10px] font-black uppercase tracking-widest text-gray-300">Стаж</p>
+                                <p className="text-[10px] font-black uppercase tracking-widest text-gray-300">{t('patient_pages.dentist.experience')}</p>
                                 <p className="mt-1 text-lg font-black text-[#1D1D2B]">{doctorData.experience}</p>
                             </div>
                         )}
@@ -142,7 +142,7 @@ const DoctorProfilePreview = () => {
                         }}
                         className="group flex w-full items-center justify-between rounded-[24px] bg-[#4E70FF] px-8 py-5 text-white shadow-lg shadow-blue-500/20 transition-all active:scale-[0.98]"
                     >
-                        <span className="text-xl font-black text-black">Услуги</span>
+                        <span className="text-xl font-black text-black">{t('patient_pages.dentist.services')}</span>
                         <div className="rounded-lg border-2 border-white bg-black p-1">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <path d="M7 17L17 7M17 7H7M17 7V17" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -154,7 +154,7 @@ const DoctorProfilePreview = () => {
                         onClick={() => router.push(paths.doctorCases)}
                         className="group flex w-full items-center justify-between rounded-[24px] bg-[#FFBC00] px-8 py-5 text-white shadow-lg shadow-amber-500/20 transition-all active:scale-[0.98]"
                     >
-                        <span className="text-xl font-black text-black">Кейсы</span>
+                        <span className="text-xl font-black text-black">{t('patient_pages.dentist.cases')}</span>
                         <div className="rounded-lg border-2 border-white bg-black p-1">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <path d="M7 17L17 7M17 7H7M17 7V17" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -166,7 +166,7 @@ const DoctorProfilePreview = () => {
                         onClick={() => toast.info(t('patient.alerts.function_in_development'))}
                         className="group flex w-full items-center justify-between rounded-[24px] bg-[#10B981] px-8 py-5 text-white shadow-lg shadow-emerald-500/20 transition-all active:scale-[0.98]"
                     >
-                        <span className="text-xl font-black text-white">Онлайн консультация</span>
+                        <span className="text-xl font-black text-white">{t('patient_pages.dentist.online_consult')}</span>
                         <div className="rounded-lg bg-white p-2">
                             <Video size={24} className="text-[#10B981]" />
                         </div>
@@ -174,24 +174,24 @@ const DoctorProfilePreview = () => {
 
                     <div className="space-y-5 rounded-[24px] bg-white p-8 shadow-sm">
                         <div className="flex items-start gap-4">
-                            <span className="min-w-[70px] whitespace-nowrap pt-1 text-[11px] font-bold text-gray-400">Тел.номер</span>
+                            <span className="min-w-[70px] whitespace-nowrap pt-1 text-[11px] font-bold text-gray-400">{t('patient_pages.dentist.phone')}</span>
                             <span className="text-[13px] font-bold leading-tight text-[#1D1D2B]">{doctorData.phone}</span>
                         </div>
                         <div className="flex items-start gap-4">
-                            <span className="min-w-[70px] whitespace-nowrap pt-1 text-[11px] font-bold text-gray-400">Адрес</span>
+                            <span className="min-w-[70px] whitespace-nowrap pt-1 text-[11px] font-bold text-gray-400">{t('patient_pages.dentist.address')}</span>
                             <span className="text-[13px] font-bold leading-tight text-[#1D1D2B]">{doctorData.address}</span>
                         </div>
                         <div className="flex items-start gap-4">
-                            <span className="min-w-[70px] whitespace-nowrap pt-1 text-[11px] font-bold text-gray-400">Клиника</span>
+                            <span className="min-w-[70px] whitespace-nowrap pt-1 text-[11px] font-bold text-gray-400">{t('patient_pages.dentist.clinic')}</span>
                             <span className="text-[13px] font-bold leading-tight text-[#1D1D2B]">{doctorData.clinic}</span>
                         </div>
                         <div className="flex items-start gap-4">
-                            <span className="min-w-[70px] whitespace-nowrap pt-1 text-[11px] font-bold text-gray-400">Специальность</span>
+                            <span className="min-w-[70px] whitespace-nowrap pt-1 text-[11px] font-bold text-gray-400">{t('patient_pages.dentist.specialty')}</span>
                             <span className="text-[13px] font-bold leading-tight text-[#1D1D2B]">{doctorData.specialty}</span>
                         </div>
                         {doctorData.work_hours && (
                             <div className="flex items-start gap-4">
-                                <span className="min-w-[70px] whitespace-nowrap pt-1 text-[11px] font-bold text-gray-400">Часы работы</span>
+                                <span className="min-w-[70px] whitespace-nowrap pt-1 text-[11px] font-bold text-gray-400">{t('patient_pages.dentist.work_hours')}</span>
                                 <span className="text-[13px] font-bold leading-tight text-[#1D1D2B]">{doctorData.work_hours}</span>
                             </div>
                         )}
@@ -221,7 +221,7 @@ const DoctorProfilePreview = () => {
                                 onClick={handleBook}
                                 className="flex w-full items-center justify-center gap-3 rounded-[24px] bg-[#11D76A] py-6 text-xl font-black text-white shadow-lg shadow-emerald-500/30 transition-all hover:shadow-emerald-500/40 active:scale-[0.98]"
                             >
-                                Записаться
+                                {t('patient_pages.book')}
                             </button>
                         </div>
                     )}
@@ -232,7 +232,7 @@ const DoctorProfilePreview = () => {
                             className="flex w-full items-center justify-center gap-2 rounded-[24px] bg-red-50 py-4 text-base font-bold text-red-500 transition-all hover:bg-red-100 active:scale-[0.98]"
                         >
                             <AlertCircle size={20} />
-                            Shifokor ustidan shikoyat qilish
+                            {t('patient_pages.dentist.complaint')}
                         </button>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
 import type { Doctor } from '@/types/patient';
 import { paths } from '@/lib/paths';
@@ -14,12 +15,13 @@ interface DoctorCardProps {
 
 const DoctorCard: React.FC<DoctorCardProps> = ({ doctor, onBook, onOpenMap }) => {
     const router = useRouter();
+    const t = useTranslations('patient.doctor_card');
     const coordinateLikeAddress = typeof doctor.address === 'string'
         ? /^\s*-?\d+(?:\.\d+)?\s*,\s*-?\d+(?:\.\d+)?\s*$/.test(doctor.address)
         : false;
     const displayAddress = coordinateLikeAddress
-        ? (doctor.clinic || 'Тошкент')
-        : (doctor.address || doctor.clinic || 'Манзил кўрсатилмаган');
+        ? (doctor.clinic || t('default_city'))
+        : (doctor.address || doctor.clinic || t('address_unspecified'));
 
     const handleCardClick = (e: React.MouseEvent) => {
         if ((e.target as HTMLElement).closest('button')) {
@@ -44,9 +46,9 @@ const DoctorCard: React.FC<DoctorCardProps> = ({ doctor, onBook, onOpenMap }) =>
             <div className="flex min-w-0 flex-1 flex-col justify-between pr-10 sm:pr-14 lg:pr-20">
                 <div>
                     <h3 className="mb-1 line-clamp-2 text-sm font-bold leading-tight text-white sm:text-lg lg:mb-2 lg:text-2xl">{doctor.name}</h3>
-                    <p className="mb-0.5 truncate text-[10px] font-medium text-white/90 sm:text-xs lg:text-sm">Направление: {doctor.direction || doctor.specialty}</p>
+                    <p className="mb-0.5 truncate text-[10px] font-medium text-white/90 sm:text-xs lg:text-sm">{t('direction_label')}: {doctor.direction || doctor.specialty}</p>
                     {doctor.experience ? (
-                        <p className="mb-2 text-[10px] font-medium text-white/90 sm:mb-3 sm:text-xs lg:text-sm">Опыт: {doctor.experience}</p>
+                        <p className="mb-2 text-[10px] font-medium text-white/90 sm:mb-3 sm:text-xs lg:text-sm">{t('experience_label')}: {doctor.experience}</p>
                     ) : null}
 
                     <div className="mb-2 flex items-center gap-1 sm:mb-3 sm:gap-1.5">
@@ -65,7 +67,7 @@ const DoctorCard: React.FC<DoctorCardProps> = ({ doctor, onBook, onOpenMap }) =>
                         }}
                         className="self-start rounded-full bg-[#11D76A] px-3 py-1.5 text-[10px] font-bold text-white shadow-sm transition-all hover:bg-[#0fc460] hover:shadow-md active:scale-95 sm:px-6 sm:py-2 sm:text-xs lg:px-10 lg:text-sm"
                     >
-                        Записаться
+                        {t('book')}
                     </button>
                     <button
                         onClick={(e) => {
@@ -74,7 +76,7 @@ const DoctorCard: React.FC<DoctorCardProps> = ({ doctor, onBook, onOpenMap }) =>
                         }}
                         className="rounded-full border border-white/40 bg-white/15 px-3 py-1.5 text-[10px] font-bold text-white transition-all hover:bg-white/25 sm:px-5 sm:py-2 sm:text-xs lg:text-sm"
                     >
-                        На карте
+                        {t('on_map')}
                     </button>
                 </div>
             </div>
@@ -86,7 +88,7 @@ const DoctorCard: React.FC<DoctorCardProps> = ({ doctor, onBook, onOpenMap }) =>
                 </div>
                 {doctor.review_count !== undefined && (
                     <span className="mt-0.5 whitespace-nowrap text-[7px] font-bold uppercase text-white/80 sm:text-[9px]">
-                        {doctor.review_count} sharh
+                        {doctor.review_count} {t('reviews_suffix')}
                     </span>
                 )}
             </div>

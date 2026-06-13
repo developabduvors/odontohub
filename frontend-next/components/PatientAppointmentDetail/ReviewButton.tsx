@@ -74,7 +74,7 @@ const ReviewButton: React.FC<ReviewButtonProps> = ({ inline = false }) => {
                 </div>
                 {rating > 0 && (
                     <p className="text-center text-sm font-black text-[#FFC107] animate-in zoom-in duration-200">
-                        {['', 'Плохо', 'Удовлетворительно', 'Хорошо', 'Очень хорошо', 'Отлично!'][rating]}
+                        {t(`patient.appointment_detail.rating_${rating}`)}
                     </p>
                 )}
 

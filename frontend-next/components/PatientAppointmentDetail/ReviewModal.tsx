@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { FaStar } from "react-icons/fa";
+import { useTranslations } from 'next-intl';
 
 interface ReviewModalProps {
     isOpen: boolean;
@@ -10,6 +11,7 @@ interface ReviewModalProps {
 }
 
 const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose, onSubmit }) => {
+    const t = useTranslations('patient.appointment_detail');
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [comment, setComment] = useState("");
@@ -53,7 +55,7 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose, onSubmit }) 
                 <div className="mb-8">
                     <textarea
                         className="w-full h-[160px] bg-[#EBEBEB] rounded-[24px] p-5 text-[#1D1D2B] placeholder-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-[#11D76A]/50 text-base font-medium"
-                        placeholder="Отзыв"
+                        placeholder={t('review_placeholder')}
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
                     />
@@ -64,7 +66,7 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose, onSubmit }) 
                     onClick={handleSubmit}
                     className="w-full bg-[#11D76A] text-white font-bold text-xl py-4 rounded-[30px] shadow-lg shadow-green-500/30 hover:bg-[#0fc460] active:scale-[0.98] transition-all"
                 >
-                    Отправить
+                    {t('send')}
                 </button>
             </div>
             {/* Close on backdrop click */}

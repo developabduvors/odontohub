@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Eye, EyeOff, LockKeyhole, Phone } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Link, useRouter } from '@/i18n/navigation';
 import api from '@/api/api';
@@ -19,6 +20,7 @@ interface LoginData {
 
 export default function LoginPage() {
   const router = useRouter();
+  const t = useTranslations();
   const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const { initData } = useTelegram();
@@ -65,7 +67,7 @@ export default function LoginPage() {
       }
     } catch (err: any) {
       const detail = err?.response?.data?.detail;
-      toast.error(detail || 'Ошибка подключения к серверу');
+      toast.error(detail || t('auth.login.server_error'));
     }
   };
 
@@ -104,13 +106,13 @@ export default function LoginPage() {
                 className="mt-4 text-4xl leading-none text-white/95"
                 style={{ fontFamily: '"Great Vibes", cursive' }}
               >
-                Добро пожаловать
+                {t('auth.login.welcome')}
               </p>
               <p
                 className="mx-auto mt-6 max-w-md text-base leading-7 text-white/82 lg:mx-0"
                 style={{ fontFamily: '"Space Grotesk", sans-serif' }}
               >
-                Войдите в свой аккаунт и продолжайте работу в цифровой стоматологической платформе GoSmile.
+                {t('auth.login.subtitle')}
               </p>
             </section>
 
@@ -127,7 +129,7 @@ export default function LoginPage() {
                     className="mt-2 text-3xl font-bold text-[#141b33]"
                     style={{ fontFamily: '"Space Grotesk", sans-serif' }}
                   >
-                    Вход в аккаунт
+                    {t('auth.login.heading')}
                   </h2>
                 </div>
 
@@ -137,7 +139,7 @@ export default function LoginPage() {
                       className="mb-2 block text-sm font-medium text-[#3d4a73]"
                       style={{ fontFamily: '"Space Grotesk", sans-serif' }}
                     >
-                      Номер телефона
+                      {t('auth.login.phone')}
                     </label>
                     <div
                       className={`flex items-center rounded-2xl border bg-white px-4 ${errors.phone ? 'border-red-400' : 'border-[#d9def7]'
@@ -150,10 +152,10 @@ export default function LoginPage() {
                         className="w-full bg-transparent py-3.5 text-base text-[#18213d] outline-none placeholder:text-[#99a2c7]"
                         style={{ fontFamily: '"Space Grotesk", sans-serif' }}
                         {...register('phone', {
-                          required: 'Введите номер телефона',
+                          required: t('auth.login.phone_required'),
                           validate: (value) => {
                             const cleaned = value.replace(/\s+/g, '');
-                            return /^\+998\d{9}$/.test(cleaned) || 'Неверный формат номера';
+                            return /^\+998\d{9}$/.test(cleaned) || t('auth.login.phone_invalid');
                           },
                         })}
                       />
@@ -168,7 +170,7 @@ export default function LoginPage() {
                       className="mb-2 block text-sm font-medium text-[#3d4a73]"
                       style={{ fontFamily: '"Space Grotesk", sans-serif' }}
                     >
-                      Пароль
+                      {t('auth.login.password')}
                     </label>
                     <div
                       className={`flex items-center rounded-2xl border bg-white px-4 ${errors.password ? 'border-red-400' : 'border-[#d9def7]'
@@ -177,12 +179,12 @@ export default function LoginPage() {
                       <LockKeyhole size={18} className="mr-3 text-[#7080ff]" />
                       <input
                         type={showPassword ? 'text' : 'password'}
-                        placeholder="Введите пароль"
+                        placeholder={t('auth.login.password_ph')}
                         className="w-full bg-transparent py-3.5 text-base text-[#18213d] outline-none placeholder:text-[#99a2c7]"
                         style={{ fontFamily: '"Space Grotesk", sans-serif' }}
                         {...register('password', {
-                          required: 'Введите пароль',
-                          minLength: { value: 6, message: 'Минимум 6 символов' },
+                          required: t('auth.login.password_required'),
+                          minLength: { value: 6, message: t('auth.login.password_min') },
                         })}
                       />
                       <button
@@ -203,7 +205,7 @@ export default function LoginPage() {
                     className="w-full rounded-full bg-[linear-gradient(135deg,#ffffff_0%,#eef1ff_100%)] px-6 py-3.5 text-xl font-bold text-[#5667ff] shadow-[0_16px_40px_rgba(30,35,94,0.12)] transition-transform duration-200 hover:-translate-y-0.5"
                     style={{ fontFamily: '"Space Grotesk", sans-serif' }}
                   >
-                    Войти
+                    {t('auth.login.submit')}
                   </button>
                 </form>
 
@@ -211,12 +213,12 @@ export default function LoginPage() {
                   className="mt-6 text-center text-sm text-[#5f6a92]"
                   style={{ fontFamily: '"Space Grotesk", sans-serif' }}
                 >
-                  Нет аккаунта?{' '}
+                  {t('auth.login.no_account')}{' '}
                   <Link
                     href={paths.registerPat}
                     className="font-semibold text-[#5667ff] transition hover:text-[#3f52ff]"
                   >
-                    Зарегистрироваться
+                    {t('auth.login.register')}
                   </Link>
                 </p>
               </div>

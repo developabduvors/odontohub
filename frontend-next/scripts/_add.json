@@ -1,0 +1,866 @@
+{
+  "ru": {
+    "common": {
+      "initializing": "Инициализация...",
+      "search": "Поиск",
+      "user": "Пользователь",
+      "doctor": "Врач",
+      "patient": "Пациент",
+      "not_specified": "Не указано",
+      "cancel": "Отмена",
+      "confirm": "Подтвердить",
+      "back": "Назад",
+      "save": "Сохранить",
+      "saving": "Сохранение...",
+      "loading": "Загрузка...",
+      "no_name": "Без имени",
+      "in_development": "В разработке"
+    },
+    "toast": {
+      "success": "Успешно",
+      "error": "Ошибка",
+      "warning": "Внимание",
+      "info": "Инфо"
+    },
+    "booking": {
+      "pick_time": "Укажите время",
+      "comment_placeholder": "Комментарии врачу",
+      "search": "Поиск",
+      "my_doctor": "Мой врач",
+      "no_results": "Нет результатов",
+      "months": { "0": "Январь", "1": "Февраль", "2": "Март", "3": "Апрель", "4": "Май", "5": "Июнь", "6": "Июль", "7": "Август", "8": "Сентябрь", "9": "Октябрь", "10": "Ноябрь", "11": "Декабрь" },
+      "weekdays": { "0": "Пн", "1": "Вт", "2": "Ср", "3": "Чт", "4": "Пт", "5": "Сб", "6": "Вс" }
+    },
+    "auth": {
+      "register": {
+        "error": "Ошибка регистрации",
+        "welcome": "Создайте аккаунт",
+        "subtitle": "Выберите роль, заполните данные и начните пользоваться GoSmile в нужном режиме.",
+        "eyebrow": "Регистрация",
+        "heading": "Регистрация",
+        "choose_role": "Выберите роль",
+        "full_name": "Полное имя",
+        "full_name_ph": "Иван Иванов",
+        "full_name_required": "Введите полное имя",
+        "name_min": "Минимум 2 символа",
+        "optional": "(необязательно)",
+        "submitting": "Регистрация...",
+        "have_account": "Уже есть аккаунт?"
+      }
+    },
+    "edit_profile": {
+      "title": "Профиль",
+      "change_photo": "Изменить фото",
+      "delete_photo": "Удалить фото",
+      "full_name": "Ф.И.О.",
+      "birth_date": "Дата рождения",
+      "region": "Регион",
+      "default_region": "г. Ташкент",
+      "phone_confirm_label": "Подтверждение номера",
+      "old_number": "Старый номер:",
+      "phone_changed_warning": "Вы изменили номер телефона. Требуется подтверждение.",
+      "phone_unchanged": "Номер не изменён",
+      "change_password": "Сменить пароль"
+    },
+    "map_modal": {
+      "enter_address_first": "Сначала введите адрес",
+      "not_found": "Адрес не найден. Уточните адрес и попробуйте снова.",
+      "search_failed": "Не удалось найти адрес. Проверьте интернет и попробуйте снова.",
+      "find_first": "Сначала найдите адрес через кнопку \"Найти\".",
+      "title": "Выберите адрес на карте",
+      "address": "Адрес",
+      "address_ph": "Введите адрес",
+      "searching": "Поиск...",
+      "find": "Найти",
+      "coordinates": "Координаты"
+    },
+    "service_modal": {
+      "save_failed": "Не удалось сохранить услугу",
+      "edit_title": "Редактировать услугу",
+      "add_title": "Добавить услугу",
+      "name_label": "Название услуги",
+      "name_ph": "Например: Чистка зубов",
+      "price_label": "Цена (UZS)",
+      "create": "Создать"
+    },
+    "doctor_profile": {
+      "birth_date": "Дата рождения",
+      "experience_label": "Стаж",
+      "default_education": "ТашПМИ"
+    },
+    "settings": {
+      "language_subtitle": "Выберите язык интерфейса для всей платформы.",
+      "privacy": {
+        "load_backup_failed": "Не удалось загрузить резервный номер",
+        "passwords_mismatch": "Новые пароли не совпадают",
+        "password_min6": "Новый пароль должен содержать минимум 6 символов",
+        "password_changed": "Пароль успешно изменен",
+        "password_change_error": "Ошибка при смене пароля",
+        "enter_or_clear_backup": "Введите резервный номер или очистите поле",
+        "backup_too_short": "Резервный номер слишком короткий",
+        "backup_must_differ": "Резервный номер должен отличаться от основного",
+        "backup_saved": "Резервный номер сохранен",
+        "backup_save_failed": "Не удалось сохранить резервный номер",
+        "backup_deleted": "Резервный номер удален",
+        "backup_delete_failed": "Не удалось удалить резервный номер",
+        "change_password_title": "Смена пароля",
+        "change_password_desc": "Обновите свой пароль для безопасности",
+        "current_password": "Текущий пароль",
+        "current_password_ph": "Введите текущий пароль",
+        "new_password": "Новый пароль",
+        "new_password_ph": "Введите новый пароль",
+        "confirm_new_password": "Подтвердите новый пароль",
+        "confirm_new_password_ph": "Повторите новый пароль",
+        "change_password_btn": "Изменить пароль",
+        "security_tips_title": "Советы по безопасности",
+        "tip1": "Используйте отдельный пароль для этого аккаунта.",
+        "tip2": "Добавляйте цифры, буквы и специальные символы.",
+        "tip3": "Не используйте основной и резервный номер как один и тот же контакт.",
+        "tip4": "Периодически обновляйте пароль и резервный номер.",
+        "primary_number": "Основной номер",
+        "backup_number_label": "Резервный номер",
+        "backup_number_hint": "Номер используется как дополнительный контакт для восстановления и подтверждения.",
+        "save_backup_btn": "Сохранить резервный номер",
+        "clear": "Очистить",
+        "delete_account_modal_title": "Удаление аккаунта",
+        "delete_account_confirm": "Вы действительно хотите удалить аккаунт? Это действие нельзя отменить.",
+        "deleting": "Удаление...",
+        "delete": "Удалить"
+      }
+    },
+    "dashboard": {
+      "appointments_card": {
+        "no_records": "Нет записей",
+        "no_records_desc": "На выбранную дату записей нет"
+      },
+      "search": {
+        "results_title": "Результаты поиска",
+        "not_found": "Пациенты не найдены по запросу \"{query}\""
+      }
+    },
+    "patients_list": {
+      "delete_confirm": "Вы уверены, что хотите удалить пациента \"{name}\"?",
+      "delete_error": "Ошибка при удалении пациента",
+      "table": { "actions": "Действия" }
+    },
+    "patient": {
+      "home": {
+        "short_days": "д",
+        "short_hours": "ч",
+        "short_mins": "м",
+        "until_appointment": "До приёма:"
+      },
+      "doctor_card": {
+        "default_city": "Ташкент",
+        "address_unspecified": "Адрес не указан",
+        "direction_label": "Направление",
+        "experience_label": "Опыт",
+        "book": "Записаться",
+        "on_map": "На карте",
+        "reviews_suffix": "отзывов"
+      },
+      "appointment_detail": {
+        "service_cost": "Стоимость услуги",
+        "review_placeholder": "Отзыв",
+        "send": "Отправить",
+        "rating_1": "Плохо",
+        "rating_2": "Удовлетворительно",
+        "rating_3": "Хорошо",
+        "rating_4": "Очень хорошо",
+        "rating_5": "Отлично!",
+        "direction": "Направление",
+        "work_experience": "Опыт работы",
+        "rating": "Оценка",
+        "go_to": "Перейти",
+        "status_label": "Статус",
+        "when_label": "Когда",
+        "notes_label": "Заметки",
+        "cancel_failed": "Отменить не удалось",
+        "reschedule_failed": "Ошибка при переносе",
+        "online_consultation": "Онлайн консультация",
+        "contact": "Связаться",
+        "reschedule": "Перенести",
+        "cancel_btn": "Отменить",
+        "cannot_undo": "Это действие нельзя отменить",
+        "reschedule_title": "Перенести приём",
+        "select_new_datetime": "Выберите новую дату и время",
+        "contact_doctor": "Связаться с врачом",
+        "choose_contact_method": "Выберите удобный способ связи",
+        "phone_not_specified": "Номер не указан",
+        "copied": "Скопировано!",
+        "copy": "Копировать",
+        "call": "Позвонить",
+        "complain": "Пожаловаться на врача"
+      }
+    },
+    "patient_pages": {
+      "appt_detail": { "default_experience": "5 лет" },
+      "services_page": {
+        "mock_consultation": "Консультация",
+        "mock_caries": "Лечение кариеса",
+        "mock_cleaning": "Чистка зубов"
+      },
+      "checkup": {
+        "fallback_title": "Осмотр",
+        "fallback_date": "25 сентября",
+        "fallback_direction": "Ортодонтия",
+        "fallback_experience": "3 года",
+        "empty": "Пусто",
+        "currency_sum": "сум"
+      },
+      "profile_pat": {
+        "default_city": "Ташкент",
+        "default_district": "Юнусабад",
+        "default_address": "г. Ташкент, Юнусабад"
+      }
+    }
+  },
+  "uz": {
+    "common": {
+      "initializing": "Ishga tushirilmoqda...",
+      "search": "Qidirish",
+      "user": "Foydalanuvchi",
+      "doctor": "Shifokor",
+      "patient": "Bemor",
+      "not_specified": "Ko'rsatilmagan",
+      "cancel": "Bekor qilish",
+      "confirm": "Tasdiqlash",
+      "back": "Orqaga",
+      "save": "Saqlash",
+      "saving": "Saqlanmoqda...",
+      "loading": "Yuklanmoqda...",
+      "no_name": "Ismsiz",
+      "in_development": "Ishlab chiqilmoqda"
+    },
+    "toast": {
+      "success": "Muvaffaqiyatli",
+      "error": "Xatolik",
+      "warning": "Diqqat",
+      "info": "Ma'lumot"
+    },
+    "booking": {
+      "pick_time": "Vaqtni belgilang",
+      "comment_placeholder": "Shifokorga izoh",
+      "search": "Qidirish",
+      "my_doctor": "Mening shifokorim",
+      "no_results": "Natija yo'q",
+      "months": { "0": "Yanvar", "1": "Fevral", "2": "Mart", "3": "Aprel", "4": "May", "5": "Iyun", "6": "Iyul", "7": "Avgust", "8": "Sentabr", "9": "Oktabr", "10": "Noyabr", "11": "Dekabr" },
+      "weekdays": { "0": "Du", "1": "Se", "2": "Cho", "3": "Pa", "4": "Ju", "5": "Sh", "6": "Ya" }
+    },
+    "auth": {
+      "register": {
+        "error": "Ro'yxatdan o'tishda xatolik",
+        "welcome": "Hisob yarating",
+        "subtitle": "Rolni tanlang, ma'lumotlarni to'ldiring va GoSmile'dan kerakli rejimda foydalanishni boshlang.",
+        "eyebrow": "Ro'yxatdan o'tish",
+        "heading": "Ro'yxatdan o'tish",
+        "choose_role": "Rolni tanlang",
+        "full_name": "To'liq ism",
+        "full_name_ph": "Ivan Ivanov",
+        "full_name_required": "To'liq ismni kiriting",
+        "name_min": "Kamida 2 ta belgi",
+        "optional": "(ixtiyoriy)",
+        "submitting": "Ro'yxatdan o'tilmoqda...",
+        "have_account": "Allaqachon hisobingiz bormi?"
+      }
+    },
+    "edit_profile": {
+      "title": "Profil",
+      "change_photo": "Rasmni o'zgartirish",
+      "delete_photo": "Rasmni o'chirish",
+      "full_name": "F.I.Sh.",
+      "birth_date": "Tug'ilgan sana",
+      "region": "Hudud",
+      "default_region": "Toshkent sh.",
+      "phone_confirm_label": "Raqamni tasdiqlash",
+      "old_number": "Eski raqam:",
+      "phone_changed_warning": "Telefon raqamini o'zgartirdingiz. Tasdiqlash talab qilinadi.",
+      "phone_unchanged": "Raqam o'zgartirilmadi",
+      "change_password": "Parolni o'zgartirish"
+    },
+    "map_modal": {
+      "enter_address_first": "Avval manzilni kiriting",
+      "not_found": "Manzil topilmadi. Manzilni aniqlang va qayta urinib ko'ring.",
+      "search_failed": "Manzilni topib bo'lmadi. Internetni tekshiring va qayta urinib ko'ring.",
+      "find_first": "Avval \"Topish\" tugmasi orqali manzilni toping.",
+      "title": "Xaritadan manzilni tanlang",
+      "address": "Manzil",
+      "address_ph": "Manzilni kiriting",
+      "searching": "Qidirilmoqda...",
+      "find": "Topish",
+      "coordinates": "Koordinatalar"
+    },
+    "service_modal": {
+      "save_failed": "Xizmatni saqlab bo'lmadi",
+      "edit_title": "Xizmatni tahrirlash",
+      "add_title": "Xizmat qo'shish",
+      "name_label": "Xizmat nomi",
+      "name_ph": "Masalan: Tish tozalash",
+      "price_label": "Narx (UZS)",
+      "create": "Yaratish"
+    },
+    "doctor_profile": {
+      "birth_date": "Tug'ilgan sana",
+      "experience_label": "Tajriba",
+      "default_education": "ToshPMI"
+    },
+    "settings": {
+      "language_subtitle": "Butun platforma uchun interfeys tilini tanlang.",
+      "privacy": {
+        "load_backup_failed": "Zaxira raqamni yuklab bo'lmadi",
+        "passwords_mismatch": "Yangi parollar mos kelmadi",
+        "password_min6": "Yangi parol kamida 6 ta belgidan iborat bo'lishi kerak",
+        "password_changed": "Parol muvaffaqiyatli o'zgartirildi",
+        "password_change_error": "Parolni o'zgartirishda xatolik",
+        "enter_or_clear_backup": "Zaxira raqamni kiriting yoki maydonni tozalang",
+        "backup_too_short": "Zaxira raqam juda qisqa",
+        "backup_must_differ": "Zaxira raqam asosiysidan farq qilishi kerak",
+        "backup_saved": "Zaxira raqam saqlandi",
+        "backup_save_failed": "Zaxira raqamni saqlab bo'lmadi",
+        "backup_deleted": "Zaxira raqam o'chirildi",
+        "backup_delete_failed": "Zaxira raqamni o'chirib bo'lmadi",
+        "change_password_title": "Parolni o'zgartirish",
+        "change_password_desc": "Xavfsizlik uchun parolingizni yangilang",
+        "current_password": "Joriy parol",
+        "current_password_ph": "Joriy parolni kiriting",
+        "new_password": "Yangi parol",
+        "new_password_ph": "Yangi parolni kiriting",
+        "confirm_new_password": "Yangi parolni tasdiqlang",
+        "confirm_new_password_ph": "Yangi parolni takrorlang",
+        "change_password_btn": "Parolni o'zgartirish",
+        "security_tips_title": "Xavfsizlik bo'yicha maslahatlar",
+        "tip1": "Bu hisob uchun alohida paroldan foydalaning.",
+        "tip2": "Raqamlar, harflar va maxsus belgilar qo'shing.",
+        "tip3": "Asosiy va zaxira raqamni bir xil kontakt sifatida ishlatmang.",
+        "tip4": "Parol va zaxira raqamni vaqti-vaqti bilan yangilang.",
+        "primary_number": "Asosiy raqam",
+        "backup_number_label": "Zaxira raqam",
+        "backup_number_hint": "Raqam tiklash va tasdiqlash uchun qo'shimcha kontakt sifatida ishlatiladi.",
+        "save_backup_btn": "Zaxira raqamni saqlash",
+        "clear": "Tozalash",
+        "delete_account_modal_title": "Hisobni o'chirish",
+        "delete_account_confirm": "Hisobni rostdan o'chirmoqchimisiz? Bu amalni bekor qilib bo'lmaydi.",
+        "deleting": "O'chirilmoqda...",
+        "delete": "O'chirish"
+      }
+    },
+    "dashboard": {
+      "appointments_card": {
+        "no_records": "Yozuvlar yo'q",
+        "no_records_desc": "Tanlangan sanaga yozuvlar yo'q"
+      },
+      "search": {
+        "results_title": "Qidiruv natijalari",
+        "not_found": "\"{query}\" so'rovi bo'yicha bemorlar topilmadi"
+      }
+    },
+    "patients_list": {
+      "delete_confirm": "\"{name}\" bemorni o'chirmoqchimisiz?",
+      "delete_error": "Bemorni o'chirishda xatolik",
+      "table": { "actions": "Amallar" }
+    },
+    "patient": {
+      "home": {
+        "short_days": "kun",
+        "short_hours": "soat",
+        "short_mins": "min",
+        "until_appointment": "Qabulgacha:"
+      },
+      "doctor_card": {
+        "default_city": "Toshkent",
+        "address_unspecified": "Manzil ko'rsatilmagan",
+        "direction_label": "Yo'nalish",
+        "experience_label": "Tajriba",
+        "book": "Yozilish",
+        "on_map": "Xaritada",
+        "reviews_suffix": "sharh"
+      },
+      "appointment_detail": {
+        "service_cost": "Xizmat narxi",
+        "review_placeholder": "Sharh",
+        "send": "Yuborish",
+        "rating_1": "Yomon",
+        "rating_2": "Qoniqarli",
+        "rating_3": "Yaxshi",
+        "rating_4": "Juda yaxshi",
+        "rating_5": "Ajoyib!",
+        "direction": "Yo'nalish",
+        "work_experience": "Ish tajribasi",
+        "rating": "Baho",
+        "go_to": "O'tish",
+        "status_label": "Holat",
+        "when_label": "Qachon",
+        "notes_label": "Eslatmalar",
+        "cancel_failed": "Bekor qilib bo'lmadi",
+        "reschedule_failed": "Ko'chirishda xatolik",
+        "online_consultation": "Onlayn konsultatsiya",
+        "contact": "Bog'lanish",
+        "reschedule": "Ko'chirish",
+        "cancel_btn": "Bekor qilish",
+        "cannot_undo": "Bu amalni bekor qilib bo'lmaydi",
+        "reschedule_title": "Qabulni ko'chirish",
+        "select_new_datetime": "Yangi sana va vaqtni tanlang",
+        "contact_doctor": "Shifokor bilan bog'lanish",
+        "choose_contact_method": "Qulay bog'lanish usulini tanlang",
+        "phone_not_specified": "Raqam ko'rsatilmagan",
+        "copied": "Nusxalandi!",
+        "copy": "Nusxalash",
+        "call": "Qo'ng'iroq qilish",
+        "complain": "Shifokor ustidan shikoyat qilish"
+      }
+    },
+    "patient_pages": {
+      "appt_detail": { "default_experience": "5 yil" },
+      "services_page": {
+        "mock_consultation": "Konsultatsiya",
+        "mock_caries": "Karies davolash",
+        "mock_cleaning": "Tish tozalash"
+      },
+      "checkup": {
+        "fallback_title": "Ko'rik",
+        "fallback_date": "25-sentabr",
+        "fallback_direction": "Ortodontiya",
+        "fallback_experience": "3 yil",
+        "empty": "Bo'sh",
+        "currency_sum": "so'm"
+      },
+      "profile_pat": {
+        "default_city": "Toshkent",
+        "default_district": "Yunusobod",
+        "default_address": "Toshkent sh., Yunusobod"
+      }
+    }
+  },
+  "en": {
+    "common": {
+      "initializing": "Initializing...",
+      "search": "Search",
+      "user": "User",
+      "doctor": "Doctor",
+      "patient": "Patient",
+      "not_specified": "Not specified",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "back": "Back",
+      "save": "Save",
+      "saving": "Saving...",
+      "loading": "Loading...",
+      "no_name": "No name",
+      "in_development": "In development"
+    },
+    "toast": {
+      "success": "Success",
+      "error": "Error",
+      "warning": "Warning",
+      "info": "Info"
+    },
+    "booking": {
+      "pick_time": "Select time",
+      "comment_placeholder": "Comment to doctor",
+      "search": "Search",
+      "my_doctor": "My doctor",
+      "no_results": "No results",
+      "months": { "0": "January", "1": "February", "2": "March", "3": "April", "4": "May", "5": "June", "6": "July", "7": "August", "8": "September", "9": "October", "10": "November", "11": "December" },
+      "weekdays": { "0": "Mo", "1": "Tu", "2": "We", "3": "Th", "4": "Fr", "5": "Sa", "6": "Su" }
+    },
+    "auth": {
+      "register": {
+        "error": "Registration error",
+        "welcome": "Create an account",
+        "subtitle": "Choose a role, fill in your details, and start using GoSmile in the mode you need.",
+        "eyebrow": "Register",
+        "heading": "Registration",
+        "choose_role": "Choose a role",
+        "full_name": "Full name",
+        "full_name_ph": "John Smith",
+        "full_name_required": "Enter your full name",
+        "name_min": "At least 2 characters",
+        "optional": "(optional)",
+        "submitting": "Registering...",
+        "have_account": "Already have an account?"
+      }
+    },
+    "edit_profile": {
+      "title": "Profile",
+      "change_photo": "Change photo",
+      "delete_photo": "Delete photo",
+      "full_name": "Full name",
+      "birth_date": "Date of birth",
+      "region": "Region",
+      "default_region": "Tashkent",
+      "phone_confirm_label": "Number confirmation",
+      "old_number": "Old number:",
+      "phone_changed_warning": "You changed your phone number. Confirmation is required.",
+      "phone_unchanged": "Number not changed",
+      "change_password": "Change password"
+    },
+    "map_modal": {
+      "enter_address_first": "Enter an address first",
+      "not_found": "Address not found. Refine the address and try again.",
+      "search_failed": "Failed to find the address. Check your internet and try again.",
+      "find_first": "First find the address using the \"Find\" button.",
+      "title": "Select an address on the map",
+      "address": "Address",
+      "address_ph": "Enter address",
+      "searching": "Searching...",
+      "find": "Find",
+      "coordinates": "Coordinates"
+    },
+    "service_modal": {
+      "save_failed": "Failed to save service",
+      "edit_title": "Edit service",
+      "add_title": "Add service",
+      "name_label": "Service name",
+      "name_ph": "For example: Teeth cleaning",
+      "price_label": "Price (UZS)",
+      "create": "Create"
+    },
+    "doctor_profile": {
+      "birth_date": "Date of birth",
+      "experience_label": "Experience",
+      "default_education": "TashPMI"
+    },
+    "settings": {
+      "language_subtitle": "Choose the interface language for the entire platform.",
+      "privacy": {
+        "load_backup_failed": "Failed to load backup number",
+        "passwords_mismatch": "New passwords do not match",
+        "password_min6": "New password must be at least 6 characters",
+        "password_changed": "Password changed successfully",
+        "password_change_error": "Error changing password",
+        "enter_or_clear_backup": "Enter a backup number or clear the field",
+        "backup_too_short": "Backup number is too short",
+        "backup_must_differ": "Backup number must differ from the primary one",
+        "backup_saved": "Backup number saved",
+        "backup_save_failed": "Failed to save backup number",
+        "backup_deleted": "Backup number deleted",
+        "backup_delete_failed": "Failed to delete backup number",
+        "change_password_title": "Change password",
+        "change_password_desc": "Update your password for security",
+        "current_password": "Current password",
+        "current_password_ph": "Enter current password",
+        "new_password": "New password",
+        "new_password_ph": "Enter new password",
+        "confirm_new_password": "Confirm new password",
+        "confirm_new_password_ph": "Repeat new password",
+        "change_password_btn": "Change password",
+        "security_tips_title": "Security tips",
+        "tip1": "Use a separate password for this account.",
+        "tip2": "Add numbers, letters, and special characters.",
+        "tip3": "Do not use the primary and backup number as the same contact.",
+        "tip4": "Periodically update your password and backup number.",
+        "primary_number": "Primary number",
+        "backup_number_label": "Backup number",
+        "backup_number_hint": "The number is used as an additional contact for recovery and confirmation.",
+        "save_backup_btn": "Save backup number",
+        "clear": "Clear",
+        "delete_account_modal_title": "Delete account",
+        "delete_account_confirm": "Do you really want to delete your account? This action cannot be undone.",
+        "deleting": "Deleting...",
+        "delete": "Delete"
+      }
+    },
+    "dashboard": {
+      "appointments_card": {
+        "no_records": "No appointments",
+        "no_records_desc": "No appointments for the selected date"
+      },
+      "search": {
+        "results_title": "Search results",
+        "not_found": "No patients found for \"{query}\""
+      }
+    },
+    "patients_list": {
+      "delete_confirm": "Are you sure you want to delete patient \"{name}\"?",
+      "delete_error": "Error deleting patient",
+      "table": { "actions": "Actions" }
+    },
+    "patient": {
+      "home": {
+        "short_days": "d",
+        "short_hours": "h",
+        "short_mins": "m",
+        "until_appointment": "Until appointment:"
+      },
+      "doctor_card": {
+        "default_city": "Tashkent",
+        "address_unspecified": "Address not specified",
+        "direction_label": "Specialty",
+        "experience_label": "Experience",
+        "book": "Book",
+        "on_map": "On map",
+        "reviews_suffix": "reviews"
+      },
+      "appointment_detail": {
+        "service_cost": "Service cost",
+        "review_placeholder": "Review",
+        "send": "Send",
+        "rating_1": "Bad",
+        "rating_2": "Fair",
+        "rating_3": "Good",
+        "rating_4": "Very good",
+        "rating_5": "Excellent!",
+        "direction": "Specialty",
+        "work_experience": "Experience",
+        "rating": "Rating",
+        "go_to": "Go to",
+        "status_label": "Status",
+        "when_label": "When",
+        "notes_label": "Notes",
+        "cancel_failed": "Failed to cancel",
+        "reschedule_failed": "Failed to reschedule",
+        "online_consultation": "Online consultation",
+        "contact": "Contact",
+        "reschedule": "Reschedule",
+        "cancel_btn": "Cancel",
+        "cannot_undo": "This action cannot be undone",
+        "reschedule_title": "Reschedule appointment",
+        "select_new_datetime": "Select new date and time",
+        "contact_doctor": "Contact the doctor",
+        "choose_contact_method": "Choose a convenient contact method",
+        "phone_not_specified": "Number not specified",
+        "copied": "Copied!",
+        "copy": "Copy",
+        "call": "Call",
+        "complain": "Report the doctor"
+      }
+    },
+    "patient_pages": {
+      "appt_detail": { "default_experience": "5 years" },
+      "services_page": {
+        "mock_consultation": "Consultation",
+        "mock_caries": "Caries treatment",
+        "mock_cleaning": "Teeth cleaning"
+      },
+      "checkup": {
+        "fallback_title": "Examination",
+        "fallback_date": "September 25",
+        "fallback_direction": "Orthodontics",
+        "fallback_experience": "3 years",
+        "empty": "Empty",
+        "currency_sum": "UZS"
+      },
+      "profile_pat": {
+        "default_city": "Tashkent",
+        "default_district": "Yunusabad",
+        "default_address": "Tashkent, Yunusabad"
+      }
+    }
+  },
+  "kz": {
+    "common": {
+      "initializing": "Инициализация...",
+      "search": "Іздеу",
+      "user": "Пайдаланушы",
+      "doctor": "Дәрігер",
+      "patient": "Науқас",
+      "not_specified": "Көрсетілмеген",
+      "cancel": "Болдырмау",
+      "confirm": "Растау",
+      "back": "Артқа",
+      "save": "Сақтау",
+      "saving": "Сақталуда...",
+      "loading": "Жүктелуде...",
+      "no_name": "Атсыз",
+      "in_development": "Әзірленуде"
+    },
+    "toast": {
+      "success": "Сәтті",
+      "error": "Қате",
+      "warning": "Назар аударыңыз",
+      "info": "Ақпарат"
+    },
+    "booking": {
+      "pick_time": "Уақытты таңдаңыз",
+      "comment_placeholder": "Дәрігерге түсініктеме",
+      "search": "Іздеу",
+      "my_doctor": "Менің дәрігерім",
+      "no_results": "Нәтиже жоқ",
+      "months": { "0": "Қаңтар", "1": "Ақпан", "2": "Наурыз", "3": "Сәуір", "4": "Мамыр", "5": "Маусым", "6": "Шілде", "7": "Тамыз", "8": "Қыркүйек", "9": "Қазан", "10": "Қараша", "11": "Желтоқсан" },
+      "weekdays": { "0": "Дс", "1": "Сс", "2": "Ср", "3": "Бс", "4": "Жм", "5": "Сб", "6": "Жс" }
+    },
+    "auth": {
+      "register": {
+        "error": "Тіркелу қатесі",
+        "welcome": "Тіркелгі жасаңыз",
+        "subtitle": "Рөлді таңдаңыз, деректерді толтырыңыз және GoSmile-ды қажетті режимде қолдана бастаңыз.",
+        "eyebrow": "Тіркелу",
+        "heading": "Тіркелу",
+        "choose_role": "Рөлді таңдаңыз",
+        "full_name": "Толық аты",
+        "full_name_ph": "Иван Иванов",
+        "full_name_required": "Толық атыңызды енгізіңіз",
+        "name_min": "Кемінде 2 таңба",
+        "optional": "(міндетті емес)",
+        "submitting": "Тіркелуде...",
+        "have_account": "Тіркелгіңіз бар ма?"
+      }
+    },
+    "edit_profile": {
+      "title": "Профиль",
+      "change_photo": "Фотоны өзгерту",
+      "delete_photo": "Фотоны жою",
+      "full_name": "Аты-жөні",
+      "birth_date": "Туған күні",
+      "region": "Аймақ",
+      "default_region": "Ташкент қ.",
+      "phone_confirm_label": "Нөмірді растау",
+      "old_number": "Ескі нөмір:",
+      "phone_changed_warning": "Сіз телефон нөмірін өзгерттіңіз. Растау қажет.",
+      "phone_unchanged": "Нөмір өзгертілмеді",
+      "change_password": "Құпиясөзді өзгерту"
+    },
+    "map_modal": {
+      "enter_address_first": "Алдымен мекенжайды енгізіңіз",
+      "not_found": "Мекенжай табылмады. Мекенжайды нақтылап, қайталап көріңіз.",
+      "search_failed": "Мекенжайды табу сәтсіз аяқталды. Интернетті тексеріп, қайталап көріңіз.",
+      "find_first": "Алдымен \"Табу\" түймесі арқылы мекенжайды табыңыз.",
+      "title": "Картадан мекенжайды таңдаңыз",
+      "address": "Мекенжай",
+      "address_ph": "Мекенжайды енгізіңіз",
+      "searching": "Ізделуде...",
+      "find": "Табу",
+      "coordinates": "Координаталар"
+    },
+    "service_modal": {
+      "save_failed": "Қызметті сақтау сәтсіз аяқталды",
+      "edit_title": "Қызметті өңдеу",
+      "add_title": "Қызмет қосу",
+      "name_label": "Қызмет атауы",
+      "name_ph": "Мысалы: Тіс тазалау",
+      "price_label": "Бағасы (UZS)",
+      "create": "Жасау"
+    },
+    "doctor_profile": {
+      "birth_date": "Туған күні",
+      "experience_label": "Өтіл",
+      "default_education": "ТашПМИ"
+    },
+    "settings": {
+      "language_subtitle": "Бүкіл платформа үшін интерфейс тілін таңдаңыз.",
+      "privacy": {
+        "load_backup_failed": "Сақтық нөмірін жүктеу сәтсіз аяқталды",
+        "passwords_mismatch": "Жаңа құпиясөздер сәйкес келмейді",
+        "password_min6": "Жаңа құпиясөз кемінде 6 таңбадан тұруы керек",
+        "password_changed": "Құпиясөз сәтті өзгертілді",
+        "password_change_error": "Құпиясөзді өзгерту қатесі",
+        "enter_or_clear_backup": "Сақтық нөмірін енгізіңіз немесе өрісті тазалаңыз",
+        "backup_too_short": "Сақтық нөмірі тым қысқа",
+        "backup_must_differ": "Сақтық нөмірі негізгіден өзгеше болуы керек",
+        "backup_saved": "Сақтық нөмірі сақталды",
+        "backup_save_failed": "Сақтық нөмірін сақтау сәтсіз аяқталды",
+        "backup_deleted": "Сақтық нөмірі жойылды",
+        "backup_delete_failed": "Сақтық нөмірін жою сәтсіз аяқталды",
+        "change_password_title": "Құпиясөзді өзгерту",
+        "change_password_desc": "Қауіпсіздік үшін құпиясөзіңізді жаңартыңыз",
+        "current_password": "Ағымдағы құпиясөз",
+        "current_password_ph": "Ағымдағы құпиясөзді енгізіңіз",
+        "new_password": "Жаңа құпиясөз",
+        "new_password_ph": "Жаңа құпиясөзді енгізіңіз",
+        "confirm_new_password": "Жаңа құпиясөзді растаңыз",
+        "confirm_new_password_ph": "Жаңа құпиясөзді қайталаңыз",
+        "change_password_btn": "Құпиясөзді өзгерту",
+        "security_tips_title": "Қауіпсіздік кеңестері",
+        "tip1": "Бұл тіркелгі үшін бөлек құпиясөз қолданыңыз.",
+        "tip2": "Сандар, әріптер және арнайы таңбалар қосыңыз.",
+        "tip3": "Негізгі және сақтық нөмірін бір контакт ретінде пайдаланбаңыз.",
+        "tip4": "Құпиясөз бен сақтық нөмірін мезгіл-мезгіл жаңартып тұрыңыз.",
+        "primary_number": "Негізгі нөмір",
+        "backup_number_label": "Сақтық нөмір",
+        "backup_number_hint": "Нөмір қалпына келтіру және растау үшін қосымша байланыс ретінде пайдаланылады.",
+        "save_backup_btn": "Сақтық нөмірін сақтау",
+        "clear": "Тазалау",
+        "delete_account_modal_title": "Тіркелгіні жою",
+        "delete_account_confirm": "Тіркелгіңізді шынымен жойғыңыз келе ме? Бұл әрекетті болдырмау мүмкін емес.",
+        "deleting": "Жойылуда...",
+        "delete": "Жою"
+      }
+    },
+    "dashboard": {
+      "appointments_card": {
+        "no_records": "Жазбалар жоқ",
+        "no_records_desc": "Таңдалған күнге жазбалар жоқ"
+      },
+      "search": {
+        "results_title": "Іздеу нәтижелері",
+        "not_found": "\"{query}\" сұранысы бойынша науқастар табылмады"
+      }
+    },
+    "patients_list": {
+      "delete_confirm": "\"{name}\" науқасты жойғыңыз келе ме?",
+      "delete_error": "Науқасты жою қатесі",
+      "table": { "actions": "Әрекеттер" }
+    },
+    "patient": {
+      "home": {
+        "short_days": "к",
+        "short_hours": "сағ",
+        "short_mins": "мин",
+        "until_appointment": "Қабылдауға дейін:"
+      },
+      "doctor_card": {
+        "default_city": "Ташкент",
+        "address_unspecified": "Мекенжай көрсетілмеген",
+        "direction_label": "Бағыт",
+        "experience_label": "Тәжірибе",
+        "book": "Жазылу",
+        "on_map": "Картада",
+        "reviews_suffix": "пікір"
+      },
+      "appointment_detail": {
+        "service_cost": "Қызмет құны",
+        "review_placeholder": "Пікір",
+        "send": "Жіберу",
+        "rating_1": "Нашар",
+        "rating_2": "Қанағаттанарлық",
+        "rating_3": "Жақсы",
+        "rating_4": "Өте жақсы",
+        "rating_5": "Тамаша!",
+        "direction": "Бағыт",
+        "work_experience": "Жұмыс тәжірибесі",
+        "rating": "Бағалау",
+        "go_to": "Өту",
+        "status_label": "Мәртебе",
+        "when_label": "Қашан",
+        "notes_label": "Жазбалар",
+        "cancel_failed": "Болдырмау сәтсіз аяқталды",
+        "reschedule_failed": "Ауыстыру қатесі",
+        "online_consultation": "Онлайн кеңес",
+        "contact": "Байланысу",
+        "reschedule": "Ауыстыру",
+        "cancel_btn": "Болдырмау",
+        "cannot_undo": "Бұл әрекетті болдырмау мүмкін емес",
+        "reschedule_title": "Қабылдауды ауыстыру",
+        "select_new_datetime": "Жаңа күн мен уақытты таңдаңыз",
+        "contact_doctor": "Дәрігермен байланысу",
+        "choose_contact_method": "Ыңғайлы байланыс әдісін таңдаңыз",
+        "phone_not_specified": "Нөмір көрсетілмеген",
+        "copied": "Көшірілді!",
+        "copy": "Көшіру",
+        "call": "Қоңырау шалу",
+        "complain": "Дәрігерге шағымдану"
+      }
+    },
+    "patient_pages": {
+      "appt_detail": { "default_experience": "5 жыл" },
+      "services_page": {
+        "mock_consultation": "Кеңес",
+        "mock_caries": "Кариесті емдеу",
+        "mock_cleaning": "Тіс тазалау"
+      },
+      "checkup": {
+        "fallback_title": "Тексеру",
+        "fallback_date": "25 қыркүйек",
+        "fallback_direction": "Ортодонтия",
+        "fallback_experience": "3 жыл",
+        "empty": "Бос",
+        "currency_sum": "сум"
+      },
+      "profile_pat": {
+        "default_city": "Ташкент",
+        "default_district": "Юнусабад",
+        "default_address": "Ташкент қ., Юнусабад"
+      }
+    }
+  }
+}

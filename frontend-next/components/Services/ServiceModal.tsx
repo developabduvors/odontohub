@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { X, Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useCreateService, useUpdateService } from '@/api/services';
 import { toast } from '@/components/Shared/Toast';
 
@@ -12,6 +13,7 @@ interface ServiceModalProps {
 }
 
 const ServiceModal: React.FC<ServiceModalProps> = ({ isOpen, onClose, initialService }) => {
+    const t = useTranslations();
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const createService = useCreateService();
@@ -49,7 +51,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({ isOpen, onClose, initialSer
             setName('');
             setPrice('');
         } catch (error: any) {
-            toast.error(error.response?.data?.detail || 'Failed to save service');
+            toast.error(error.response?.data?.detail || t('service_modal.save_failed'));
         }
     };
 
@@ -69,24 +71,24 @@ const ServiceModal: React.FC<ServiceModalProps> = ({ isOpen, onClose, initialSer
                 </button>
 
                 <h2 className="text-2xl font-black text-[#1a1f36] mb-6">
-                    {isEdit ? 'Редактировать услугу' : 'Добавить услугу'}
+                    {isEdit ? t('service_modal.edit_title') : t('service_modal.add_title')}
                 </h2>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="block text-sm font-bold text-gray-500 mb-2">Название услуги</label>
+                        <label className="block text-sm font-bold text-gray-500 mb-2">{t('service_modal.name_label')}</label>
                         <input
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             className="w-full h-12 bg-[#efefef] rounded-[14px] px-4 font-bold text-[#1a1f36] border-none outline-none focus:ring-2 focus:ring-[#4f6bff]/20"
-                            placeholder="Например: Чистка зубов"
+                            placeholder={t('service_modal.name_ph')}
                             autoFocus
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-bold text-gray-500 mb-2">Цена (UZS)</label>
+                        <label className="block text-sm font-bold text-gray-500 mb-2">{t('service_modal.price_label')}</label>
                         <input
                             type="number"
                             value={price}
@@ -102,7 +104,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({ isOpen, onClose, initialSer
                         className="w-full h-14 bg-[#4f6bff] text-white font-bold rounded-[14px] shadow-lg shadow-[#4f6bff]/20 hover:bg-[#3d56d5] transition-all disabled:opacity-50 flex items-center justify-center gap-2 mt-4"
                     >
                         {isLoading && <Loader2 className="animate-spin w-5 h-5" />}
-                        {isEdit ? 'Сохранить' : 'Создать'}
+                        {isEdit ? t('common.save') : t('service_modal.create')}
                     </button>
                 </form>
             </div>

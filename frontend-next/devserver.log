@@ -6,12 +6,166 @@
 - Local:         http://localhost:3000
 - Network:       http://192.168.100.217:3000
 - Environments: .env.local
-✓ Ready in 2.8min
-○ Compiling middleware ...
+✓ Ready in 681ms
 ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
 
- GET /ru/login 200 in 33.5s (next.js: 25.7s, proxy.ts: 84ms, generate-params: 11.9s, application-code: 7.7s)
- GET /ru/register_pat 200 in 14.7s (next.js: 12.8s, proxy.ts: 85ms, generate-params: 12.0s, application-code: 1732ms)
- GET /ru/register_pat 200 in 1161ms (next.js: 196ms, proxy.ts: 63ms, generate-params: 121ms, application-code: 902ms)
- GET /ru/login 200 in 1073ms (next.js: 163ms, proxy.ts: 37ms, generate-params: 100ms, application-code: 872ms)
-[?25h
+ GET /uz/menu 200 in 3.6s (next.js: 3.1s, proxy.ts: 147ms, generate-params: 1222ms, application-code: 372ms)
+ GET /sw.js 404 in 703ms (next.js: 634ms, generate-params: 559ms, application-code: 69ms)
+ GET /uz/menu 200 in 104ms (next.js: 20ms, proxy.ts: 17ms, generate-params: 9ms, application-code: 67ms)
+ GET /sw.js 404 in 85ms (next.js: 16ms, generate-params: 11ms, application-code: 69ms)
+ GET /uz 200 in 87ms (next.js: 25ms, proxy.ts: 7ms, generate-params: 8ms, application-code: 55ms)
+ GET /sw.js 404 in 75ms (next.js: 12ms, generate-params: 9ms, application-code: 62ms)
+ GET /uz/menu 200 in 111ms (next.js: 17ms, proxy.ts: 4ms, generate-params: 9ms, application-code: 89ms)
+ GET /sw.js 404 in 73ms (next.js: 13ms, generate-params: 9ms, application-code: 61ms)
+ GET /sw.js 404 in 67ms (next.js: 11ms, generate-params: 7ms, application-code: 56ms)
+✓ Compiled in 624ms
+ GET /uz/menu 200 in 350ms (next.js: 220ms, proxy.ts: 50ms, generate-params: 13ms, application-code: 80ms)
+✓ Compiled in 282ms
+✓ Compiled in 437ms
+ GET /uz/menu 200 in 521ms (next.js: 193ms, proxy.ts: 51ms, generate-params: 10ms, application-code: 277ms)
+ GET /uz/menu 200 in 101ms (next.js: 16ms, proxy.ts: 5ms, generate-params: 9ms, application-code: 79ms)
+ GET /sw.js 404 in 195ms (next.js: 44ms, generate-params: 12ms, application-code: 151ms)
+ GET /uz/menu 200 in 110ms (next.js: 20ms, proxy.ts: 8ms, generate-params: 9ms, application-code: 83ms)
+ GET /sw.js 404 in 81ms (next.js: 14ms, generate-params: 9ms, application-code: 66ms)
+○ Compiling /[locale]/patients ...
+ GET /uz/patients 200 in 6.1s (next.js: 6.0s, proxy.ts: 8ms, generate-params: 729ms, application-code: 151ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /uz/appointments 200 in 2.4s (next.js: 2.3s, proxy.ts: 11ms, generate-params: 753ms, application-code: 56ms)
+ GET /sw.js 404 in 267ms (next.js: 99ms, generate-params: 37ms, application-code: 168ms)
+ GET /uz/chats 200 in 844ms (next.js: 784ms, proxy.ts: 11ms, generate-params: 630ms, application-code: 49ms)
+ GET /uz/notifications 200 in 765ms (next.js: 717ms, proxy.ts: 5ms, generate-params: 628ms, application-code: 42ms)
+ GET /uz/patients 200 in 62ms (next.js: 19ms, proxy.ts: 5ms, generate-params: 9ms, application-code: 39ms)
+ GET /uz/menu 200 in 66ms (next.js: 24ms, proxy.ts: 5ms, generate-params: 11ms, application-code: 38ms)
+✓ Compiled in 511ms
+✓ Compiled in 311ms
+✓ Compiled in 408ms
+[browser] ./components/Bosh sahifa/Hero.tsx:183:16
+Expected '</', got 'jsx text'
+  181 |           </div>
+  182 |         </div>
+> 183 |       </header>
+      |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 184 |
+      | ^
+> 185 |       {isRatingModalOpen && (
+      | ^^^^^^
+  186 |         <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center just...
+  187 |           <div ref={ratingModalRef} className="bg-white rounded-2xl sm:rounded-[32px] w-f...
+  188 |             <div className="p-4 sm:p-8 border-b border-gray-100 bg-gray-50/50 flex items-...
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Client Component Browser:
+    ./components/Bosh sahifa/Hero.tsx [Client Component Browser]
+    ./app/[locale]/(doctor)/menu/page.tsx [Client Component Browser]
+    ./app/[locale]/(doctor)/menu/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Bosh sahifa/Hero.tsx [Client Component SSR]
+    ./app/[locale]/(doctor)/menu/page.tsx [Client Component SSR]
+    ./app/[locale]/(doctor)/menu/page.tsx [Server Component] 
+[browser] ./components/Bosh sahifa/Hero.tsx:183:16
+Expected '</', got 'jsx text'
+  181 |           </div>
+  182 |         </div>
+> 183 |       </header>
+      |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 184 |
+      | ^
+> 185 |       {isRatingModalOpen && (
+      | ^^^^^^
+  186 |         <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center just...
+  187 |           <div ref={ratingModalRef} className="bg-white rounded-2xl sm:rounded-[32px] w-f...
+  188 |             <div className="p-4 sm:p-8 border-b border-gray-100 bg-gray-50/50 flex items-...
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Client Component Browser:
+    ./components/Bosh sahifa/Hero.tsx [Client Component Browser]
+    ./app/[locale]/(doctor)/menu/page.tsx [Client Component Browser]
+    ./app/[locale]/(doctor)/menu/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Bosh sahifa/Hero.tsx [Client Component SSR]
+    ./app/[locale]/(doctor)/menu/page.tsx [Client Component SSR]
+    ./app/[locale]/(doctor)/menu/page.tsx [Server Component] 
+✓ Compiled in 115ms
+[browser] ./components/Bosh sahifa/Hero.tsx:183:16
+Expected '</', got 'jsx text'
+  181 |           </div>
+  182 |         </div>
+> 183 |       </header>
+      |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 184 |
+      | ^
+> 185 |       {isRatingModalOpen && (
+      | ^^^^^^
+  186 |         <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center just...
+  187 |           <div ref={ratingModalRef} className="bg-white rounded-2xl sm:rounded-[32px] w-f...
+  188 |             <div className="p-4 sm:p-8 border-b border-gray-100 bg-gray-50/50 flex items-...
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Client Component Browser:
+    ./components/Bosh sahifa/Hero.tsx [Client Component Browser]
+    ./app/[locale]/(doctor)/menu/page.tsx [Client Component Browser]
+    ./app/[locale]/(doctor)/menu/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Bosh sahifa/Hero.tsx [Client Component SSR]
+    ./app/[locale]/(doctor)/menu/page.tsx [Client Component SSR]
+    ./app/[locale]/(doctor)/menu/page.tsx [Server Component] 
+ GET /uz/menu 200 in 898ms (next.js: 315ms, proxy.ts: 139ms, generate-params: 15ms, application-code: 444ms)
+ GET /sw.js 404 in 122ms (next.js: 29ms, generate-params: 7ms, application-code: 92ms)
+ GET /uz/menu 200 in 96ms (next.js: 50ms, proxy.ts: 4ms, generate-params: 7ms, application-code: 42ms)
+ GET /uz/menu 200 in 87ms (next.js: 15ms, proxy.ts: 6ms, generate-params: 8ms, application-code: 66ms)
+ GET /sw.js 404 in 69ms (next.js: 10ms, generate-params: 6ms, application-code: 60ms)
+✓ Compiled in 472ms
+ GET /sw.js 404 in 333ms (next.js: 104ms, generate-params: 7ms, application-code: 228ms)
+ GET /uz/menu 200 in 375ms (next.js: 115ms, proxy.ts: 29ms, generate-params: 6ms, application-code: 232ms)
+ GET /uz/menu 200 in 99ms (next.js: 21ms, proxy.ts: 6ms, generate-params: 8ms, application-code: 72ms)
+ GET /sw.js 404 in 52ms (next.js: 10ms, generate-params: 7ms, application-code: 43ms)
+ GET /sw.js 404 in 89ms (next.js: 20ms, generate-params: 8ms, application-code: 69ms)
+ GET /uz/menu 200 in 267ms (next.js: 42ms, proxy.ts: 67ms, generate-params: 12ms, application-code: 158ms)
+ GET /sw.js 404 in 87ms (next.js: 11ms, generate-params: 7ms, application-code: 75ms)
+✓ Compiled in 867ms
+ GET /uz/menu 200 in 1215ms (next.js: 376ms, proxy.ts: 113ms, generate-params: 18ms, application-code: 726ms)
+ GET /sw.js 404 in 201ms (next.js: 55ms, generate-params: 14ms, application-code: 146ms)
+✓ Compiled in 549ms
+ GET /sw.js 404 in 449ms (next.js: 191ms, generate-params: 12ms, application-code: 258ms)
+✓ Compiled in 485ms
+ GET /uz/menu 200 in 642ms (next.js: 203ms, proxy.ts: 45ms, generate-params: 12ms, application-code: 394ms)
+ GET /sw.js 404 in 122ms (next.js: 33ms, generate-params: 10ms, application-code: 90ms)
+ GET /uz/menu 200 in 120ms (next.js: 20ms, proxy.ts: 12ms, generate-params: 8ms, application-code: 88ms)
+ GET /sw.js 404 in 68ms (next.js: 10ms, generate-params: 6ms, application-code: 58ms)
+✓ Compiled in 249ms
+✓ Compiled in 141ms
+ GET /uz/menu 200 in 857ms (next.js: 185ms, proxy.ts: 56ms, generate-params: 10ms, application-code: 616ms)
+ GET /sw.js 404 in 319ms (next.js: 106ms, generate-params: 11ms, application-code: 213ms)
+ GET /sw.js 404 in 102ms (next.js: 23ms, generate-params: 9ms, application-code: 78ms)
+ GET /uz/menu 200 in 127ms (next.js: 16ms, proxy.ts: 24ms, generate-params: 7ms, application-code: 88ms)
+ GET /sw.js 404 in 64ms (next.js: 11ms, generate-params: 7ms, application-code: 52ms)
+ GET /uz/menu 200 in 547ms (next.js: 92ms, proxy.ts: 107ms, generate-params: 31ms, application-code: 348ms)
+ GET /sw.js 404 in 125ms (next.js: 16ms, generate-params: 10ms, application-code: 109ms)
+ GET /sw.js 404 in 77ms (next.js: 14ms, generate-params: 8ms, application-code: 64ms)
+ GET /uz/menu 200 in 144ms (next.js: 29ms, proxy.ts: 13ms, generate-params: 7ms, application-code: 103ms)
+ GET /sw.js 404 in 96ms (next.js: 15ms, generate-params: 9ms, application-code: 81ms)
+ GET /ru 200 in 87ms (next.js: 14ms, proxy.ts: 6ms, generate-params: 7ms, application-code: 68ms)
+ GET /uz 200 in 64ms (next.js: 13ms, proxy.ts: 8ms, generate-params: 6ms, application-code: 42ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /uz 200 in 33ms (next.js: 19ms, proxy.ts: 4ms, generate-params: 10ms, application-code: 9ms)
+ GET /uz 200 in 47ms (next.js: 12ms, proxy.ts: 6ms, generate-params: 44µs, application-code: 29ms)
+ GET /uz/role 200 in 847ms (next.js: 799ms, proxy.ts: 9ms, generate-params: 526ms, application-code: 39ms)
+ GET /uz/home 200 in 1064ms (next.js: 934ms, proxy.ts: 9ms, generate-params: 591ms, application-code: 120ms)
+ GET /uz/home 200 in 77ms (next.js: 25ms, proxy.ts: 4ms, generate-params: 8ms, application-code: 48ms)
+ GET /uz/login 200 in 1010ms (next.js: 811ms, proxy.ts: 6ms, generate-params: 615ms, application-code: 192ms)
+ GET /uz/menu 200 in 51ms (next.js: 17ms, proxy.ts: 5ms, generate-params: 10ms, application-code: 29ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /uz/menu 200 in 51ms (next.js: 18ms, proxy.ts: 5ms, generate-params: 9ms, application-code: 28ms)
+ GET /uz/menu 200 in 337ms (next.js: 49ms, proxy.ts: 65ms, generate-params: 18ms, application-code: 224ms)
+✓ Compiled in 625ms
+ GET /uz/menu 200 in 1093ms (next.js: 595ms, proxy.ts: 378ms, generate-params: 9ms, application-code: 119ms)
+ GET /uz/menu 200 in 1480ms (next.js: 16ms, proxy.ts: 7ms, generate-params: 8ms, application-code: 1457ms)

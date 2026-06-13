@@ -29,12 +29,12 @@ export default function PatientsTable({ patients }: Props) {
     e.preventDefault();
     e.stopPropagation();
 
-    if (window.confirm(`Вы уверены, что хотите удалить пациента "${patientName}"?`)) {
+    if (window.confirm(t('patients_list.delete_confirm', { name: patientName }))) {
       try {
         await deletePatient.mutateAsync(patientId);
       } catch (error) {
         console.error('Error deleting patient:', error);
-        toast.error('Ошибка при удалении пациента');
+        toast.error(t('patients_list.delete_error'));
       }
     }
   };
@@ -60,7 +60,7 @@ export default function PatientsTable({ patients }: Props) {
         <div>{t('patients_list.table.phone')}</div>
         <div>{t('patients_list.table.diagnosis')}</div>
         <div>{t('patients_list.table.status')}</div>
-        <div className="text-right">Действия</div>
+        <div className="text-right">{t('patients_list.table.actions')}</div>
       </div>
 
       <div className="space-y-3 sm:space-y-2 mt-2">

@@ -46,9 +46,9 @@ export default function UpcomingAppointment() {
     const mins = Math.floor(diff / (1000 * 60));
     const hours = Math.floor(mins / 60);
     const days = Math.floor(hours / 24);
-    if (days > 0) return `${days}д ${hours % 24}ч`;
-    if (hours > 0) return `${hours}ч ${mins % 60}м`;
-    return `${mins}м`;
+    if (days > 0) return `${days}${t('patient.home.short_days')} ${hours % 24}${t('patient.home.short_hours')}`;
+    if (hours > 0) return `${hours}${t('patient.home.short_hours')} ${mins % 60}${t('patient.home.short_mins')}`;
+    return `${mins}${t('patient.home.short_mins')}`;
   };
 
   const remainingTimeStr = getRemainingTime(startTime);
@@ -81,7 +81,7 @@ export default function UpcomingAppointment() {
             <h3 className="text-xl lg:text-4xl font-black">{upcoming.service || t('patient.appointments.type_extraction')}</h3>
             <div className="flex items-center gap-2 opacity-90 text-sm lg:text-xl">
               <Users size={20} className="lg:size-6" />
-              <span className="font-bold">{upcoming.dentist_name || 'Махмуд Пулатов'}</span>
+              <span className="font-bold">{upcoming.dentist_name || t('common.doctor')}</span>
             </div>
             <p className="text-xs lg:text-base opacity-75 font-bold tracking-wide uppercase">{t('patient.appointments.specialty_general')}</p>
           </div>
@@ -102,7 +102,7 @@ export default function UpcomingAppointment() {
           </div>
           <div className="w-px h-6 bg-white/20 hidden sm:block"></div>
           <div className="flex items-center gap-3 text-blue-50">
-            <span className="opacity-80">До приёма:</span>
+            <span className="opacity-80">{t('patient.home.until_appointment')}</span>
             <span className="font-mono text-sm lg:text-xl tracking-wider bg-white/20 px-4 py-1.5 rounded-xl">
               {remainingTimeStr}
             </span>

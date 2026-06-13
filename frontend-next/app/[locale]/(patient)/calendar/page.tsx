@@ -31,9 +31,9 @@ const PatientAppointments = () => {
 
             return {
                 id: app.id,
-                title: app.service || "РџСЂРёС‘Рј Сѓ РІСЂР°С‡Р°",
-                doctor: app.dentist_name || "Р”РѕРєС‚РѕСЂ",
-                specialty: "РЎС‚РѕРјР°С‚РѕР»РѕРі",
+                title: app.service || t('patient_pages.calendar.appointment_default'),
+                doctor: app.dentist_name || t('patient_pages.calendar.doctor_default'),
+                specialty: t('patient_pages.calendar.specialty'),
                 date: startDate.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }),
                 time: `${startDate.getHours().toString().padStart(2, '0')}:${startDate.getMinutes().toString().padStart(2, '0')}-${endDate.getHours().toString().padStart(2, '0')}:${endDate.getMinutes().toString().padStart(2, '0')}`,
                 image: DentistImg,
@@ -43,8 +43,8 @@ const PatientAppointments = () => {
                     app.status === 'moved' ? 'rescheduled' :
                     app.status === 'pending' ? 'pending' : 'success',
                 statusText: app.status === 'completed' ? t("patient.appointments.success_status") :
-                    app.status === 'cancelled' ? (t("patient.appointments.cancelled_status") || 'РћС‚РјРµРЅС‘РЅ') :
-                    app.status === 'moved' ? (t("patient.appointments.rescheduled_status") || 'РџРµСЂРµРЅРµСЃС‘РЅ') :
+                    app.status === 'cancelled' ? t("patient.appointments.cancelled_status") :
+                    app.status === 'moved' ? t("patient.appointments.rescheduled_status") :
                     app.status === 'pending' ? (t.has("patient.appointments.pending_status") ? t("patient.appointments.pending_status") : "Kutilmoqda") :
                     t("patient.appointments.success_status"),
                 comment: app.cancel_reason || app.notes || undefined,
@@ -86,7 +86,7 @@ const PatientAppointments = () => {
                     </div>
                 ) : (
                     <div className="text-center py-20 text-gray-400 font-bold">
-                        {t.has("patient.appointments.empty_list") ? t("patient.appointments.empty_list") : "РЈ РІР°СЃ РїРѕРєР° РЅРµС‚ РїСЂРёС‘РјРѕРІ"}
+                        {t.has("patient.appointments.empty_list") ? t("patient.appointments.empty_list") : t('patient_pages.calendar.empty')}
                     </div>
                 )}
             </div>

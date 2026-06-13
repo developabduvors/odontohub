@@ -41,11 +41,11 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
     const [minute, setMinute] = useState('00');
 
     const services = [
-        { id: 1, name: 'Маслаҳат', price: '0', currency: 'UZS' },
-        { id: 2, name: 'Кўрик', price: '50000', currency: 'UZS' },
-        { id: 3, name: 'Рентген', price: '80000', currency: 'UZS' },
-        { id: 4, name: 'Гигиена', price: '200000', currency: 'UZS' },
-        { id: 5, name: 'Пломба', price: '300000', currency: 'UZS' },
+        { id: 1, name: 'Маслаҳат', label: t('modal.services.consultation'), price: '0', currency: 'UZS' },
+        { id: 2, name: 'Кўрик', label: t('modal.services.checkup'), price: '50000', currency: 'UZS' },
+        { id: 3, name: 'Рентген', label: t('modal.services.xray'), price: '80000', currency: 'UZS' },
+        { id: 4, name: 'Гигиена', label: t('modal.services.hygiene'), price: '200000', currency: 'UZS' },
+        { id: 5, name: 'Пломба', label: t('modal.services.filling'), price: '300000', currency: 'UZS' },
     ];
 
     const transliterate = (text: string) => {
@@ -96,9 +96,9 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
             setSearchTerm(patient.full_name);
             setShowQuickAdd(false);
             setIsDropdownOpen(false);
-            toast.success('Янги бемор қўшилди');
+            toast.success(t('modal.toast_patient_added'));
         } catch (error: any) {
-            const errorMessage = error?.response?.data?.detail || error?.message || 'Хатолик юз берди';
+            const errorMessage = error?.response?.data?.detail || error?.message || t('appointments.toasts.error');
             toast.error(errorMessage);
         }
     };
@@ -119,11 +119,11 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
                     setSearchTerm(exactMatch.full_name);
                 } else {
                     setShowQuickAdd(true);
-                    toast.info('Бемор топилмади. Телефон рақам киритинг.');
+                    toast.info(t('modal.toast_not_found'));
                     return;
                 }
             } else {
-                toast.error('Пациентни танланг');
+                toast.error(t('modal.select_patient'));
                 return;
             }
         }
@@ -137,7 +137,7 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
         }
 
         if (!dentistId) {
-            toast.error('Доктор маълумоти топилмади. Қайта киринг.');
+            toast.error(t('modal.no_dentist'));
             return;
         }
 
@@ -158,11 +158,11 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
                 price: servicePrice
             });
 
-            toast.success('Қабул муваффақиятли сақланди');
+            toast.success(t('modal.saved'));
             if (onSuccess) onSuccess();
             onClose();
         } catch (error: any) {
-            const errorMessage = error?.response?.data?.detail || error?.message || 'Хатолик юз берди';
+            const errorMessage = error?.response?.data?.detail || error?.message || t('appointments.toasts.error');
             toast.error(errorMessage);
         }
     };
@@ -231,8 +231,8 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
                                                 {p.full_name?.charAt(0) || 'P'}
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <p className="font-bold text-[#1a1f36] truncate">{p.full_name || 'Номсиз бемор'}</p>
-                                                <p className="text-xs text-gray-400">{p.phone || 'Рақамсиз'}</p>
+                                                <p className="font-bold text-[#1a1f36] truncate">{p.full_name || t('modal.unnamed_patient')}</p>
+                                                <p className="text-xs text-gray-400">{p.phone || t('modal.no_phone')}</p>
                                             </div>
                                         </div>
                                     ))
@@ -241,7 +241,7 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
                                         <div className="py-4 text-center text-gray-400 font-bold">
                                             {(patients?.length || 0) > 0
                                                 ? t('common.no_results')
-                                                : 'Sizning рўйхатингизда беморлар йўқ'}
+                                                : t('modal.empty_patients')}
                                         </div>
                                         {searchTerm.trim().length > 0 && (
                                             <button
@@ -252,7 +252,7 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
                                                 className="w-full mt-2 py-4 bg-[#4f6bff] text-white rounded-[18px] font-bold flex items-center justify-center gap-2 hover:bg-[#3d56d5] transition-all shadow-lg shadow-[#4f6bff]/20"
                                             >
                                                 <Plus size={20} />
-                                                <span>Янги қўшиш: &quot;{searchTerm}&quot;</span>
+                                                <span>{t('modal.add_new_named', { term: searchTerm })}</span>
                                             </button>
                                         )}
                                     </div>
@@ -263,13 +263,13 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
                         {showQuickAdd && (
                             <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-[24px] shadow-2xl border border-gray-100 z-100 p-6 animate-in slide-in-from-top-2 duration-200">
                                 <h3 className="font-bold text-[#1a1f36] mb-4 flex items-center gap-2">
-                                    <Plus size={18} /> Быстрое добавление пациента
+                                    <Plus size={18} /> {t('modal.quick_add_title')}
                                 </h3>
                                 <div className="space-y-4">
                                     <div className="relative">
                                         <input
                                             type="tel"
-                                            placeholder="Номер телефона"
+                                            placeholder={t('modal.phone_placeholder')}
                                             value={newPatientPhone}
                                             onChange={(e) => setNewPatientPhone(e.target.value)}
                                             className="w-full h-14 bg-[#efefef] rounded-[15px] px-10 text-lg font-bold text-[#1a1f36] border-none focus:ring-2 focus:ring-[#4f6bff]/20 outline-none"
@@ -281,7 +281,7 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
                                             onClick={() => setShowQuickAdd(false)}
                                             className="flex-1 py-3 bg-gray-100 text-gray-500 font-bold rounded-[15px] hover:bg-gray-200 transition-colors"
                                         >
-                                            Отмена
+                                            {t('common.cancel')}
                                         </button>
                                         <button
                                             onClick={handleQuickAdd}
@@ -289,7 +289,7 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
                                             className="flex-2 py-3 bg-[#4f6bff] text-white font-bold rounded-[15px] hover:bg-[#3d56d5] transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
                                         >
                                             {createPatient.isPending && <Loader2 size={18} className="animate-spin" />}
-                                            Создать и выбрать
+                                            {t('modal.create_select')}
                                         </button>
                                     </div>
                                 </div>
@@ -306,7 +306,7 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
                             >
                                 {services?.map((s: any) => (
                                     <option key={s.id} value={s.name}>
-                                        {s.name} - {s.price} {s.currency || 'UZS'}
+                                        {s.label} - {s.price} {s.currency || 'UZS'}
                                     </option>
                                 ))}
                             </select>
@@ -407,7 +407,7 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
                         }`}
                     >
                         {createAppointment.isPending && <Loader2 className="animate-spin" />}
-                        {createAppointment.isPending ? 'Сақланмоқда...' : t('modal.record')}
+                        {createAppointment.isPending ? t('common.saving') : t('modal.record')}
                     </button>
                 </div>
             </div>

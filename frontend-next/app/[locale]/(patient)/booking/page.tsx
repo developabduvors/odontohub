@@ -15,11 +15,6 @@ import { toast } from '@/components/Shared/Toast';
 import { paths } from '@/lib/paths';
 import { getUser } from '@/utils/auth';
 
-const RU_MONTHS = [
-    "январь", "февраль", "март", "апрель", "май", "июнь",
-    "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"
-];
-
 const Booking = () => {
     const router = useRouter();
     const t = useTranslations();
@@ -103,7 +98,7 @@ const Booking = () => {
             const targetPatientId = patientFromState || userData.patient_id;
 
             if (userData.role === 'dentist' && !targetPatientId) {
-                toast.error("Для создания записи необходимо выбрать пациента");
+                toast.error(t("booking.select_patient"));
                 setIsSubmitting(false);
                 return;
             }
@@ -118,26 +113,26 @@ const Booking = () => {
                 notes: comment || undefined
             });
 
-            toast.success("Запись успешно создана!");
+            toast.success(t("booking.created"));
 
             // Hand the booked summary to /booking/checkup-preview (App Router has no router state)
             const selectedDoctorData = dentists.find(d => d.id.toString() === selectedDoctor);
             const previewPayload = {
-                title: selectedService || "Осмотр",
-                date: `${selectedDate.getDate()} ${RU_MONTHS[selectedDate.getMonth()]}`,
+                title: selectedService || t("booking.default_service"),
+                date: `${selectedDate.getDate()} ${t(`common.months.${selectedDate.getMonth()}`)}`,
                 time: selectedTime,
                 doctor: {
-                    name: selectedDoctorData?.full_name || "Врач",
-                    direction: selectedDoctorData?.specialization || "Стоматолог",
-                    experience: selectedDoctorData?.experience_years != null ? `${selectedDoctorData.experience_years} года` : "",
+                    name: selectedDoctorData?.full_name || t("booking.default_doctor"),
+                    direction: selectedDoctorData?.specialization || t("booking.default_specialty"),
+                    experience: selectedDoctorData?.experience_years != null ? `${selectedDoctorData.experience_years} ${t('doctor_profile.experience_suffix')}` : "",
                     rating: selectedDoctorData?.rating != null ? String(selectedDoctorData.rating) : "—",
                     image: "/assets/img/photos/Dentist.png",
                 },
                 details: {
-                    status: "запланирован",
+                    status: t("booking.status_planned"),
                     date: selectedDate.toLocaleDateString('ru-RU'),
-                    duration: "1 час",
-                    tip: comment || "Пусто",
+                    duration: t("booking.duration_1h"),
+                    tip: comment || t("booking.empty"),
                     notes: comment || "",
                 },
                 price: selectedServiceData ? `${selectedServiceData.price.toLocaleString()} ${selectedServiceData.currency}` : "",
@@ -151,9 +146,9 @@ const Booking = () => {
             const status = error.response?.status;
             const detail = error.response?.data?.detail;
             if (status === 409) {
-                toast.error(detail || "Bu vaqtda shifokor band. Boshqa vaqt tanlang.");
+                toast.error(detail || t("booking.slot_taken"));
             } else {
-                toast.error(detail || "Ошибка при создании записи");
+                toast.error(detail || t("booking.create_error"));
             }
         } finally {
             setIsSubmitting(false);
@@ -170,7 +165,7 @@ const Booking = () => {
                 >
                     <FaArrowLeft />
                 </button>
-                <h1 className="text-2xl md:text-3xl font-black text-[#1D1D2B] tracking-tight">Новая запись</h1>
+                <h1 className="text-2xl md:text-3xl font-black text-[#1D1D2B] tracking-tight">{t('booking.title')}</h1>
                 <div className="w-12"></div>
             </div>
 
@@ -179,7 +174,7 @@ const Booking = () => {
                 <div className="bg-white rounded-[2rem] lg:rounded-[3rem] p-6 lg:p-10 shadow-sm border border-gray-100">
                     <h3 className="text-lg lg:text-2xl font-bold mb-6 lg:mb-8 text-[#1D1D2B] flex items-center gap-3">
                         <div className="w-1.5 lg:w-2 h-6 lg:h-8 bg-[#4361EE] rounded-full"></div>
-                        Выберите дату и время
+                        {t('booking.select_date_time')}
                     </h3>
 
                     <div className="mb-8 lg:mb-10">
@@ -202,9 +197,9 @@ const Booking = () => {
                     {/* Left: Doctor & Service Selection */}
                     <div className="bg-white rounded-[2rem] lg:rounded-[2.5rem] p-6 lg:p-8 shadow-sm border border-gray-50 space-y-6 lg:space-y-8">
                         <div className="space-y-4">
-                            <label className="text-xs lg:text-sm font-black uppercase text-gray-300 tracking-widest ml-1">Стоматолог</label>
+                            <label className="text-xs lg:text-sm font-black uppercase text-gray-300 tracking-widest ml-1">{t('booking.dentist')}</label>
                             <CustomDropdown
-                                placeholder="Выберите стоматолога"
+                                placeholder={t('booking.dentist_ph')}
                                 value={selectedDoctor}
                                 options={doctors}
                                 onChange={(val) => { setSelectedDoctor(val); setSelectedService(""); }}
@@ -213,9 +208,9 @@ const Booking = () => {
                         </div>
 
                         <div className="space-y-4">
-                            <label className="text-xs lg:text-sm font-black uppercase text-gray-300 tracking-widest ml-1">Услуга</label>
+                            <label className="text-xs lg:text-sm font-black uppercase text-gray-300 tracking-widest ml-1">{t('booking.service')}</label>
                             <CustomDropdown
-                                placeholder="Выберите услуgu"
+                                placeholder={t('booking.service_ph')}
                                 value={selectedService}
                                 options={services}
                                 onChange={setSelectedService}
@@ -226,7 +221,7 @@ const Booking = () => {
 
                     {/* Right: Comment */}
                     <div className="bg-white rounded-[2rem] lg:rounded-[2.5rem] p-6 lg:p-8 shadow-sm border border-gray-50 space-y-4">
-                        <label className="text-xs lg:text-sm font-black uppercase text-gray-300 tracking-widest ml-1">Комментарий к записи</label>
+                        <label className="text-xs lg:text-sm font-black uppercase text-gray-300 tracking-widest ml-1">{t('booking.comment')}</label>
                         <CommentInput
                             value={comment}
                             onChange={setComment}
@@ -242,7 +237,7 @@ const Booking = () => {
                     disabled={isSubmitting}
                     className='w-full max-w-md lg:max-w-xl h-14 lg:h-20 rounded-2xl lg:rounded-3xl bg-[#11D76A] font-black text-lg lg:text-2xl text-center text-white shadow-xl shadow-green-500/20 hover:brightness-105 hover:-translate-y-1 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed'
                 >
-                    {isSubmitting ? 'Отправка...' : 'Записаться'}
+                    {isSubmitting ? t('booking.submitting') : t('patient_pages.book')}
                 </button>
             </div>
         </div>

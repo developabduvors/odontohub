@@ -62,8 +62,15 @@ export default function Sidebar() {
     <div className="app-panel flex h-full min-h-0 flex-col overflow-hidden rounded-[32px] bg-transparent font-railway">
       <div className="flex items-center justify-between border-b border-white/50 bg-transparent px-5 pb-3 pt-1 sm:px-6 sm:pb-4 sm:pt-2">
         <Link href={paths.menu} className="flex items-center gap-3 self-start">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/img/icons/logo1.png" alt="GoSmile" className="h-auto w-[150px] sm:w-[160px]" />
+          {/* logo1.png is a 1081x1081 square with the wordmark in a thin centred band — crop the padding */}
+          <span className="relative block h-9 w-[168px] overflow-hidden sm:w-[178px]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/assets/img/icons/logo1.png"
+              alt="GoSmile"
+              className="absolute left-1/2 top-1/2 w-[252px] max-w-none -translate-x-1/2 -translate-y-1/2 sm:w-[266px]"
+            />
+          </span>
         </Link>
         {isDrawer && (
           <button
@@ -76,7 +83,8 @@ export default function Sidebar() {
         )}
       </div>
 
-      <nav className="flex-1 space-y-2 px-4 py-4">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
+      <nav className="space-y-2 px-4 py-4">
         {menuItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.path || (item.id === "chats" && pathname.startsWith("/chats"));
@@ -108,7 +116,7 @@ export default function Sidebar() {
         })}
       </nav>
 
-      <div className="mx-5 mb-4 mt-3 shrink-0 overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,#6577ff_0%,#8b7cf6_100%)] p-5 text-white shadow-[0_24px_50px_rgba(90,96,195,0.28)]">
+      <div className="mx-5 mb-4 mt-auto shrink-0 overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,#6577ff_0%,#8b7cf6_100%)] p-5 text-white shadow-[0_24px_50px_rgba(90,96,195,0.28)]">
         <div className="relative z-10 text-center">
           <h3 className="mb-4 font-space text-lg font-bold">{t("sidebar.focus_title")}</h3>
           <div className="space-y-1.5 text-base font-semibold">
@@ -122,6 +130,7 @@ export default function Sidebar() {
           </Link>
         </div>
       </div>
+      </div>
     </div>
   );
 
@@ -134,15 +143,23 @@ export default function Sidebar() {
       <header className="fixed inset-x-0 top-0 z-40 border-b border-white/40 bg-white/70 shadow-sm backdrop-blur-xl lg:hidden">
         <div className="flex items-center justify-between px-4 py-2.5">
           <Link href={paths.menu} className="flex shrink-0 items-center">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/img/icons/logo1.png" alt="GoSmile" className="h-9 w-auto" />
+            {/* logo content is 723x151 inside a 1081² square (67% x 14%, centred);
+                crop the padding and zoom so the wordmark reads at ~42px tall */}
+            <span className="relative block h-11 w-[200px] shrink-0 overflow-hidden">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/assets/img/icons/logo1.png"
+                alt="GoSmile"
+                className="absolute left-1/2 top-1/2 w-[300px] max-w-none -translate-x-1/2 -translate-y-1/2"
+              />
+            </span>
           </Link>
           <button
             onClick={() => setIsMobileOpen(true)}
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/60 bg-white/60 text-[#42507f] shadow-sm transition-colors hover:bg-white"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/60 bg-white/60 text-[#42507f] shadow-sm transition-colors hover:bg-white"
             aria-label={t("common.menu")}
           >
-            <Menu size={24} strokeWidth={2.2} />
+            <Menu size={22} strokeWidth={2.2} />
           </button>
         </div>
       </header>

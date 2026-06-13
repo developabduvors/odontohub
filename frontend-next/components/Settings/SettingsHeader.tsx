@@ -3,6 +3,7 @@
 import React from 'react';
 import { ArrowLeft, Search } from 'lucide-react';
 import { useSelector } from 'react-redux';
+import { useTranslations } from 'next-intl';
 
 import { Link, useRouter } from '@/i18n/navigation';
 import { paths } from '@/lib/paths';
@@ -10,6 +11,7 @@ import type { RootState } from '@/store/store';
 
 export const SettingsHeader: React.FC = () => {
   const router = useRouter();
+  const t = useTranslations('common');
   const user = useSelector((state: RootState) => state.user.user);
 
   return (
@@ -24,7 +26,7 @@ export const SettingsHeader: React.FC = () => {
       <div className="relative order-3 w-full flex-1 sm:order-2 sm:max-w-4xl">
         <input
           type="text"
-          placeholder="Поиск"
+          placeholder={t('search')}
           className="h-[52px] w-full rounded-2xl border border-[#d9def7] bg-white px-5 pr-12 text-gray-600 outline-none transition focus:ring-2 focus:ring-[#7080ff]/20"
         />
         <Search className="absolute right-5 top-1/2 h-5 w-5 -translate-y-1/2 text-[#7080ff]" />
@@ -40,10 +42,10 @@ export const SettingsHeader: React.FC = () => {
         </div>
         <div className="hidden min-w-0 flex-col leading-tight md:flex">
           <span className="whitespace-nowrap text-sm font-bold">
-            {user?.full_name || 'Пользователь'}
+            {user?.full_name || t('user')}
           </span>
           <span className="text-[11px] text-white/70">
-            {user?.role === 'dentist' ? 'Врач' : 'Пациент'}
+            {user?.role === 'dentist' ? t('doctor') : t('patient')}
           </span>
         </div>
       </Link>

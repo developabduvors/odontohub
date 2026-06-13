@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { initializeTelegramWebApp, getTelegramLocale, isTelegramWebApp } from '@/lib/telegram-language';
 import type { SupportedLanguage } from '@/locales/i18n';
 
@@ -11,12 +12,28 @@ interface TelegramLanguageProviderProps {
 }
 
 /**
+ * Whether the app is actually running as a Telegram Mini App.
+ *
+ * NOTE: the bare presence of `window.Telegram.WebApp` is NOT enough — the
+ * `telegram-web-app.js` script (loaded globally in the layout) creates that
+ * object in every plain browser too. Only a real Telegram launch populates
+ * `initData`. Without this stricter check the provider would treat a normal
+ * browser as Telegram, force the locale back to the detected default on every
+ * navigation, and make manual language switching impossible.
+ */
+function inTelegramMiniApp(): boolean {
+  if (typeof window === 'undefined') return false;
+  const initData = window.Telegram?.WebApp?.initData;
+  return typeof initData === 'string' && initData.length > 0;
+}
+
+/**
  * Provider component that detects Telegram language and redirects to appropriate locale
  * Should be used in the layout to ensure language detection happens early
  */
 export function TelegramLanguageProvider({ children, currentLocale }: TelegramLanguageProviderProps) {
   const [isInitialized, setIsInitialized] = useState(false);
-  const [detectedLanguage, setDetectedLanguage] = useState<SupportedLanguage | null>(null);
+  const t = useTranslations('common');
   const router = useRouter();
   const pathname = usePathname();
 
@@ -25,35 +42,27 @@ export function TelegramLanguageProvider({ children, currentLocale }: TelegramLa
 
     const initializeLanguage = async () => {
       try {
-        // Only run language detection in Telegram WebApp environment
-        if (!isTelegramWebApp()) {
-          console.log('Not in Telegram WebApp, skipping language detection');
+        // Outside a real Telegram Mini App we must never override the locale,
+        // otherwise manual language switching in the browser is impossible.
+        if (!inTelegramMiniApp()) {
           setIsInitialized(true);
           return;
         }
 
-        // Initialize Telegram WebApp and detect language
+        // Apply the Telegram language only once per session. After that, respect
+        // whatever locale the user manually selected.
+        if (sessionStorage.getItem('tg_lang_applied')) {
+          setIsInitialized(true);
+          return;
+        }
+
         const telegramLanguage = await initializeTelegramWebApp();
-        
         if (!mounted) return;
 
-        setDetectedLanguage(telegramLanguage);
-        
-        // Get the appropriate locale for next-intl
-        const targetLocale = getTelegramLocale(telegramLanguage);
-        
-        console.log('Language detection result:', {
-          telegramLanguage,
-          targetLocale,
-          currentLocale,
-          pathname
-        });
+        sessionStorage.setItem('tg_lang_applied', '1');
 
-        // If detected language differs from current locale, redirect
+        const targetLocale = getTelegramLocale(telegramLanguage);
         if (targetLocale !== currentLocale) {
-          console.log(`Redirecting from ${currentLocale} to ${targetLocale}`);
-          
-          // Replace current locale in pathname with detected locale
           const newPathname = pathname.replace(`/${currentLocale}`, `/${targetLocale}`);
           router.replace(newPathname);
           return;
@@ -77,13 +86,13 @@ export function TelegramLanguageProvider({ children, currentLocale }: TelegramLa
     };
   }, [currentLocale, pathname, router]);
 
-  // Show loading state while initializing (only in Telegram WebApp)
-  if (isTelegramWebApp() && !isInitialized) {
+  // Show loading state while initializing (only inside a real Telegram Mini App)
+  if (inTelegramMiniApp() && !isInitialized) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
-          <p className="text-sm text-gray-600">Инициализация...</p>
+          <p className="text-sm text-gray-600">{t('initializing')}</p>
         </div>
       </div>
     );
