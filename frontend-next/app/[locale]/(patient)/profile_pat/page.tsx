@@ -13,16 +13,13 @@ import { usePatientProfile, useUpdatePatient } from "@/api/profile";
 import { toast } from "@/components/Shared/Toast";
 import { getToken } from "@/utils/auth";
 
-const DentistImg = "/assets/img/photos/Dentist.png";
+const DefaultAvatar = "/assets/img/photos/NoProfilePhoto.png";
 
 type PatientProfileState = {
     name: string;
     phone: string;
     gender: string;
     birthDate: string;
-    region: string;
-    city: string;
-    district: string;
     address: string;
     avatar: string;
 };
@@ -43,8 +40,6 @@ const PatientProfilePage = () => {
     const { data: patientProfile, isLoading } = usePatientProfile();
     const updatePatient = useUpdatePatient();
 
-    const defaultCity = t('patient_pages.profile_pat.default_city');
-    const defaultDistrict = t('patient_pages.profile_pat.default_district');
     const defaultAddress = t('patient_pages.profile_pat.default_address');
 
     const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
@@ -54,11 +49,8 @@ const PatientProfilePage = () => {
         phone: user?.phone || "+998 (90) 123 45 67",
         gender: "Мужчина",
         birthDate: "",
-        region: defaultCity,
-        city: defaultCity,
-        district: defaultDistrict,
         address: defaultAddress,
-        avatar: DentistImg,
+        avatar: DefaultAvatar,
     });
 
     useEffect(() => {
@@ -94,11 +86,8 @@ const PatientProfilePage = () => {
                 phone: patientProfile.phone || user?.phone || "+998 (90) 123 45 67",
                 gender: patientProfile.gender === "male" ? "Мужчина" : patientProfile.gender === "female" ? "Женщина" : "Мужчина",
                 birthDate: patientProfile.birth_date ? patientProfile.birth_date.slice(0, 10) : "",
-                region: defaultCity,
-                city: defaultCity,
-                district: defaultDistrict,
                 address: patientProfile.address || defaultAddress,
-                avatar: DentistImg,
+                avatar: DefaultAvatar,
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -244,8 +233,7 @@ const PatientProfilePage = () => {
                                 </div>
                                 <div className="pt-2 text-left">
                                     <p className="text-[10px] font-black uppercase tracking-widest text-gray-300">{t('patient_pages.profile_pat.location')}</p>
-                                    <p className="mt-1 text-sm font-bold text-[#1D1D2B]">{userData.region}, {userData.city}</p>
-                                    <p className="mt-0.5 text-xs font-semibold text-gray-500">{userData.district}</p>
+                                    <p className="mt-1 text-sm font-bold text-[#1D1D2B]">{userData.address || t('patient_pages.dentist.not_specified')}</p>
                                 </div>
                             </div>
                         </div>

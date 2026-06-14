@@ -28,6 +28,7 @@ class DentistProfile(Base):
     
     # Profile fields from EditDoctorProfile
     specialization: Mapped[str | None] = mapped_column(String, nullable=True)
+    education: Mapped[str | None] = mapped_column(String, nullable=True)  # doctor enters own education
     phone: Mapped[str | None] = mapped_column(String, nullable=True)
     address: Mapped[str | None] = mapped_column(String, nullable=True)
     clinic: Mapped[str | None] = mapped_column(String, nullable=True)

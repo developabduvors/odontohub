@@ -35,7 +35,7 @@ const DoctorInfoCard: FC<DoctorInfoCardProps> = ({ name, gender, birthDate, expe
                     <p>{t('patient_profile.gender')}: <span className="font-medium text-white">{gender}</span></p>
                     <p>{t('doctor_profile.birth_date')}: <span className="font-medium text-white">{birthDate || t('common.not_specified')}</span></p>
                     <p>{t('doctor_profile.experience_label')}: <span className="font-medium text-white">{experienceYears || t('common.not_specified')}</span></p>
-                    <p className="break-words">{t('doctor_profile.specialization_label')}: <span className="font-medium text-white">{specialization}</span></p>
+                    <p className="break-words">{t('doctor_profile.specialization_label')}: <span className="font-medium text-white">{specialization || t('common.not_specified')}</span></p>
                 </div>
             </div>
         </div>

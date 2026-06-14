@@ -117,6 +117,7 @@ def get_all_dentists(
             "user_id": dentist.user_id,
             "full_name": dentist.full_name,
             "specialization": dentist.specialization,
+            "education": dentist.education,
             "phone": dentist.user.phone if dentist.user else None,
             "email": dentist.user.email if dentist.user else None,
             "address": dentist.address,
@@ -193,6 +194,7 @@ def dentist_me(
         "diploma_photo_url": profile.diploma_photo_url,
         "verification_status": profile.verification_status.value if hasattr(profile.verification_status, 'value') else profile.verification_status,
         "specialization": profile.specialization,
+        "education": profile.education,
         "phone": user.phone,  # Берем из user, а не из profile
         "email": user.email,  # Добавляем email
         "address": profile.address,
@@ -316,8 +318,8 @@ def update_dentist_profile(
     
     # Список разрешенных полей для обновления
     allowed_fields = [
-        'full_name', 'specialization', 'clinic', 'address', 'age', 
-        'birth_date', 'experience_years', 'schedule', 'work_hours', 'telegram', 
+        'full_name', 'specialization', 'education', 'clinic', 'address', 'age',
+        'birth_date', 'experience_years', 'schedule', 'work_hours', 'telegram',
         'instagram', 'whatsapp', 'latitude', 'longitude', 'works_photos',
         'pinfl', 'diploma_number', 'gender'
     ]

@@ -9,6 +9,7 @@ import { useAllDentists } from "@/api/profile";
 import { toast } from "@/components/Shared/Toast";
 import { paths } from "@/lib/paths";
 import { getUser } from "@/utils/auth";
+import DoctorName from "@/components/Shared/DoctorName";
 
 const DentistImg = "/assets/img/photos/Dentist.png";
 
@@ -48,6 +49,7 @@ const DoctorProfilePreview = () => {
 
         return {
             id: source.id || 0,
+            displayName: source.full_name || source.name || '',
             name: source.full_name || source.name || t('patient_pages.dentist.default_name'),
             phone: source.phone || t('patient_pages.dentist.not_specified'),
             gender: source.gender === "male" ? t('patient_pages.dentist.gender_male') : source.gender === "female" ? t('patient_pages.dentist.gender_female') : "",
@@ -104,7 +106,11 @@ const DoctorProfilePreview = () => {
                         </div>
 
                         <div className="w-full rounded-[24px] bg-white p-5 shadow-sm">
-                            <h2 className="text-xl font-black text-[#1D1D2B]">{doctorData.name}</h2>
+                            <DoctorName
+                                name={doctorData.displayName}
+                                className="text-xl font-black text-[#1D1D2B]"
+                                placeholderClassName="text-sm font-bold text-gray-400"
+                            />
                             <p className="mt-1 text-xs font-bold text-gray-400">{doctorData.phone}</p>
                             {doctorData.diploma_photo_url && (
                                 <div className="mt-3 inline-flex items-center gap-1.5 rounded-xl border border-[#11D76A]/20 bg-[#E8F8F0] px-3 py-1.5 text-[#11D76A]">

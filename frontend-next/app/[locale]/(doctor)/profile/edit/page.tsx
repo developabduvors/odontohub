@@ -26,6 +26,7 @@ export default function EditDoctorProfilePage() {
 
   const [formData, setFormData] = useState({
     specialization: '',
+    education: '',
     phone: '',
     address: '',
     clinic: '',
@@ -51,6 +52,7 @@ export default function EditDoctorProfilePage() {
 
     setFormData({
       specialization: dentist.specialization || '',
+      education: dentist.education || '',
       phone: dentist.phone || '',
       address: dentist.address || '',
       clinic: dentist.clinic || '',
@@ -123,6 +125,7 @@ export default function EditDoctorProfilePage() {
     try {
       const payload: any = {
         specialization: formData.specialization,
+        education: formData.education,
         phone: formData.phone,
         address: formData.address,
         clinic: formData.clinic,
@@ -257,6 +260,17 @@ export default function EditDoctorProfilePage() {
                 onChange={(e) => setFormData({ ...formData, clinic: e.target.value })}
                 className="h-14 w-full rounded-2xl border-2 border-blue-200 bg-white px-4 text-lg font-semibold focus:border-blue-400 focus:outline-none"
                 placeholder={t('doctor_edit.clinic_ph')}
+              />
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm text-gray-600">{t('doctor_edit.education')}</label>
+              <input
+                type="text"
+                value={formData.education}
+                onChange={(e) => setFormData({ ...formData, education: e.target.value })}
+                className="h-14 w-full rounded-2xl border-2 border-blue-200 bg-white px-4 text-lg font-semibold focus:border-blue-400 focus:outline-none"
+                placeholder={t('doctor_edit.education_ph')}
               />
             </div>
 

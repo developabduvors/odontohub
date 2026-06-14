@@ -6,6 +6,7 @@ import { useRouter } from '@/i18n/navigation';
 import type { Doctor } from '@/types/patient';
 import { paths } from '@/lib/paths';
 import { FaMapMarkerAlt } from "react-icons/fa";
+import DoctorName from '@/components/Shared/DoctorName';
 
 interface DoctorCardProps {
     doctor: Doctor;
@@ -45,7 +46,11 @@ const DoctorCard: React.FC<DoctorCardProps> = ({ doctor, onBook, onOpenMap }) =>
 
             <div className="flex min-w-0 flex-1 flex-col justify-between pr-10 sm:pr-14 lg:pr-20">
                 <div>
-                    <h3 className="mb-1 line-clamp-2 text-sm font-bold leading-tight text-white sm:text-lg lg:mb-2 lg:text-2xl">{doctor.name}</h3>
+                    <DoctorName
+                        name={doctor.name}
+                        className="mb-1 line-clamp-2 block text-sm font-bold leading-tight text-white sm:text-lg lg:mb-2 lg:text-2xl"
+                        placeholderClassName="mb-1 block text-[11px] font-semibold leading-tight text-white/70 sm:text-xs lg:mb-2"
+                    />
                     <p className="mb-0.5 truncate text-[10px] font-medium text-white/90 sm:text-xs lg:text-sm">{t('direction_label')}: {doctor.direction || doctor.specialty}</p>
                     {doctor.experience ? (
                         <p className="mb-2 text-[10px] font-medium text-white/90 sm:mb-3 sm:text-xs lg:text-sm">{t('experience_label')}: {doctor.experience}</p>
