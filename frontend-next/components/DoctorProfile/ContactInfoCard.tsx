@@ -82,7 +82,7 @@ const ContactInfoCard: FC<ContactInfoCardProps> = ({ data }) => {
                 <ContactItem
                     icon={<GraduationCap className="w-3.5 h-3.5 text-gray-400" />}
                     label={t('doctor_profile.education')}
-                    value={data.education}
+                    value={data.education || t('common.not_specified')}
                 />
                 <ContactItem
                     icon={<Building2 className="w-3.5 h-3.5 text-gray-400" />}

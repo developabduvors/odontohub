@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
 import { paths } from '@/lib/paths';
 import type { Doctor } from "@/types/patient";
+import DoctorName from '@/components/Shared/DoctorName';
 
 interface DoctorInfoCardProps {
     doctor: Doctor;
@@ -34,7 +35,11 @@ const DoctorInfoCard: React.FC<DoctorInfoCardProps> = ({ doctor }) => {
 
             {/* Content */}
             <div className="flex-1 z-10 min-w-0">
-                <h3 className="text-lg sm:text-2xl lg:text-4xl font-bold mb-2 sm:mb-3 lg:mb-4 truncate">{doctor.name}</h3>
+                <DoctorName
+                    name={doctor.name}
+                    className="block text-lg sm:text-2xl lg:text-4xl font-bold mb-2 sm:mb-3 lg:mb-4 truncate"
+                    placeholderClassName="block text-base sm:text-lg lg:text-xl font-semibold text-white/70 mb-2 sm:mb-3 lg:mb-4"
+                />
                 <div className="space-y-1 sm:space-y-2 lg:space-y-3 text-sm sm:text-base lg:text-2xl opacity-90">
                     <p className="truncate">{t('direction')}: {doctor.direction}</p>
                     <p className="truncate">{t('work_experience')}: {doctor.experience}</p>

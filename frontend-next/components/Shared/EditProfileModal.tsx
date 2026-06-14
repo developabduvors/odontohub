@@ -2,8 +2,9 @@
 
 import { type FC, useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
+import { UZ_REGIONS } from '@/lib/regions';
 
-const DentistImg = "/assets/img/photos/Dentist.png";
+const DentistImg = "/assets/img/photos/NoProfilePhoto.png";
 
 interface EditProfileModalProps {
     isOpen: boolean;
@@ -124,15 +125,19 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ isOpen, onClose, initialD
                             />
                         </div>
 
-                        {/* Region */}
+                        {/* Joylashuv — faqat viloyat yoki shahar tanlanadi */}
                         <div className="space-y-2">
                             <label className="text-[14px] font-black text-[#1D1D2B] px-4">{t('edit_profile.region')}</label>
-                            <input
-                                type="text"
-                                value={formData.address || t('edit_profile.default_region')}
+                            <select
+                                value={UZ_REGIONS.includes(formData.address) ? formData.address : ''}
                                 onChange={(e) => handleChange('address', e.target.value)}
                                 className="w-full bg-[#D9D9D9] border-none rounded-[20px] py-4 px-6 text-lg font-black text-[#1D1D2B] focus:ring-2 focus:ring-blue-500/20"
-                            />
+                            >
+                                <option value="" disabled>{t('edit_profile.region_ph')}</option>
+                                {UZ_REGIONS.map((region) => (
+                                    <option key={region} value={region}>{region}</option>
+                                ))}
+                            </select>
                         </div>
 
                         {/* Confirmation */}

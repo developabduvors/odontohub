@@ -6,6 +6,7 @@ import { useMyAppointments } from '@/api/appointments';
 import { Link, useRouter } from '@/i18n/navigation';
 import { paths } from '@/lib/paths';
 import { MapPin } from 'lucide-react';
+import DoctorName from '@/components/Shared/DoctorName';
 
 const DOCTOR_IMG = '/assets/img/photos/Dentist.png';
 
@@ -134,7 +135,11 @@ export default function SuggestedDoctors() {
                 </div>
               )}
             </div>
-            <h3 className="text-xl font-black mb-1 truncate text-blue-900">{doctor.full_name}</h3>
+            <DoctorName
+              name={doctor.full_name}
+              className="block text-xl font-black mb-1 truncate text-blue-900"
+              placeholderClassName="block text-sm font-bold mb-1 text-gray-400"
+            />
             <p className="text-gray-500 text-sm mb-4 font-semibold">{doctor.specialization || 'Stomatolog'}</p>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1 bg-yellow-50 rounded-full px-2 py-1 text-xs font-black text-yellow-600">

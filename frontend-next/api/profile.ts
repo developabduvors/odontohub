@@ -23,6 +23,7 @@ export interface DentistProfile {
     diploma_number: string | null;
     verification_status: "pending" | "approved" | "rejected";
     specialization?: string;
+    education?: string;
     phone?: string;
     email?: string;
     address?: string;
@@ -189,6 +190,7 @@ export const useUpdateDentistProfile = () => {
     return useMutation({
         mutationFn: async (data: Partial<{
             specialization: string;
+            education: string;
             phone: string;
             address: string;
             clinic: string;

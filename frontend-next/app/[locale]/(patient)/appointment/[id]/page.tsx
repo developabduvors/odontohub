@@ -74,7 +74,7 @@ const PatientAppointmentDetail = () => {
                 time: local.time,
                 doctor: {
                     id: local.doctor_id,
-                    name: dentist?.full_name || local.doctor_name || defaultDoctor,
+                    name: dentist?.full_name || local.doctor_name || '',
                     direction: dentist?.specialization || defaultDirection,
                     experience: defaultExperience,
                     rating: "4.7",
@@ -101,7 +101,7 @@ const PatientAppointmentDetail = () => {
             statusCode = 'completed';
             appointment = {
                 title: defaultService, date: "", time: "",
-                doctor: { name: defaultDoctor, direction: defaultDirection, experience: defaultExperience, rating: "4.7", image: DentistImg, phone: "" },
+                doctor: { name: "", direction: defaultDirection, experience: defaultExperience, rating: "4.7", image: DentistImg, phone: "" },
                 details: { status: statusLabel(statusCode), date: "", duration: "", tip: "", notes: "" },
                 price: notSpecified
             };
@@ -120,7 +120,7 @@ const PatientAppointmentDetail = () => {
             date: startDate.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' }),
             time: startDate.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
             doctor: {
-                name: appointmentData.dentist_name || defaultDoctor,
+                name: appointmentData.dentist_name || '',
                 direction: defaultDirection,
                 experience: defaultExperience,
                 rating: "4.7",
@@ -141,7 +141,7 @@ const PatientAppointmentDetail = () => {
         statusCode = 'completed';
         appointment = {
             title: defaultService, date: "", time: "",
-            doctor: { name: defaultDoctor, direction: defaultDirection, experience: defaultExperience, rating: "4.7", image: DentistImg, phone: "" },
+            doctor: { name: "", direction: defaultDirection, experience: defaultExperience, rating: "4.7", image: DentistImg, phone: "" },
             details: { status: statusLabel(statusCode), date: "", duration: "", tip: "", notes: "" },
             price: notSpecified
         };
@@ -190,7 +190,7 @@ const PatientAppointmentDetail = () => {
                         </div>
                         <div>
                             {isActive ? (
-                                <ActionButtons phone={appointment.doctor.phone} doctorName={appointment.doctor.name} />
+                                <ActionButtons phone={appointment.doctor.phone} doctorName={appointment.doctor.name || defaultDoctor} />
                             ) : (statusCode === "completed" || (appointmentData && new Date(appointmentData.end_time) < new Date() && appointmentData.status !== "cancelled")) ? (
                                 <div className="space-y-6">
                                     <div className="bg-white rounded-[2.5rem] p-8 shadow-sm border border-gray-50 animate-in fade-in slide-in-from-bottom-4 duration-500">
