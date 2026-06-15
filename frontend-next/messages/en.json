@@ -1,4 +1,20 @@
 {
+  "magic": {
+    "error_title": "Link invalid",
+    "error_desc": "The link has expired or is invalid. Ask your dentist for a new one.",
+    "go_login": "Go to login",
+    "loading_title": "Signing you in…",
+    "loading_desc": "Please wait",
+    "created_title": "Patient {name} added",
+    "created_desc": "Send the patient their login link — they open it on their own device.",
+    "link_label": "Login link",
+    "link_hint": "The link is valid for 7 days and works on any device.",
+    "link_unavailable": "Could not create a link. The patient was added.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "copy_failed": "Failed to copy",
+    "done": "Done"
+  },
   "sidebar": {
     "dashboard": "Dashboard",
     "patients": "Patients",
@@ -204,6 +220,7 @@
     "toast_not_found": "Patient not found. Enter a phone number.",
     "select_patient": "Select a patient",
     "no_dentist": "Doctor data not found. Please log in again.",
+    "no_services": "First add services in your profile",
     "saved": "Appointment saved successfully"
   },
   "settings": {

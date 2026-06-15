@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { useCreateAppointment } from '@/api/appointments';
 import { useAllPatients, useCreatePatient, useDentistProfile } from '@/api/profile';
+import { useServices } from '@/api/services';
 import { toast } from '@/components/Shared/Toast';
 
 interface Props {
@@ -20,12 +21,13 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
 
     const { data: patients, isLoading: isLoadingPatients } = useAllPatients();
     const { data: dentist } = useDentistProfile();
+    const { data: servicesData = [] } = useServices(dentist?.id);
     const createAppointment = useCreateAppointment();
     const createPatient = useCreatePatient();
 
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedPatientId, setSelectedPatientId] = useState<string | number>('');
-    const [selectedService, setSelectedService] = useState('Маслаҳат');
+    const [selectedService, setSelectedService] = useState('');
     const [notes, setNotes] = useState('');
     const [visitType, setVisitType] = useState<'primary' | 'repeat'>('primary');
 
@@ -40,13 +42,21 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
     const [hour, setHour] = useState(String(now.getHours()).padStart(2, '0'));
     const [minute, setMinute] = useState('00');
 
-    const services = [
-        { id: 1, name: 'Маслаҳат', label: t('modal.services.consultation'), price: '0', currency: 'UZS' },
-        { id: 2, name: 'Кўрик', label: t('modal.services.checkup'), price: '50000', currency: 'UZS' },
-        { id: 3, name: 'Рентген', label: t('modal.services.xray'), price: '80000', currency: 'UZS' },
-        { id: 4, name: 'Гигиена', label: t('modal.services.hygiene'), price: '200000', currency: 'UZS' },
-        { id: 5, name: 'Пломба', label: t('modal.services.filling'), price: '300000', currency: 'UZS' },
-    ];
+    // Doktorning haqiqiy xizmatlari API'dan — qotirilgan mock ro'yxat o'rniga
+    const services = servicesData.map((s) => ({
+        id: s.id,
+        name: s.name,
+        label: s.name,
+        price: String(s.price),
+        currency: s.currency || 'UZS',
+    }));
+
+    // Xizmatlar yuklangach birinchisini avtomatik tanlash
+    useEffect(() => {
+        if (!selectedService && services.length > 0) {
+            setSelectedService(services[0].name);
+        }
+    }, [services, selectedService]);
 
     const transliterate = (text: string) => {
         const latinToCyrillic: { [key: string]: string } = {
@@ -126,6 +136,11 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
                 toast.error(t('modal.select_patient'));
                 return;
             }
+        }
+
+        if (!selectedService) {
+            toast.error(t('modal.no_services'));
+            return;
         }
 
         let dentistId = dentist?.id;

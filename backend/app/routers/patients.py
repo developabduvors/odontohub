@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from datetime import datetime
+from datetime import datetime, timedelta
 from app.core.database import get_db
-from app.core.security import require_role, hash_password, get_current_user
+from app.core.security import require_role, hash_password, get_current_user, create_access_token
 from app.schemas.patient import PatientCreate, PatientUpdate, PatientSchema
 from app.schemas.appointment import MedcardResponse, MedcardPatientSchema, MedcardAllergySchema, MedcardPrescriptionSchema, MedcardAppointmentSchema
 from app.models.patient import PatientProfile
@@ -206,6 +206,37 @@ def create_patient(
         error_msg = f"Error creating patient: {str(e)}\n{traceback.format_exc()}"
         print(error_msg) # Print to backend console
         raise HTTPException(status_code=500, detail=error_msg)
+
+
+# Сколько действует magic-ссылка для входа пациента
+MAGIC_LINK_VALID_DAYS = 7
+
+
+@router.get("/{patient_id}/magic-link")
+def get_patient_magic_link(
+    patient_id: int,
+    db: Session = Depends(get_db),
+    user: User = Depends(require_role(UserRole.DENTIST)),
+):
+    """Doktor uchun: bemorni avtomatik tizimga kiritadigan magic-havola tokeni.
+
+    Token = bemor User'i uchun {MAGIC_LINK_VALID_DAYS}-kunlik JWT. get_current_user
+    faqat `sub` ni tekshirgani uchun bu token to'g'ridan-to'g'ri sessiya tokeni
+    sifatida ishlaydi. To'liq URL'ni frontend quradi (origin + locale'ni biladi).
+    """
+    profile = db.query(PatientProfile).filter(PatientProfile.id == patient_id).first()
+    if not profile:
+        raise HTTPException(status_code=404, detail="Patient not found")
+    if not profile.user_id:
+        raise HTTPException(status_code=400, detail="Patient has no user account")
+
+    expires_delta = timedelta(days=MAGIC_LINK_VALID_DAYS)
+    token = create_access_token(
+        {"sub": str(profile.user_id), "role": UserRole.PATIENT.value},
+        expires_delta=expires_delta,
+    )
+    expires_at = (datetime.utcnow() + expires_delta).isoformat() + "Z"
+    return {"token": token, "expires_at": expires_at, "patient_id": patient_id}
 
 @router.get("/me", response_model=PatientSchema)
 def patient_me(

@@ -1,4 +1,20 @@
 {
+  "magic": {
+    "error_title": "Havola yaroqsiz",
+    "error_desc": "Havola muddati o'tgan yoki noto'g'ri. Yangi havola uchun shifokorga murojaat qiling.",
+    "go_login": "Kirishga o'tish",
+    "loading_title": "Tizimga kiritilmoqda…",
+    "loading_desc": "Iltimos, kuting",
+    "created_title": "{name} bemor qo'shildi",
+    "created_desc": "Bemorga kirish havolasini yuboring — u o'z qurilmasida ochadi.",
+    "link_label": "Kirish havolasi",
+    "link_hint": "Havola 7 kun amal qiladi va istalgan qurilmada ishlaydi.",
+    "link_unavailable": "Havola yaratib bo'lmadi. Bemor qo'shildi.",
+    "copy": "Nusxa olish",
+    "copied": "Nusxa olindi",
+    "copy_failed": "Nusxa olib bo'lmadi",
+    "done": "Tayyor"
+  },
   "sidebar": {
     "dashboard": "Boshqaruv paneli",
     "patients": "Bemorlar",
@@ -227,6 +243,7 @@
     "toast_not_found": "Bemor topilmadi. Telefon raqamini kiriting.",
     "select_patient": "Bemorni tanlang",
     "no_dentist": "Doktor ma'lumoti topilmadi. Qayta kiring.",
+    "no_services": "Avval profilingizda xizmatlar qo'shing",
     "saved": "Qabul muvaffaqiyatli saqlandi"
   },
   "settings": {

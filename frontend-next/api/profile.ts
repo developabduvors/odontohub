@@ -158,6 +158,23 @@ export const useCreatePatient = () => {
     });
 };
 
+export interface MagicLink {
+    token: string;
+    expires_at: string;
+    patient_id: number;
+}
+
+// Doktor bemor uchun magic-havola tokenini oladi (faqat dentist).
+// To'liq URL'ni chaqiruvchi komponent quradi (origin + locale).
+export const useGetMagicLink = () => {
+    return useMutation({
+        mutationFn: async (patientId: number): Promise<MagicLink> => {
+            const response = await api.get<MagicLink>(`/patients/${patientId}/magic-link`);
+            return response.data;
+        },
+    });
+};
+
 export const useUpdatePatient = () => {
     const queryClient = useQueryClient();
     return useMutation({
