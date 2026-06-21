@@ -6,7 +6,7 @@
 
 import { saveUserLang, getUserLang, userExists } from '../lib/database';
 import { t, normalizeLanguage, isLanguageSupported } from '../locales/i18n';
-import { detectTelegramLanguage, initializeTelegramWebApp } from '../lib/telegram-language';
+
 import { validateConfiguration, safeTranslate } from '../lib/error-handler';
 
 async function testDatabaseIntegration() {

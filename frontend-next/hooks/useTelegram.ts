@@ -2,18 +2,35 @@
 
 import { useEffect, useState } from 'react';
 
+// Minimal shape of Telegram's WebApp API that this hook touches.
+interface TelegramWebAppUser {
+    id: number;
+    first_name?: string;
+    last_name?: string;
+    username?: string;
+    language_code?: string;
+    [key: string]: unknown;
+}
+interface TelegramWebApp {
+    initData: string;
+    initDataUnsafe: { user?: TelegramWebAppUser };
+    expand: () => void;
+    ready: () => void;
+    close: () => void;
+}
+
 // Define the shape of Telegram's global object for TypeScript
 declare global {
     interface Window {
         Telegram?: {
-            WebApp: any;
+            WebApp: TelegramWebApp;
         };
     }
 }
 
 export function useTelegram() {
     const [initData, setInitData] = useState<string>('');
-    const [user, setUser] = useState<any>(null);
+    const [user, setUser] = useState<TelegramWebAppUser | null>(null);
     const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
@@ -27,6 +44,7 @@ export function useTelegram() {
             // Let Telegram know the app is fully loaded
             tg.ready();
 
+            // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time init reading from the Telegram WebApp global on mount
             setInitData(tg.initData);
 
             // tg.initDataUnsafe contains user info parsed locally (useful for UI, though not secure for auth)

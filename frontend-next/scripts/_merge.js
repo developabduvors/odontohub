@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 // Deep-merges scripts/_add.json into each messages/<locale>.json.
 // _add.json shape: { "ru": {nested}, "uz": {nested}, "en": {nested}, "kz": {nested} }
 const fs = require('fs');

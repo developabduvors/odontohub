@@ -31,6 +31,7 @@ export function RoleGuard({ requiredRole, children }: RoleGuardProps) {
       router.replace('/role');
       return;
     }
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- guards only need to run once
     setReady(true);
   }, [requiredRole, router]);
 

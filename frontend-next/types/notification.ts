@@ -16,7 +16,7 @@ export interface NotificationMetadata {
   rating?: number;
   review?: string;
   stars?: number;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface Notification {

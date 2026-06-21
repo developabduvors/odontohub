@@ -4,7 +4,7 @@ import { type FC, useState } from 'react';
 import { Edit2, Trash2, Plus, Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { useServices, useDeleteService } from '@/api/services';
+import { useServices, useDeleteService, type Service } from '@/api/services';
 import ServiceModal from '@/components/Services/ServiceModal';
 
 const ServicesSection: FC = () => {
@@ -19,7 +19,7 @@ const ServicesSection: FC = () => {
         setIsModalOpen(true);
     };
 
-    const handleEdit = (service: any) => {
+    const handleEdit = (service: Service) => {
         setEditingService(service);
         setIsModalOpen(true);
     };
@@ -55,7 +55,7 @@ const ServicesSection: FC = () => {
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {services?.map((service: any) => (
+                    {services?.map((service: Service) => (
                         <div key={service.id} className="bg-white rounded-[24px] p-6 shadow-sm border border-gray-50 relative group">
                             <h4 className="font-bold text-[#5B7FFF] text-lg mb-6 leading-tight pr-8">{service.name}</h4>
                             <div className="flex items-baseline gap-1">

@@ -139,7 +139,7 @@ export const useCreatePatient = () => {
 
                 const newPatient = {
                     ...data,
-                    id: Math.max(0, ...raw.map((p: any) => p.id)) + 1,
+                    id: Math.max(0, ...raw.map((p: { id: number }) => p.id)) + 1,
                     user_id: 0,
                     dentist_id: dentistId,
                     created_at: new Date().toISOString()

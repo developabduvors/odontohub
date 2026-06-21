@@ -35,6 +35,7 @@ const DateStrip: React.FC<DateStripProps> = ({ selectedDate, onDateChange }) => 
                 fullDate: current
             });
         }
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- locale/tarjima o'zgarganda kunlar ro'yxatini qayta hosil qilish
         setDays(generatedDays);
     }, [locale, t]);
 

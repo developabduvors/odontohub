@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { saveUserLang, getUserLang, userExists } from '@/lib/database';
-import { t, normalizeLanguage, type SupportedLanguage } from '@/locales/i18n';
+import { t, type SupportedLanguage } from '@/locales/i18n';
 import { 
   withErrorHandling, 
   withDatabaseRetry, 
@@ -59,10 +59,10 @@ export interface TelegramUpdate {
   channel_post?: TelegramMessage;
   edited_channel_post?: TelegramMessage;
   callback_query?: TelegramCallbackQuery;
-  inline_query?: any;
-  chosen_inline_result?: any;
-  shipping_query?: any;
-  pre_checkout_query?: any;
+  inline_query?: unknown;
+  chosen_inline_result?: unknown;
+  shipping_query?: unknown;
+  pre_checkout_query?: unknown;
 }
 
 // Telegram Bot API response types

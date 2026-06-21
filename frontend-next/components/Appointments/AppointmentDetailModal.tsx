@@ -18,7 +18,7 @@ interface AppointmentDetailModalProps {
         service: string;
         patientName: string;
         status: AppointmentStatus;
-        raw?: any;
+        raw?: Record<string, unknown>;
     } | null;
     onSuccess?: (message: string, type: 'success' | 'error') => void;
 }
@@ -29,15 +29,17 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
 
     // Notes editing state
     const [isEditingNotes, setIsEditingNotes] = useState(false);
-    const [notes, setNotes] = useState(appointment?.raw?.notes || '');
+    const [notes, setNotes] = useState<string>(typeof appointment?.raw?.notes === 'string' ? appointment.raw.notes : '');
 
     const cancelMutation = useCancelAppointment();
     const rescheduleMutation = useRescheduleAppointment();
     const updateMutation = useUpdateAppointment();
 
     useEffect(() => {
+        // Modal ochilganda izohni prop'dan sinxronlash — atayin qilingan derived-state.
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- prop o'zgarganda izohni qayta yuklash kerak
         if (appointment?.raw?.notes) {
-            setNotes(appointment.raw.notes);
+            setNotes(String(appointment.raw.notes));
         } else {
             setNotes('');
         }
@@ -51,7 +53,7 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
                 await cancelMutation.mutateAsync({ id: appointment.id });
                 onSuccess?.(t('appointments.toasts.cancelled'), 'success');
                 onClose();
-            } catch (error) {
+            } catch {
                 onSuccess?.(t('appointments.toasts.cancel_error'), 'error');
             }
         }
@@ -67,7 +69,7 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
             onSuccess?.(t('appointments.toasts.rescheduled'), 'success');
             setIsRescheduleOpen(false);
             onClose();
-        } catch (error) {
+        } catch {
             onSuccess?.(t('appointments.toasts.reschedule_error'), 'error');
         }
     };
@@ -80,7 +82,7 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
             });
             setIsEditingNotes(false);
             toast.success(t('appointments.toasts.notes_saved'));
-        } catch (error) {
+        } catch {
             toast.error(t('appointments.toasts.error'));
         }
     };
@@ -94,7 +96,7 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
             toast.success(t('appointments.toasts.started'));
             onClose();
             // Transitions to InProgressView happens via appointments page logic
-        } catch (error) {
+        } catch {
             toast.error(t('appointments.toasts.error'));
         }
     };
@@ -208,7 +210,7 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
                         </div>
                         {appointment.raw?.price && (
                             <div className="pt-4 border-t border-white/20">
-                                <span className="text-2xl font-black">{appointment.raw.price.toLocaleString()} <span className="text-sm">{t('appointments.detail.sum')}</span></span>
+                                <span className="text-2xl font-black">{(appointment.raw.price as number).toLocaleString()} <span className="text-sm">{t('appointments.detail.sum')}</span></span>
                             </div>
                         )}
                     </div>
@@ -266,7 +268,7 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
                     isOpen={isRescheduleOpen}
                     onClose={() => setIsRescheduleOpen(false)}
                     onConfirm={handleReschedule}
-                    currentStartTime={appointment.raw.start_time}
+                    currentStartTime={appointment.raw.start_time as string}
                 />
             )}
         </div>

@@ -23,30 +23,30 @@ export function t(key: string, lang: SupportedLanguage = 'uz'): string {
     
     // Split key by dots and traverse the object
     const keys = key.split('.');
-    let result: any = translation;
-    
+    let result: unknown = translation;
+
     for (const k of keys) {
       if (result && typeof result === 'object' && k in result) {
-        result = result[k];
+        result = (result as Record<string, unknown>)[k];
       } else {
         // Key not found, try fallback to Uzbek if we were using Russian
         if (language === 'ru') {
           result = translations.uz;
           for (const fallbackKey of keys) {
             if (result && typeof result === 'object' && fallbackKey in result) {
-              result = result[fallbackKey];
+              result = (result as Record<string, unknown>)[fallbackKey];
             } else {
               return `[Missing translation: ${key}]`;
             }
           }
-          return result;
+          return result as string;
         }
         return `[Missing translation: ${key}]`;
       }
     }
-    
+
     return typeof result === 'string' ? result : `[Invalid translation: ${key}]`;
-  } catch (error) {
+  } catch {
     // Fallback to Uzbek on any error
     if (lang !== 'uz') {
       return t(key, 'uz');

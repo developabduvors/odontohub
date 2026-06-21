@@ -132,6 +132,7 @@
     "calendar": "Kalendar",
     "record_appointment": "Qabulga yozish",
     "success_toast": "Qabul muvaffaqiyatli belgilandi",
+    "in_progress_disabled": "Bu bo'lim vaqtinchali mavjud emas",
     "month_view": {
       "month_appointments": "Oylik qabullar",
       "week": "Hafta",

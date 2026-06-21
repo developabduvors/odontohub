@@ -15,12 +15,24 @@ import { toast } from '@/components/Shared/Toast';
 import { useMyAppointments } from '@/api/appointments';
 import { useServices } from '@/api/services';
 
+// AppointmentDetailModal va InProgressView ikkalasi ham qabul qiladigan shakl.
+type SelectedAppointment = {
+    id: number;
+    time: string;
+    date: string;
+    status: AppointmentStatus;
+    service: string;
+    patientName: string;
+    notes: string | null;
+    raw?: Record<string, unknown>;
+};
+
 const AppointmentsPage: React.FC = () => {
     const t = useTranslations();
     const router = useRouter();
     const [view, setView] = useState<'list' | 'calendar' | 'in_progress'>('list');
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedAppointment, setSelectedAppointment] = useState<any>(null);
+    const [selectedAppointment, setSelectedAppointment] = useState<SelectedAppointment | null>(null);
     const [isDetailOpen, setIsDetailOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
@@ -118,7 +130,9 @@ const AppointmentsPage: React.FC = () => {
             raw: apt.raw
         });
         if (apt.status === 'in_progress') {
-            setView('in_progress');
+            // "Jarayonda" ekrani vaqtinchali yopiq. Qayta yoqish uchun pastdagi
+            // setView('in_progress') ni tiklang (InProgressView komponenti joyida turibdi).
+            toast.info(t('appointments.in_progress_disabled'));
         } else {
             setIsDetailOpen(true);
         }

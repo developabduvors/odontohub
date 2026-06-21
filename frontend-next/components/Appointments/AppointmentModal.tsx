@@ -15,6 +15,9 @@ interface Props {
     onSuccess?: () => void;
 }
 
+type PatientOption = { id: number | string; full_name?: string; phone?: string };
+type ApiError = { response?: { data?: { detail?: string } }; message?: string };
+
 const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
     const t = useTranslations();
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -53,6 +56,8 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
 
     // Xizmatlar yuklangach birinchisini avtomatik tanlash
     useEffect(() => {
+        // Xizmatlar yuklangach birinchisini tanlash — derived default.
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- API yuklangach standart xizmatni o'rnatish kerak
         if (!selectedService && services.length > 0) {
             setSelectedService(services[0].name);
         }
@@ -75,7 +80,7 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
 
         const cyrillicTerm = transliterate(term);
 
-        return patients.filter((p: any) => {
+        return patients.filter((p: PatientOption) => {
             const name = p.full_name?.toLowerCase() || '';
             const phone = p.phone || '';
             return name.includes(term) || name.includes(cyrillicTerm) || phone.includes(term);
@@ -83,6 +88,8 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
     }, [searchTerm, patients]);
 
     useEffect(() => {
+        // Qidiruv yozilganda dropdown'ni ochish.
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- qidiruv matni o'zgarganda ro'yxatni ochish kerak
         if (searchTerm.length > 0 && !selectedPatientId) {
             setIsDropdownOpen(true);
         }
@@ -107,8 +114,9 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
             setShowQuickAdd(false);
             setIsDropdownOpen(false);
             toast.success(t('modal.toast_patient_added'));
-        } catch (error: any) {
-            const errorMessage = error?.response?.data?.detail || error?.message || t('appointments.toasts.error');
+        } catch (error) {
+            const e = error as ApiError;
+            const errorMessage = e?.response?.data?.detail || e?.message || t('appointments.toasts.error');
             toast.error(errorMessage);
         }
     };
@@ -118,7 +126,7 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
 
         if (!finalPatientId) {
             if (searchTerm.trim().length > 0) {
-                const exactMatch = patients?.find((p: any) =>
+                const exactMatch = patients?.find((p: PatientOption) =>
                     p.full_name?.toLowerCase() === searchTerm.trim().toLowerCase() ||
                     p.full_name?.toLowerCase() === transliterate(searchTerm.trim()).toLowerCase()
                 );
@@ -176,8 +184,9 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
             toast.success(t('modal.saved'));
             if (onSuccess) onSuccess();
             onClose();
-        } catch (error: any) {
-            const errorMessage = error?.response?.data?.detail || error?.message || t('appointments.toasts.error');
+        } catch (error) {
+            const e = error as ApiError;
+            const errorMessage = e?.response?.data?.detail || e?.message || t('appointments.toasts.error');
             toast.error(errorMessage);
         }
     };
@@ -232,7 +241,7 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
                         {isDropdownOpen && !showQuickAdd && (
                             <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-[24px] shadow-2xl border border-gray-100 z-100 max-h-72 overflow-y-auto overflow-x-hidden animate-in slide-in-from-top-2 duration-200">
                                 {filteredPatients && filteredPatients.length > 0 ? (
-                                    filteredPatients.map((p: any) => (
+                                    filteredPatients.map((p: PatientOption) => (
                                         <div
                                             key={p.id}
                                             onClick={() => {
@@ -319,7 +328,7 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
                                 onChange={(e) => setSelectedService(e.target.value)}
                                 className="w-full h-12 md:h-14 bg-[#efefef] rounded-[16px] px-5 text-base md:text-lg font-bold text-[#1a1f36] border-none appearance-none cursor-pointer focus:ring-2 focus:ring-[#4f6bff]/20 outline-none"
                             >
-                                {services?.map((s: any) => (
+                                {services?.map((s) => (
                                     <option key={s.id} value={s.name}>
                                         {s.label} - {s.price} {s.currency || 'UZS'}
                                     </option>

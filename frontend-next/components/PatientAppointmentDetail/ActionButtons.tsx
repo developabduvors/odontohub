@@ -5,11 +5,14 @@ import { useRouter } from "@/i18n/navigation";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { toast } from "@/components/Shared/Toast";
-import { AlertTriangle, Video } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
 import { paths } from "@/lib/paths";
 import { getToken } from "@/utils/auth";
 
-const ActionButtons = ({ phone, doctorName }: { phone?: string; doctorName?: string }) => {
+// localStorage'da saqlanadigan qabul yozuvi (local rejim uchun).
+type StoredAppointment = { id: number | string } & Record<string, unknown>;
+
+const ActionButtons = ({ phone }: { phone?: string; doctorName?: string }) => {
     const router = useRouter();
     const t = useTranslations();
     const { id } = useParams<{ id: string }>();
@@ -33,13 +36,13 @@ const ActionButtons = ({ phone, doctorName }: { phone?: string; doctorName?: str
 
         if (isLocalMode) {
             const appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
-            const updated = appointments.filter((app: any) => app.id.toString() !== id);
+            const updated = appointments.filter((app: StoredAppointment) => app.id.toString() !== id);
             localStorage.setItem('appointments', JSON.stringify(updated));
         } else {
             try {
                 const { default: api } = await import('@/api/api');
                 await api.patch(`/appointments/${id}`, { status: 'cancelled' });
-            } catch (e) {
+            } catch {
                 toast.error(t('patient.appointment_detail.cancel_failed'));
                 setShowCancelModal(false);
                 return;
@@ -62,7 +65,7 @@ const ActionButtons = ({ phone, doctorName }: { phone?: string; doctorName?: str
 
         if (isLocalMode) {
             const appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
-            const updated = appointments.map((app: any) =>
+            const updated = appointments.map((app: StoredAppointment) =>
                 app.id.toString() === id
                     ? { ...app, date: new Date(newDate).toLocaleDateString('ru-RU'), status: 'moved' }
                     : app
@@ -79,7 +82,7 @@ const ActionButtons = ({ phone, doctorName }: { phone?: string; doctorName?: str
                         status: 'moved'
                     });
                 });
-            } catch (e) {
+            } catch {
                 toast.error(t('patient.appointment_detail.reschedule_failed'));
                 setShowRescheduleModal(false);
                 return;
@@ -94,14 +97,14 @@ const ActionButtons = ({ phone, doctorName }: { phone?: string; doctorName?: str
     return (
         <>
             <div className="flex flex-col gap-3 sm:gap-4 lg:gap-5">
-                {/* Online consultation button */}
-                <button
+                {/* Online consultation button — vaqtinchali yashirilgan. Qayta yoqish uchun shu blokni tiklang. */}
+                {/* <button
                     onClick={() => toast.info(t('patient.alerts.function_in_development'))}
                     className="w-full bg-[#4E70FF] text-white py-3 sm:py-4 lg:py-5 rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] text-sm sm:text-base lg:text-2xl font-bold shadow-lg shadow-blue-500/20 hover:bg-[#3d5ce0] transition-all active:scale-95 flex items-center justify-center gap-2"
                 >
                     <Video size={20} />
                     {t('patient.appointment_detail.online_consultation')}
-                </button>
+                </button> */}
                 <div className="flex gap-3 sm:gap-4 lg:gap-5">
                     <button
                         onClick={() => setShowContactModal(true)}

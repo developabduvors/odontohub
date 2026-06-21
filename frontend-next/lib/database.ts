@@ -146,7 +146,7 @@ export async function userExists(chatId: string): Promise<boolean> {
  * @param chatId - Telegram chat ID (as string)
  * @returns Promise<User | null>
  */
-export async function getUserByTelegramId(chatId: string): Promise<any | null> {
+export async function getUserByTelegramId(chatId: string): Promise<Record<string, unknown> | null> {
   if (!chatId) {
     return null;
   }

@@ -28,7 +28,7 @@ export const useUnreadCount = () => {
             try {
                 const response = await api.get('/api/notifications/unread-count');
                 return response.data.unread_count || 0;
-            } catch (err) {
+            } catch {
                 return 0;
             }
         },
@@ -52,7 +52,7 @@ export const getUnreadCount = async (): Promise<number> => {
     try {
         const response = await api.get('/api/notifications/unread-count');
         return response.data.unread_count || 0;
-    } catch (err) {
+    } catch {
         return 0;
     }
 };

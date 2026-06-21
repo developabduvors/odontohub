@@ -1,6 +1,26 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import api from "./api"
-import { getToken } from "@/utils/auth"
+
+// Shape of appointment records persisted in localStorage (local/offline mode).
+interface StoredAppointment {
+    id: number;
+    start_time?: string;
+    created_at?: string;
+    date?: string;
+    time?: string;
+    end_time?: string;
+    status?: string;
+    service?: string | null;
+    price?: number | null;
+    notes?: string | null;
+    comment?: string | null;
+    doctor_id?: number;
+    dentist_id?: number;
+    patient_id?: number;
+    doctor_name?: string;
+    dentist_name?: string;
+    patient_name?: string;
+}
 
 export interface Appointment {
     id: number;
@@ -44,12 +64,12 @@ export const useCreateAppointment = () => {
             if (isLocalMode) {
                 const raw = JSON.parse(localStorage.getItem('appointments') || '[]');
                 const patients = JSON.parse(localStorage.getItem('patients') || '[]');
-                const patient = patients.find((p: any) => p.id === data.patient_id);
+                const patient = patients.find((p: { id: number; full_name?: string }) => p.id === data.patient_id);
                 const start = new Date(data.start_time);
 
                 const newApt = {
                     ...data,
-                    id: Math.max(0, ...raw.map((a: any) => a.id)) + 1,
+                    id: Math.max(0, ...raw.map((a: StoredAppointment) => a.id)) + 1,
                     status: 'pending',
                     created_at: new Date().toISOString(),
                     patient_name: patient ? patient.full_name : 'Пациент',
@@ -102,7 +122,7 @@ export const useMyAppointments = () => {
                 const raw = JSON.parse(localStorage.getItem('appointments') || '[]');
                 const userData = JSON.parse(sessionStorage.getItem('user_data') || localStorage.getItem('user_data') || '{}');
 
-                return raw.map((a: any) => {
+                return raw.map((a: StoredAppointment) => {
                     let start_time = a.start_time || a.created_at || new Date().toISOString();
                     if (a.date && a.time) {
                         const parts = a.date.split('.');
@@ -130,8 +150,8 @@ export const useMyAppointments = () => {
             try {
                 const response = await api.get<Appointment[]>('/appointments/me');
                 return response.data;
-            } catch (err: any) {
-                if (err.response?.status === 401) return [];
+            } catch (err) {
+                if ((err as { response?: { status?: number } }).response?.status === 401) return [];
                 throw err;
             }
         },
@@ -151,7 +171,7 @@ export const useUpdateAppointment = () => {
 
             if (isLocalMode) {
                 const raw = JSON.parse(localStorage.getItem('appointments') || '[]');
-                const updated = raw.map((a: any) => {
+                const updated = raw.map((a: StoredAppointment) => {
                     if (a.id === id) {
                         return { ...a, ...data };
                     }

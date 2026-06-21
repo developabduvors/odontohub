@@ -24,6 +24,7 @@ export default function MagicLoginPage() {
         const raw = params?.token;
         const token = Array.isArray(raw) ? raw[0] : raw;
         if (!token) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect -- this effect only runs once on mount
             setError(true);
             return;
         }

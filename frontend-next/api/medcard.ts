@@ -73,14 +73,47 @@ const emptyMedcard = (): MedcardData => ({
   appointments: [],
 });
 
+// Loose shapes for data persisted in localStorage (local/offline mode).
+interface StoredUserData {
+  patient_id?: number | string;
+  full_name?: string;
+  phone?: string;
+  gender?: string;
+}
+interface StoredPatientProfile {
+  id?: number | string;
+  name?: string;
+  birthYear?: number | string;
+  gender?: string;
+  address?: string;
+}
+interface StoredAppointmentRaw {
+  id: number;
+  start_time?: string;
+  created_at?: string;
+  date?: string;
+  time?: string;
+  end_time?: string;
+  service?: string | null;
+  title?: string | null;
+  status?: string;
+  visit_type?: string | null;
+  notes?: string | null;
+  comment?: string | null;
+  diagnosis?: string | null;
+  treatment_notes?: string | null;
+  dentist_name?: string;
+  doctor_name?: string;
+}
+
 const buildLocalMedcard = (): MedcardData => {
   if (typeof window === 'undefined') return emptyMedcard();
 
-  const userData = safeParse<Record<string, any>>(localStorage.getItem("user_data"), {});
-  const patientProfile = safeParse<Record<string, any>>(localStorage.getItem("patient_profile"), {});
-  const rawAppointments = safeParse<any[]>(localStorage.getItem("appointments"), []);
+  const userData = safeParse<StoredUserData>(localStorage.getItem("user_data"), {});
+  const patientProfile = safeParse<StoredPatientProfile>(localStorage.getItem("patient_profile"), {});
+  const rawAppointments = safeParse<StoredAppointmentRaw[]>(localStorage.getItem("appointments"), []);
 
-  const appointments: MedcardAppointment[] = rawAppointments.map((item: any) => {
+  const appointments: MedcardAppointment[] = rawAppointments.map((item: StoredAppointmentRaw) => {
     let startTime = item.start_time || item.created_at || new Date().toISOString();
 
     if (item.date && item.time) {
@@ -98,7 +131,7 @@ const buildLocalMedcard = (): MedcardData => {
       start_time: startTime,
       end_time: endTime,
       service: item.service || item.title || null,
-      status: (item.status === "upcoming" ? "pending" : item.status === "past" ? "completed" : item.status) || "pending",
+      status: ((item.status === "upcoming" ? "pending" : item.status === "past" ? "completed" : item.status) || "pending") as MedcardAppointment["status"],
       visit_type: item.visit_type || "primary",
       notes: item.notes || item.comment || null,
       diagnosis: item.diagnosis || null,

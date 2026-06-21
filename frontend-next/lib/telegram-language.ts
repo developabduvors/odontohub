@@ -3,7 +3,7 @@
  * Detects user language from Telegram WebApp data and integrates with next-intl
  */
 
-import { normalizeLanguage, isLanguageSupported, type SupportedLanguage } from '@/locales/i18n';
+import { isLanguageSupported, type SupportedLanguage } from '@/locales/i18n';
 
 /**
  * Detect language from Telegram WebApp data
@@ -96,7 +96,7 @@ export function getTelegramChat() {
 export function isTelegramWebApp(): boolean {
   try {
     return typeof window !== 'undefined' && !!window.Telegram?.WebApp;
-  } catch (error) {
+  } catch {
     return false;
   }
 }

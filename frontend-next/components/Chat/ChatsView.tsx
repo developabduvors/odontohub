@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
-import { Search, Send, ArrowLeft, MessageCircle, Image } from 'lucide-react';
+import { Search, Send, ArrowLeft, MessageCircle, Image as ImageIcon } from 'lucide-react';
 import { useRouter } from '@/i18n/navigation';
 import { useMyAppointments } from '@/api/appointments';
 import { sendMessage, getMessages, deleteMessage, editMessage } from '@/api/chat';
@@ -85,7 +85,9 @@ export default function ChatsView({ appointmentId, variant = 'doctor' }: ChatsVi
 
     useEffect(() => {
         if (!appointmentId) return;
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- suhbat almashganda eski xabarlarni tozalash
         setMessages([]);
+        // eslint-disable-next-line react-hooks/immutability -- fetchMessages quyiroqda e'lon qilingan
         fetchMessages();
 
         const token = localStorage.getItem('access_token');
@@ -159,7 +161,6 @@ export default function ChatsView({ appointmentId, variant = 'doctor' }: ChatsVi
                 setChatPreviews(prev => ({ ...prev, [appointmentId]: { ...prev[appointmentId], unread: 0 } }));
             }
         }).catch(() => {});
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [appointmentId]);
 
     useEffect(() => {
@@ -381,7 +382,7 @@ export default function ChatsView({ appointmentId, variant = 'doctor' }: ChatsVi
                             <input type="file" accept="image/*" ref={fileRef} className="hidden" onChange={handleImageSelect} />
                             <form onSubmit={handleSend} className="flex items-end gap-2 sm:gap-3 px-1">
                                 <button type="button" onClick={() => fileRef.current?.click()} className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-gray-400 hover:text-[#4D71F8] hover:bg-blue-50 rounded-full transition-all shrink-0 active:scale-90">
-                                    <Image size={22} className="sm:size-[26px]" />
+                                    <ImageIcon size={22} className="sm:size-[26px]" />
                                 </button>
                                 <div className="flex-1 min-w-0">
                                     <textarea

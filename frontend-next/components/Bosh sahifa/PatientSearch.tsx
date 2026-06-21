@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
-import { useAllPatients } from '@/api/profile';
+import { useAllPatients, type Patient } from '@/api/profile';
 
 interface PatientSearchProps {
   searchQuery: string;
@@ -18,7 +18,7 @@ export default function PatientSearch({ searchQuery }: PatientSearchProps) {
     if (!searchQuery || !patients || !Array.isArray(patients)) return [];
 
     const query = searchQuery.toLowerCase();
-    return patients.filter((p: any) =>
+    return patients.filter((p: Patient) =>
       p.full_name?.toLowerCase().includes(query) ||
       p.phone?.includes(query) ||
       p.source?.toLowerCase().includes(query)
@@ -58,7 +58,7 @@ export default function PatientSearch({ searchQuery }: PatientSearchProps) {
       </h2>
 
       <div className="space-y-3 sm:space-y-4">
-        {filteredPatients.map((patient: any) => (
+        {filteredPatients.map((patient: Patient) => (
           <Link
             key={patient.id}
             href={`/patients/${patient.id}`}

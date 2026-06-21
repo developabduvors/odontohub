@@ -14,7 +14,7 @@ interface InProgressViewProps {
         patientName: string;
         service: string;
         notes?: string | null;
-        [key: string]: any;
+        raw?: Record<string, unknown>;
     } | null;
 }
 
@@ -37,6 +37,7 @@ const InProgressView: React.FC<InProgressViewProps> = ({ onBack, appointment }) 
     );
     const [isFinishing, setIsFinishing] = useState(false);
 
+    /* eslint-disable react-hooks/set-state-in-effect -- appointment prop o'zgarganda derived holatlarni sinxronlash kerak */
     useEffect(() => {
         if (appointment?.notes) setNotes(appointment.notes);
         if (appointment?.raw?.visit_type) {
@@ -46,10 +47,11 @@ const InProgressView: React.FC<InProgressViewProps> = ({ onBack, appointment }) 
             setTreatmentPrice(String(appointment.raw.price));
         }
     }, [appointment]);
+    /* eslint-enable react-hooks/set-state-in-effect */
 
     if (!appointment) return null;
 
-    const patientId: number = appointment.raw?.patient_id;
+    const patientId = appointment.raw?.patient_id as number | undefined;
 
     const handleSaveNotes = async () => {
         try {

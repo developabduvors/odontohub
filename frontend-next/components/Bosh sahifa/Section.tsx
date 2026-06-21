@@ -48,7 +48,7 @@ const Section: FC = () => {
           time: `${startTime}-${endTime}`
         };
       });
-  }, [apiAppointments, effectiveDate]);
+  }, [apiAppointments, effectiveDate, t]);
 
   const goToPreviousDay = () => {
     const d = new Date(effectiveDate);

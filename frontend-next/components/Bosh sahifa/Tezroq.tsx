@@ -6,7 +6,6 @@ import { useRouter } from '@/i18n/navigation';
 import AppointmentModal from '@/components/Appointments/AppointmentModal';
 import AddPatientModal from '@/components/Patients/AddPatientModal';
 import AddNoteModal from '@/components/Patients/AddNoteModal';
-import { toast } from '@/components/Shared/Toast';
 
 type Action = {
   titleKey: string;
@@ -39,7 +38,7 @@ const Tezroq: React.FC = () => {
         setIsNoteModalOpen(true);
         break;
       case 'message':
-        toast.info(t('patient.alerts.function_in_development'));
+        router.push('/chats');
         break;
     }
   };
@@ -71,11 +70,6 @@ const Tezroq: React.FC = () => {
               className="bg-gray-50 hover:bg-gray-100 rounded-xl sm:rounded-2xl p-3 sm:p-6 text-center transition-colors relative"
             >
               <p className="font-semibold text-gray-900 text-xs sm:text-base">{t(action.titleKey)}</p>
-              {action.action === 'message' && (
-                <span className="absolute top-1 right-1 sm:top-2 sm:right-2 text-[10px] sm:text-xs bg-yellow-100 text-yellow-700 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full font-medium">
-                  {t('common.in_development')}
-                </span>
-              )}
             </button>
           ))}
         </div>

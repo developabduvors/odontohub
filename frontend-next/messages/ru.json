@@ -132,6 +132,7 @@
     "calendar": "Календарь",
     "record_appointment": "Записать приём",
     "success_toast": "Приём успешно назначен",
+    "in_progress_disabled": "Этот раздел временно недоступен",
     "month_view": {
       "month_appointments": "Приёмов за месяц",
       "week": "Неделя",

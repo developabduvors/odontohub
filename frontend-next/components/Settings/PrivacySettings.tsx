@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { Eye, EyeOff, Lock, Phone } from 'lucide-react';
 
 import { useRouter } from '@/i18n/navigation';
-import { changePassword, getBackupPhone, updateBackupPhone } from '@/api/auth';
+import { changePassword, getBackupPhone, getMe, updateBackupPhone } from '@/api/auth';
 import { paths } from '@/lib/paths';
 import { clearUser } from '@/store/slices/userSlice';
 import { getToken } from '@/utils/auth';
@@ -56,6 +56,8 @@ export const PrivacySettings: React.FC = () => {
     });
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState<FlashMessage>(null);
+    // hasPassword=false => magic-link bemor, hali parol yo'q -> "o'rnатиш" rejimи
+    const [hasPassword, setHasPassword] = useState(true);
 
     const [primaryPhone, setPrimaryPhone] = useState('');
     const [backupPhone, setBackupPhone] = useState('');
@@ -114,6 +116,11 @@ export const PrivacySettings: React.FC = () => {
 
         loadBackupPhone();
 
+        // Foydаланувчида haqiqий parol bor-yo'qлигини aniqлаймиз
+        getMe()
+            .then((me) => { if (isMounted && typeof me.has_password === 'boolean') setHasPassword(me.has_password); })
+            .catch(() => {});
+
         return () => { isMounted = false; };
     }, []);
 
@@ -165,12 +172,14 @@ export const PrivacySettings: React.FC = () => {
 
         try {
             await changePassword({
-                current_password: formData.currentPassword,
+                // set-rejimда (hasPassword=false) eski parol yubormaymиз
+                ...(hasPassword ? { current_password: formData.currentPassword } : {}),
                 new_password: formData.newPassword,
             });
 
             setMessage({ type: 'success', text: t('settings.privacy.password_changed') });
             setFormData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+            setHasPassword(true); // endi haqiqий parol bor -> keyingи safar "o'zгартириш" rejimи
         } catch (error) {
             setMessage({
                 type: 'error',
@@ -277,26 +286,29 @@ export const PrivacySettings: React.FC = () => {
                 </div>
 
                 <form onSubmit={handlePasswordSubmit} className="space-y-4">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">{t('settings.privacy.current_password')}</label>
-                        <div className="relative">
-                            <input
-                                type={showPasswords.current ? 'text' : 'password'}
-                                value={formData.currentPassword}
-                                onChange={(e) => setFormData((prev) => ({ ...prev, currentPassword: e.target.value }))}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-12"
-                                placeholder={t('settings.privacy.current_password_ph')}
-                                required
-                            />
-                            <button
-                                type="button"
-                                onClick={() => togglePasswordVisibility('current')}
-                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                            >
-                                {showPasswords.current ? <EyeOff size={20} /> : <Eye size={20} />}
-                            </button>
+                    {/* Magic-link orqали kirган bemorда eski parol yo'q -> bu maydonни yashиramиз */}
+                    {hasPassword && (
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">{t('settings.privacy.current_password')}</label>
+                            <div className="relative">
+                                <input
+                                    type={showPasswords.current ? 'text' : 'password'}
+                                    value={formData.currentPassword}
+                                    onChange={(e) => setFormData((prev) => ({ ...prev, currentPassword: e.target.value }))}
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-12"
+                                    placeholder={t('settings.privacy.current_password_ph')}
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => togglePasswordVisibility('current')}
+                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                >
+                                    {showPasswords.current ? <EyeOff size={20} /> : <Eye size={20} />}
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">{t('settings.privacy.new_password')}</label>

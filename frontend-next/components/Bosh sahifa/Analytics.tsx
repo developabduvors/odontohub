@@ -3,7 +3,7 @@
 import { HiArrowUp, HiArrowDown } from "react-icons/hi";
 import { useTranslations } from "next-intl";
 import { useMyAppointments } from "@/api/appointments";
-import { useAllPatients } from "@/api/profile";
+import { useAllPatients, type Patient } from "@/api/profile";
 import { useMemo } from "react";
 
 type Stat = {
@@ -24,13 +24,13 @@ export default function Analytics() {
     const todayEnd = new Date(today);
     todayEnd.setHours(23, 59, 59, 999);
 
-    const todayAppointments = appointments?.filter((app: any) => {
+    const todayAppointments = appointments?.filter((app) => {
       const appDate = new Date(app.start_time);
       return appDate >= today && appDate <= todayEnd;
     }).length || 0;
 
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-    const monthAppointments = appointments?.filter((app: any) => {
+    const monthAppointments = appointments?.filter((app) => {
       const appDate = new Date(app.start_time);
       return appDate >= firstDayOfMonth;
     }).length || 0;
@@ -38,7 +38,7 @@ export default function Analytics() {
     const lastWeek = new Date(today);
     lastWeek.setDate(lastWeek.getDate() - 7);
 
-    const weekPatients = patients?.filter((p: any) => {
+    const weekPatients = patients?.filter((p: Patient & { created_at?: string }) => {
       if (!p.created_at) return false;
       const createdDate = new Date(p.created_at);
       return createdDate >= lastWeek;

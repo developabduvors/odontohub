@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import type { UserRole } from '@/types';
 
 interface UserState {
-  user: Record<string, any> | null;
+  user: Record<string, unknown> | null;
   isAuthenticated: boolean;
   role: UserRole | null;
 }
@@ -18,7 +18,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<Record<string, any>>) => {
+    setUser: (state, action: PayloadAction<Record<string, unknown>>) => {
       state.user = action.payload;
       state.isAuthenticated = true;
       if (action.payload.role) {
@@ -30,7 +30,7 @@ const userSlice = createSlice({
       state.isAuthenticated = false;
       state.role = null;
     },
-    updateUser: (state, action: PayloadAction<Record<string, any>>) => {
+    updateUser: (state, action: PayloadAction<Record<string, unknown>>) => {
       if (state.user) {
         state.user = { ...state.user, ...action.payload };
       }

@@ -12,6 +12,9 @@ interface AddNoteModalProps {
     onSuccess?: (patientId: number, note: string) => void;
 }
 
+type PatientOption = { id: number; full_name?: string; phone?: string };
+type ApiError = { response?: { data?: { detail?: string } }; message?: string };
+
 const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess }) => {
     const t = useTranslations();
     const [selectedPatientId, setSelectedPatientId] = useState<number | ''>('');
@@ -45,7 +48,7 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
 
         const cyrillicTerm = transliterate(term);
 
-        return patients.filter((p: any) => {
+        return patients.filter((p: PatientOption) => {
             const name = (p.full_name || '').toLowerCase();
             const phone = p.phone || '';
             // Basic fuzzy matching (check if name contains current term or transliterated term)
@@ -55,6 +58,7 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
 
     // Ensure dropdown stays open while typing
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- qidiruv yozilganda ro'yxatni ochish kerak
         if (searchTerm.length > 0 && !selectedPatientId && !showQuickAdd) {
             setIsDropdownOpen(true);
         }
@@ -72,8 +76,9 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
             setShowQuickAdd(false);
             setIsDropdownOpen(false);
             toast.success(t('patients_modals.note.toast_added'));
-        } catch (error: any) {
-            toast.error(error?.response?.data?.detail || t('patients_modals.note.toast_error'));
+        } catch (error) {
+            const e = error as ApiError;
+            toast.error(e?.response?.data?.detail || t('patients_modals.note.toast_error'));
         }
     };
 
@@ -82,7 +87,7 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
 
         let finalId = selectedPatientId;
         if (!finalId && searchTerm.trim()) {
-            const match = patients?.find((p: any) =>
+            const match = patients?.find((p: PatientOption) =>
                 (p.full_name || '').toLowerCase() === searchTerm.trim().toLowerCase() ||
                 (p.full_name || '').toLowerCase() === transliterate(searchTerm.trim()).toLowerCase()
             );
@@ -107,7 +112,7 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
             setNote('');
             onClose();
             toast.success(t('patients_modals.note.toast_note_added'));
-        } catch (error) {
+        } catch {
             toast.error(t('patients_modals.note.toast_error'));
         } finally {
             setIsSubmitting(false);
@@ -171,7 +176,7 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
                         {isDropdownOpen && !showQuickAdd && (
                             <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-[24px] shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-gray-100 z-100 max-h-60 overflow-y-auto animate-in slide-in-from-top-2 duration-200">
                                 {filteredPatients.length > 0 ? (
-                                    filteredPatients.map((p: any) => (
+                                    filteredPatients.map((p: PatientOption) => (
                                         <div
                                             key={p.id}
                                             onClick={() => {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 #!/usr/bin/env node
 /**
  * Quick test script for basic functionality
@@ -10,7 +11,7 @@ function testTranslations() {
   
   try {
     // Import translation functions (using require for Node.js compatibility)
-    const { t, normalizeLanguage, isLanguageSupported } = require('../locales/i18n.ts');
+    var _t = require('../locales/i18n.ts');
     
     // Test basic translations
     console.log('✅ Translation module loaded successfully');

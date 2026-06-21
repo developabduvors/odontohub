@@ -9,7 +9,7 @@ interface ScheduleCardProps {
     startMinute?: string;
     workEnd?: string;
     endMinute?: string;
-    onSave?: (newData: any) => void;
+    onSave?: (newData: Record<string, string>) => void;
 }
 
 const ScheduleCard: FC<ScheduleCardProps> = ({

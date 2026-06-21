@@ -22,6 +22,7 @@ const WorksSection: FC = () => {
             try {
                 const photos = JSON.parse(dentist.works_photos);
                 if (photos && Array.isArray(photos)) {
+                    // eslint-disable-next-line react-hooks/set-state-in-effect -- dentist propidan rasmlarni boshlang'ich yuklash
                     setWorkPhotos(photos);
                 }
             } catch (e) {

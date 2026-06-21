@@ -68,8 +68,14 @@ export const useCurrentUser = () => {
   })
 }
 
-export const changePassword = async (data: { current_password: string; new_password: string }) => {
+export const changePassword = async (data: { current_password?: string; new_password: string }) => {
   const response = await api.put('/auth/change-password', data)
+  return response.data
+}
+
+// has_password=false => foydalanuvchи magic-link orqali kirган, hali parol o'rnатmaган
+export const getMe = async (): Promise<{ has_password?: boolean; phone?: string; backup_phone?: string | null }> => {
+  const response = await api.get('/auth/me')
   return response.data
 }
 

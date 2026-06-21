@@ -21,7 +21,7 @@ const parseJwtPayload = (token: string): Record<string, unknown> | null => {
   }
 };
 
-export const getUser = (): any | null => {
+export const getUser = (): Record<string, unknown> | null => {
   if (typeof window === 'undefined') return null;
   const userStr = localStorage.getItem('user_data');
   if (!userStr) return null;
