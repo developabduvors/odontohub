@@ -16,11 +16,7 @@ import type { Notification as NotifType } from '@/api/notifications';
 interface HeroProps {
   onSearch?: (query: string) => void;
 }
-
-const 
-
-
-Hero: React.FC<HeroProps> = ({ onSearch }) => {
+const Hero: React.FC<HeroProps> = ({ onSearch }) => {
   const t = useTranslations();
   const router = useRouter();
   const user = useSelector((state: RootState) => state.user.user);
@@ -35,7 +31,8 @@ Hero: React.FC<HeroProps> = ({ onSearch }) => {
 
   const { data: stats } = useDentistStats();
   const { data: dentistProfile } = useDentistProfile();
-  const dentistId = dentistProfile?.id || (user as any)?.dentist_profile?.id || (user as any)?.dentist_id || (user as any)?.id;
+  const u = user as { dentist_profile?: { id?: number }; dentist_id?: number; id?: number } | null;
+  const dentistId = dentistProfile?.id || u?.dentist_profile?.id || u?.dentist_id || u?.id;
   const { data: reviewsData, isLoading: reviewsLoading } = useDentistReviews(dentistId);
 
   const typeLabels: Record<string, string> = {
@@ -48,6 +45,7 @@ Hero: React.FC<HeroProps> = ({ onSearch }) => {
 
   const formatTime = (d: string) => {
     const utcString = d.endsWith('Z') || d.includes('+') ? d : d + 'Z';
+    // eslint-disable-next-line react-hooks/purity -- nisbiy vaqt joriy soatga bog'liq, ataylab
     const diff = Date.now() - new Date(utcString).getTime();
     const m = Math.floor(diff / 60000);
     if (m < 1) return 'Hozir';
@@ -76,6 +74,7 @@ Hero: React.FC<HeroProps> = ({ onSearch }) => {
 
   useEffect(() => {
     if (isNotifOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- ochilganda yuklash holatini ko'rsatish
       setNotifLoading(true);
       getNotifications().then(data => { setNotifList(data.slice(0, 10)); setNotifLoading(false); }).catch(() => setNotifLoading(false));
     }
@@ -176,7 +175,7 @@ Hero: React.FC<HeroProps> = ({ onSearch }) => {
                   <img src="/assets/img/photos/Dentist.png" alt="Profile" className="h-full w-full object-cover" />
                 </div>
                 <div className="hidden min-w-0 flex-col leading-tight sm:flex">
-                  <span className="max-w-[110px] truncate text-xs font-bold">{user?.full_name || 'Shifokor'}</span>
+                  <span className="max-w-[110px] truncate text-xs font-bold">{String(user?.full_name || 'Shifokor')}</span>
                   <span className="text-[10px] font-bold uppercase tracking-tighter text-gray-400">Boshqaruv</span>
                 </div>
               </Link>
