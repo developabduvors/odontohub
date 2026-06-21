@@ -3,7 +3,7 @@ from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.core.security import create_access_token, get_current_user
+from app.core.security import create_access_token, get_current_user, verify_password
 from app.models.dentist import DentistProfile, VerificationStatus
 from app.models.patient import PatientProfile
 from app.models.user import User, UserRole
@@ -48,7 +48,9 @@ def register(data: RegisterSchema, db: Session = Depends(get_db)):
                 DentistProfile(
                     user_id=user.id,
                     full_name=full_name,
-                    verification_status=VerificationStatus.PENDING,
+                    # Avto-tasdiqlash: yangi doktor ro'yxatdan o'tishi bilan darrov
+                    # bemorlarga ko'rinsin (admin tasdiqlashini kutmasdan).
+                    verification_status=VerificationStatus.APPROVED,
                 )
             )
 
@@ -98,6 +100,10 @@ def get_me(user: User = Depends(get_current_user)):
         full_name = user.dentist_profile.full_name
         dentist_id = user.dentist_profile.id
 
+    # has_password=False => faqat magic-link placeholder bor, frontend "parol
+    # o'rnатиш" rejimини ko'рсатади (eski parol so'rамаydi).
+    has_password = bool(user.password) and not verify_password(user.phone, user.password)
+
     return {
         "id": user.id,
         "phone": user.phone,
@@ -107,6 +113,7 @@ def get_me(user: User = Depends(get_current_user)):
         "full_name": full_name,
         "patient_id": patient_id,
         "dentist_id": dentist_id,
+        "has_password": has_password,
     }
 
 
@@ -127,9 +134,16 @@ def change_password(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    if user.password != data.current_password:
+    # Doktor qo'shган bemorда parol = telefon raqамининг bcrypt placeholder'и.
+    # verify_password(phone, stored) faqat o'ша avto-generated placeholder uchun True
+    # bo'lади — ya'ni foydаланувчи hali haqiqий parol o'rnатmagan. Bunday holда
+    # birinchи marta parol o'rnатишга ruxsat (eski parol talab qilинmaydi).
+    has_real_password = bool(user.password) and not verify_password(user.phone, user.password)
+
+    if has_real_password and user.password != data.current_password:
         raise HTTPException(status_code=400, detail="Текущий пароль неверен")
 
+    # Plaintext saqlanади — login ham plaintext solishtirади (mavjуd sxema bilan mos).
     user.password = data.new_password
     db.commit()
 

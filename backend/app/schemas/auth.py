@@ -26,7 +26,9 @@ class TokenSchema(BaseModel):
 
 
 class ChangePasswordSchema(BaseModel):
-    current_password: str
+    # Optional: magic-link orqali kirган bemorда haqiqий parol yo'q,
+    # birinchи marta o'rnатганда current_password yuborмаслиги mumkin.
+    current_password: str | None = None
     new_password: str
 
 
