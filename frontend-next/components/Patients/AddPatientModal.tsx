@@ -5,6 +5,7 @@ import { X, Loader2, User, Phone, MapPin, Calendar, Check, Link2, Copy, CheckCir
 import { useTranslations, useLocale } from 'next-intl';
 import { useCreatePatient, useGetMagicLink } from '@/api/profile';
 import { toast } from '@/components/Shared/Toast';
+import PhoneInput from '@/components/Shared/PhoneInput';
 
 interface AddPatientModalProps {
     isOpen: boolean;
@@ -189,10 +190,9 @@ const AddPatientModal: React.FC<AddPatientModalProps> = ({ isOpen, onClose, onSu
                                 <Phone size={16} />
                                 {t('patients_list.add_modal.phone')} <span className="text-red-500">*</span>
                             </label>
-                            <input
-                                type="tel"
+                            <PhoneInput
                                 value={formData.phone}
-                                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                onChange={(v) => setFormData({ ...formData, phone: v })}
                                 placeholder="+998 XX XXX XX XX"
                                 className="w-full h-14 bg-[#efefef] rounded-[20px] px-6 text-base font-bold text-[#1a1f36] border-none focus:ring-2 focus:ring-[#4f6bff]/20 outline-none transition-all placeholder:text-gray-400"
                                 required

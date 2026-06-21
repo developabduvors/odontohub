@@ -4,6 +4,7 @@ import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { X, Loader2, ChevronDown, Plus, Phone } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useAllPatients, useCreatePatient } from '@/api/profile';
+import PhoneInput from '@/components/Shared/PhoneInput';
 import { toast } from '@/components/Shared/Toast';
 
 interface AddNoteModalProps {
@@ -220,11 +221,10 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
                                 </h3>
                                 <div className="space-y-4">
                                     <div className="relative">
-                                        <input
-                                            type="tel"
+                                        <PhoneInput
                                             placeholder={t('patients_modals.note.phone_ph')}
                                             value={newPatientPhone}
-                                            onChange={(e) => setNewPatientPhone(e.target.value)}
+                                            onChange={setNewPatientPhone}
                                             className="w-full h-14 bg-[#efefef] rounded-[15px] px-10 text-lg font-bold text-[#1a1f36] border-none focus:ring-2 focus:ring-[#4f6bff]/20 outline-none"
                                         />
                                         <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />

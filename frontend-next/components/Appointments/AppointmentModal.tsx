@@ -8,6 +8,7 @@ import { useCreateAppointment } from '@/api/appointments';
 import { useAllPatients, useCreatePatient, useDentistProfile } from '@/api/profile';
 import { useServices } from '@/api/services';
 import { toast } from '@/components/Shared/Toast';
+import PhoneInput from '@/components/Shared/PhoneInput';
 
 interface Props {
     isOpen: boolean;
@@ -291,11 +292,10 @@ const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
                                 </h3>
                                 <div className="space-y-4">
                                     <div className="relative">
-                                        <input
-                                            type="tel"
+                                        <PhoneInput
                                             placeholder={t('modal.phone_placeholder')}
                                             value={newPatientPhone}
-                                            onChange={(e) => setNewPatientPhone(e.target.value)}
+                                            onChange={setNewPatientPhone}
                                             className="w-full h-14 bg-[#efefef] rounded-[15px] px-10 text-lg font-bold text-[#1a1f36] border-none focus:ring-2 focus:ring-[#4f6bff]/20 outline-none"
                                         />
                                         <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
