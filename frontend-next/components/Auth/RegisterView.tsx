@@ -11,6 +11,7 @@ import { paths } from '@/lib/paths';
 import { setUser } from '@/store/slices/userSlice';
 import { useAppDispatch } from '@/store/hooks';
 import { toast } from '@/components/Shared/Toast';
+import PhoneInput from '@/components/Shared/PhoneInput';
 
 interface RegisterViewProps {
   role: 'patient' | 'dentist';
@@ -33,6 +34,9 @@ export default function RegisterView({ role }: RegisterViewProps) {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
+    trigger,
     formState: { errors },
   } = useForm<RegisterFormData>();
 
@@ -187,18 +191,15 @@ export default function RegisterView({ role }: RegisterViewProps) {
                     </label>
                     <div className={`flex items-center rounded-2xl border bg-white px-4 ${errors.phone ? 'border-red-400' : 'border-[#d9def7]'}`}>
                       <Phone size={18} className="mr-3 text-[#7080ff]" />
-                      <input
-                        type="tel"
+                      <PhoneInput
                         placeholder="+998 90 123 45 67"
+                        value={watch('phone') || ''}
+                        onChange={(v) => {
+                          setValue('phone', v, { shouldValidate: true });
+                          trigger('phone');
+                        }}
                         className="w-full bg-transparent py-3.5 text-base text-[#18213d] outline-none placeholder:text-[#99a2c7]"
                         style={{ fontFamily: '"Space Grotesk", sans-serif' }}
-                        {...register('phone', {
-                          required: t('auth.login.phone_required'),
-                          validate: (value) => {
-                            const cleaned = value.replace(/\s+/g, '');
-                            return /^\+998\d{9}$/.test(cleaned) || t('auth.login.phone_invalid');
-                          },
-                        })}
                       />
                     </div>
                     {errors.phone && <p className="mt-1.5 text-sm text-red-500">{errors.phone.message}</p>}

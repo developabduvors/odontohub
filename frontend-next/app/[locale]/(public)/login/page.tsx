@@ -12,6 +12,7 @@ import { setUser } from '@/store/slices/userSlice';
 import { useAppDispatch } from '@/store/hooks';
 import { useTelegram } from '@/hooks/useTelegram';
 import { toast } from '@/components/Shared/Toast';
+import PhoneInput from '@/components/Shared/PhoneInput';
 
 interface LoginData {
   phone: string;
@@ -28,6 +29,9 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
+    trigger,
     formState: { errors },
   } = useForm<LoginData>();
 
@@ -146,18 +150,15 @@ export default function LoginPage() {
                         }`}
                     >
                       <Phone size={18} className="mr-3 text-[#7080ff]" />
-                      <input
-                        type="tel"
+                      <PhoneInput
                         placeholder="+998 90 123 45 67"
+                        value={watch('phone') || ''}
+                        onChange={(v) => {
+                          setValue('phone', v, { shouldValidate: true });
+                          trigger('phone');
+                        }}
                         className="w-full bg-transparent py-3.5 text-base text-[#18213d] outline-none placeholder:text-[#99a2c7]"
                         style={{ fontFamily: '"Space Grotesk", sans-serif' }}
-                        {...register('phone', {
-                          required: t('auth.login.phone_required'),
-                          validate: (value) => {
-                            const cleaned = value.replace(/\s+/g, '');
-                            return /^\+998\d{9}$/.test(cleaned) || t('auth.login.phone_invalid');
-                          },
-                        })}
                       />
                     </div>
                     {errors.phone && (
