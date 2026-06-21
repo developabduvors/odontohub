@@ -19,9 +19,9 @@ const stripPrefix = (v: string) => {
 const formatDigits = (digits: string) => {
   const d = digits.slice(0, 9);
   let out = PREFIX;
-  if (d.length > 0) out += d[0];
-  if (d.length > 1) out += ' ' + d.slice(1, 4);
-  if (d.length > 4) out += ' ' + d.slice(4, 7);
+  if (d.length > 0) out += d.slice(0, 2);
+  if (d.length > 2) out += ' ' + d.slice(2, 5);
+  if (d.length > 5) out += ' ' + d.slice(5, 7);
   if (d.length > 7) out += ' ' + d.slice(7, 9);
   return out.trimEnd();
 };
