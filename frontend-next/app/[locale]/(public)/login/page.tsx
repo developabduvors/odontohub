@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { Eye, EyeOff, LockKeyhole, Phone } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -29,9 +29,7 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
-    setValue,
-    watch,
-    trigger,
+    control,
     formState: { errors },
   } = useForm<LoginData>();
 
@@ -150,15 +148,25 @@ export default function LoginPage() {
                         }`}
                     >
                       <Phone size={18} className="mr-3 text-[#7080ff]" />
-                      <PhoneInput
-                        placeholder="+998 90 123 45 67"
-                        value={watch('phone') || ''}
-                        onChange={(v) => {
-                          setValue('phone', v, { shouldValidate: true });
-                          trigger('phone');
+                      <Controller
+                        name="phone"
+                        control={control}
+                        rules={{
+                          required: t('auth.login.phone_required'),
+                          validate: (value) => {
+                            const cleaned = value.replace(/\s+/g, '');
+                            return /^\+998\d{9}$/.test(cleaned) || t('auth.login.phone_invalid');
+                          },
                         }}
-                        className="w-full bg-transparent py-3.5 text-base text-[#18213d] outline-none placeholder:text-[#99a2c7]"
-                        style={{ fontFamily: '"Space Grotesk", sans-serif' }}
+                        render={({ field: { onChange, value } }) => (
+                          <PhoneInput
+                            placeholder="+998 90 123 45 67"
+                            value={value || ''}
+                            onChange={onChange}
+                            className="w-full bg-transparent py-3.5 text-base text-[#18213d] outline-none placeholder:text-[#99a2c7]"
+                            style={{ fontFamily: '"Space Grotesk", sans-serif' }}
+                          />
+                        )}
                       />
                     </div>
                     {errors.phone && (
