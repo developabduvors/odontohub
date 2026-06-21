@@ -48,15 +48,15 @@ const DoctorProfilePage: FC = () => {
     const { data: dentistData } = useDentistProfile();
 
     const [profileData, setProfileData] = useState<ProfileData>({
-        phone: user?.phone || '+998 (93) 123 45 67',
-        email: user?.email || 'example@gmail.com',
+        phone: String(user?.phone || '+998 (93) 123 45 67'),
+        email: String(user?.email || 'example@gmail.com'),
         address: t('doctor_profile.address_placeholder'),
         education: '',
         clinic: 'OdontoHub',
         specialization: '',
         telegram: '@stom',
         instagram: 'stomatolog.uz',
-        whatsapp: user?.phone || '+998 90 123 45 67',
+        whatsapp: String(user?.phone || '+998 90 123 45 67'),
         schedule: t('doctor_profile.every_day'),
         workStart: '08',
         startMinute: '00',
@@ -65,7 +65,7 @@ const DoctorProfilePage: FC = () => {
         gender: t('patient_profile.male'),
         birthDate: '',
         experienceYears: '',
-        name: user?.full_name || t('common.doctor'),
+        name: String(user?.full_name || t('common.doctor')),
     });
 
     useEffect(() => {
@@ -105,10 +105,10 @@ const DoctorProfilePage: FC = () => {
         if (!user) return;
         setProfileData((prev) => ({
             ...prev,
-            name: user.full_name || prev.name,
-            phone: user.phone || prev.phone,
-            email: user.email || prev.email,
-            whatsapp: user.phone || prev.whatsapp,
+            name: String(user.full_name || prev.name),
+            phone: String(user.phone || prev.phone),
+            email: String(user.email || prev.email),
+            whatsapp: String(user.phone || prev.whatsapp),
         }));
     }, [user]);
 

@@ -15,7 +15,7 @@ interface Props {
     onSuccess?: () => void;
 }
 
-type PatientOption = { id: number | string; full_name?: string; phone?: string };
+type PatientOption = { id: number | string; full_name?: string; phone?: string | null };
 type ApiError = { response?: { data?: { detail?: string } }; message?: string };
 
 const AppointmentModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {

@@ -95,7 +95,7 @@ const Booking = () => {
             const endDateTime = new Date(startDateTime);
             endDateTime.setHours(startDateTime.getHours() + 1);
 
-            const targetPatientId = patientFromState || userData.patient_id;
+            const targetPatientId = patientFromState || (userData.patient_id as number | undefined);
 
             if (userData.role === 'dentist' && !targetPatientId) {
                 toast.error(t("booking.select_patient"));

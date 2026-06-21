@@ -208,7 +208,7 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
                                 {t('appointments.detail.initial')}
                             </span>
                         </div>
-                        {appointment.raw?.price && (
+                        {!!appointment.raw?.price && (
                             <div className="pt-4 border-t border-white/20">
                                 <span className="text-2xl font-black">{(appointment.raw.price as number).toLocaleString()} <span className="text-sm">{t('appointments.detail.sum')}</span></span>
                             </div>
@@ -263,7 +263,7 @@ const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({ isOpen,
             </div>
 
             {/* Reschedule Modal */}
-            {appointment.raw?.start_time && (
+            {!!appointment.raw?.start_time && (
                 <RescheduleModal
                     isOpen={isRescheduleOpen}
                     onClose={() => setIsRescheduleOpen(false)}

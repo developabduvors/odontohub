@@ -45,8 +45,8 @@ const PatientProfilePage = () => {
     const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [userData, setUserData] = useState<PatientProfileState>({
-        name: user?.full_name || t('common.patient'),
-        phone: user?.phone || "+998 (90) 123 45 67",
+        name: String(user?.full_name || t('common.patient')),
+        phone: String(user?.phone || "+998 (90) 123 45 67"),
         gender: "Мужчина",
         birthDate: "",
         address: defaultAddress,
@@ -82,8 +82,8 @@ const PatientProfilePage = () => {
 
         if (patientProfile) {
             setUserData({
-                name: patientProfile.full_name || user?.full_name || t('common.patient'),
-                phone: patientProfile.phone || user?.phone || "+998 (90) 123 45 67",
+                name: String(patientProfile.full_name || user?.full_name || t('common.patient')),
+                phone: String(patientProfile.phone || user?.phone || "+998 (90) 123 45 67"),
                 gender: patientProfile.gender === "male" ? "Мужчина" : patientProfile.gender === "female" ? "Женщина" : "Мужчина",
                 birthDate: patientProfile.birth_date ? patientProfile.birth_date.slice(0, 10) : "",
                 address: patientProfile.address || defaultAddress,

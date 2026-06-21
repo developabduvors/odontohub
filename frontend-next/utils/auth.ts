@@ -51,7 +51,7 @@ export const getUserRole = (): 'patient' | 'dentist' | null => {
     }
   }
 
-  return user?.role || null;
+  return (user?.role as 'patient' | 'dentist') || null;
 };
 
 export const isPatient = (): boolean => getUserRole() === 'patient';

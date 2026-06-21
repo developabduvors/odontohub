@@ -82,7 +82,8 @@ export function getTelegramChat() {
       return null;
     }
 
-    return window.Telegram.WebApp.initDataUnsafe?.chat || null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (window.Telegram.WebApp.initDataUnsafe as any)?.chat || null;
   } catch (error) {
     console.error('Error getting Telegram chat:', error);
     return null;

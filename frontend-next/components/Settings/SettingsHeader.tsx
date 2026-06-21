@@ -42,7 +42,7 @@ export const SettingsHeader: React.FC = () => {
         </div>
         <div className="hidden min-w-0 flex-col leading-tight md:flex">
           <span className="whitespace-nowrap text-sm font-bold">
-            {user?.full_name || t('user')}
+            {String(user?.full_name || t('user'))}
           </span>
           <span className="text-[11px] text-white/70">
             {user?.role === 'dentist' ? t('doctor') : t('patient')}

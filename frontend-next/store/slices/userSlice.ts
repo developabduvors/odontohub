@@ -22,7 +22,7 @@ const userSlice = createSlice({
       state.user = action.payload;
       state.isAuthenticated = true;
       if (action.payload.role) {
-        state.role = action.payload.role;
+        state.role = action.payload.role as UserRole;
       }
     },
     clearUser: (state) => {

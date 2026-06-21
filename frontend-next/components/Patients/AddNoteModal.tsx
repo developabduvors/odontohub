@@ -12,7 +12,7 @@ interface AddNoteModalProps {
     onSuccess?: (patientId: number, note: string) => void;
 }
 
-type PatientOption = { id: number; full_name?: string; phone?: string };
+type PatientOption = { id: number; full_name?: string; phone?: string | null };
 type ApiError = { response?: { data?: { detail?: string } }; message?: string };
 
 const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess }) => {
@@ -181,7 +181,7 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({ isOpen, onClose, onSuccess 
                                             key={p.id}
                                             onClick={() => {
                                                 setSelectedPatientId(p.id);
-                                                setSearchTerm(p.full_name);
+                                                setSearchTerm(p.full_name || '');
                                                 setIsDropdownOpen(false);
                                             }}
                                             className="px-6 py-4 hover:bg-[#4f6bff]/5 cursor-pointer transition-colors flex items-center gap-4 border-b border-gray-50 last:border-0"
