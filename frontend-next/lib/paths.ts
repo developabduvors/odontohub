@@ -4,6 +4,8 @@ export const paths = {
   welcome: '/',
   role: '/role',
   login: '/login',
+  loginCode: '/login-code',
+  forgotPassword: '/forgot-password',
   registrDoc: '/register_doc',
   registerPat: '/register_pat',
   patient: '/patients',

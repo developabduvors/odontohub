@@ -1360,6 +1360,9 @@
       "password_required": "Введите пароль",
       "password_min": "Минимум 6 символов",
       "submit": "Войти",
+      "forgot_password": "Забыли пароль?",
+      "or": "или",
+      "login_with_code": "Войти по коду Telegram",
       "no_account": "Нет аккаунта?",
       "register": "Зарегистрироваться",
       "server_error": "Ошибка подключения к серверу"

@@ -9,6 +9,9 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
 
+    # 🤖 Telegram bot (parolni tiklash kodlarini yuborish uchun)
+    TELEGRAM_BOT_TOKEN: Optional[str] = None
+
     # 🗄 Database
     DATABASE_URL: Optional[str] = None
     DB_USER: Optional[str] = None

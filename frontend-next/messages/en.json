@@ -1337,6 +1337,9 @@
       "password_required": "Enter password",
       "password_min": "At least 6 characters",
       "submit": "Log in",
+      "forgot_password": "Forgot password?",
+      "or": "or",
+      "login_with_code": "Log in with Telegram code",
       "no_account": "No account?",
       "register": "Sign up",
       "server_error": "Server connection error"

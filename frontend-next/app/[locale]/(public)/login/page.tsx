@@ -11,6 +11,7 @@ import { paths } from '@/lib/paths';
 import { setUser } from '@/store/slices/userSlice';
 import { useAppDispatch } from '@/store/hooks';
 import { useTelegram } from '@/hooks/useTelegram';
+import { useRedirectIfAuthed } from '@/hooks/useRedirectIfAuthed';
 import { toast } from '@/components/Shared/Toast';
 import PhoneInput from '@/components/Shared/PhoneInput';
 
@@ -25,6 +26,8 @@ export default function LoginPage() {
   const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const { initData } = useTelegram();
+
+  useRedirectIfAuthed(); // shu qurilmada allaqachon kirgan bo'lsa — to'g'ri home'ga
 
   const {
     register,
@@ -44,7 +47,7 @@ export default function LoginPage() {
 
       if (initData) {
         try {
-          await api.post('/telegram/link',
+          await api.post('/api/telegram/link',
             { init_data: initData },
             { headers: { Authorization: `Bearer ${access_token}` } }
           );
@@ -207,6 +210,14 @@ export default function LoginPage() {
                     {errors.password && (
                       <p className="mt-1.5 text-sm text-red-500">{errors.password.message}</p>
                     )}
+                    <div className="mt-2 text-right">
+                      <Link
+                        href={paths.forgotPassword}
+                        className="text-sm font-semibold text-[#5667ff] transition hover:text-[#3f52ff]"
+                      >
+                        {t('auth.login.forgot_password')}
+                      </Link>
+                    </div>
                   </div>
 
                   <button
@@ -217,6 +228,20 @@ export default function LoginPage() {
                     {t('auth.login.submit')}
                   </button>
                 </form>
+
+                <div className="my-5 flex items-center gap-3 text-xs text-[#9aa3c7]">
+                  <span className="h-px flex-1 bg-[#e3e7f7]" />
+                  {t('auth.login.or')}
+                  <span className="h-px flex-1 bg-[#e3e7f7]" />
+                </div>
+
+                <Link
+                  href={paths.loginCode}
+                  className="flex w-full items-center justify-center gap-2 rounded-full border border-[#cdd5f5] bg-white px-6 py-3 text-base font-semibold text-[#5667ff] transition hover:bg-[#f3f5ff]"
+                  style={{ fontFamily: '"Space Grotesk", sans-serif' }}
+                >
+                  {t('auth.login.login_with_code')}
+                </Link>
 
                 <p
                   className="mt-6 text-center text-sm text-[#5f6a92]"

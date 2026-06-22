@@ -12,6 +12,8 @@ import { setUser } from '@/store/slices/userSlice';
 import { useAppDispatch } from '@/store/hooks';
 import { toast } from '@/components/Shared/Toast';
 import PhoneInput from '@/components/Shared/PhoneInput';
+import { useRedirectIfAuthed } from '@/hooks/useRedirectIfAuthed';
+import { useTelegram } from '@/hooks/useTelegram';
 
 interface RegisterViewProps {
   role: 'patient' | 'dentist';
@@ -30,6 +32,9 @@ export default function RegisterView({ role }: RegisterViewProps) {
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const { initData } = useTelegram(); // Mini App ichida bo'lsa — registratsiyada telegram_id bog'lanadi
+
+  useRedirectIfAuthed(); // shu qurilmada allaqachon kirgan bo'lsa — to'g'ri home'ga
 
   const {
     register,
@@ -47,6 +52,7 @@ export default function RegisterView({ role }: RegisterViewProps) {
         email: data.email || '',
         password: data.password,
         role,
+        init_data: initData || undefined, // Mini App'da telegram_id ni darrov bog'laydi
       });
 
       const accessToken = result.data.access_token;

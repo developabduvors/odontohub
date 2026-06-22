@@ -21,7 +21,7 @@ export function TelegramAuthWrapper({ children }: { children: React.ReactNode })
 
         const autoLogin = async () => {
             try {
-                const result = await api.post('/telegram/login', { init_data: initData });
+                const result = await api.post('/api/telegram/login', { init_data: initData });
                 const { access_token } = result.data;
 
                 localStorage.setItem('access_token', access_token);

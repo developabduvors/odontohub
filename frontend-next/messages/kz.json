@@ -1336,6 +1336,9 @@
       "password_required": "Құпиясөзді енгізіңіз",
       "password_min": "Кемінде 6 таңба",
       "submit": "Кіру",
+      "forgot_password": "Құпия сөзді ұмыттыңыз ба?",
+      "or": "немесе",
+      "login_with_code": "Telegram коды арқылы кіру",
       "no_account": "Аккаунт жоқ па?",
       "register": "Тіркелу",
       "server_error": "Серверге қосылу қатесі"

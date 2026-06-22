@@ -1360,6 +1360,9 @@
       "password_required": "Parolni kiriting",
       "password_min": "Kamida 6 ta belgi",
       "submit": "Kirish",
+      "forgot_password": "Parolni unutdingizmi?",
+      "or": "yoki",
+      "login_with_code": "Telegram kodi bilan kirish",
       "no_account": "Hisobingiz yo'qmi?",
       "register": "Ro'yxatdan o'tish",
       "server_error": "Serverga ulanishda xatolik"

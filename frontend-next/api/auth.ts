@@ -79,6 +79,36 @@ export const getMe = async (): Promise<{ has_password?: boolean; phone?: string;
   return response.data
 }
 
+// ── Parolni tiklash (Telegram orqali) ──
+export const forgotPassword = async (phone: string): Promise<{ sent: boolean; expires_in: number }> => {
+  const res = await api.post('/auth/forgot-password', { phone })
+  return res.data
+}
+
+export const verifyResetCode = async (phone: string, code: string): Promise<{ valid: boolean; attempts_left: number }> => {
+  const res = await api.post('/auth/verify-reset-code', { phone, code })
+  return res.data
+}
+
+export const resetPassword = async (phone: string, code: string, new_password: string): Promise<{ message: string }> => {
+  const res = await api.post('/auth/reset-password', { phone, code, new_password })
+  return res.data
+}
+
+// ── Telegram kodi orqali kirish (passwordless login) ──
+export const sendLoginCode = async (phone: string): Promise<{ sent: boolean; expires_in: number }> => {
+  const res = await api.post('/auth/send-login-code', { phone })
+  return res.data
+}
+
+export const verifyLoginCode = async (
+  phone: string,
+  code: string,
+): Promise<{ access_token: string; token_type: string }> => {
+  const res = await api.post('/auth/verify-login-code', { phone, code })
+  return res.data
+}
+
 export const getBackupPhone = async (): Promise<{ backup_phone: string | null }> => {
   const response = await api.get('/auth/backup-phone')
   return response.data
