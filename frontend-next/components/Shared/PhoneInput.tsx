@@ -7,6 +7,12 @@ interface PhoneInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'o
   onChange: (value: string) => void;
 }
 
+// Saqlanadigan qiymat doim "+998 <national>" ko'rinishida keladi. Shu
+// prefiksni AVVAL olib tashlaymiz — aks holda qisman kiritishda (masalan
+// "+998 9" -> "9989") prefiks "998" raqamlari national raqamga qo'shilib,
+// "bitta 9 yozsam o'zidan sonlar chiqib ketadi" bug'i yuzaga keladi.
+const stripPrefix = (v: string) => v.replace(/^\s*\+?998\s*/, '');
+
 // Raqamlarni ajratib oladi. Brauzer autofill '+' siz to'liq raqam berishi
 // mumkin (998901234567) — '998' mamlakat kodini ham olib tashlaymiz, so'ng
 // 9 ta abonent raqamigacha cheklaymiz.
@@ -28,7 +34,8 @@ const formatNational = (digits: string) => {
 };
 
 const PhoneInput: FC<PhoneInputProps> = ({ value, onChange, className, style, ...props }) => {
-  const digits = stripDigits(value);
+  // value = prop ("+998 ..."): avval prefiksni olib tashlab, keyin raqamlarni ajratamiz
+  const digits = stripDigits(stripPrefix(value));
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const d = stripDigits(e.target.value);
