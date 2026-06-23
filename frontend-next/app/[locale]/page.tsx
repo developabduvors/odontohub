@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { useRouter, usePathname } from '@/i18n/navigation';
 import { paths } from '@/lib/paths';
+import { useRedirectIfAuthed } from '@/hooks/useRedirectIfAuthed';
 
 type Language = 'uz' | 'ru' | 'kz' | 'en';
 
@@ -49,6 +50,8 @@ export default function WelcomePage() {
   const router = useRouter();
   const pathname = usePathname();
   const [selectedLanguage, setSelectedLanguage] = useState<Language | ''>('');
+
+  useRedirectIfAuthed(); // qaytgan foydalanuvchini to'g'ri home'ga olib o'tadi
 
   const activeLanguage = useMemo(
     () =>

@@ -25,11 +25,13 @@ export default function MenuPage() {
       <div>
         <Hero onSearch={setSearchQuery} />
         <div className="px-3 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+          {/* Qidiruv natijasi to'g'ridan-to'g'ri qidiruv maydoni ostida ko'rinsin
+              (bo'sh so'rovda PatientSearch null qaytaradi — joy egallamaydi) */}
+          <PatientSearch searchQuery={searchQuery} />
           <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 sm:gap-6">
             <div className="xl:col-span-8 flex flex-col space-y-4 sm:space-y-6 min-w-0">
               <Analytics />
               <NewPatients />
-              <PatientSearch searchQuery={searchQuery} />
               <Tezroq />
             </div>
             <div className="xl:col-span-4 min-w-0">

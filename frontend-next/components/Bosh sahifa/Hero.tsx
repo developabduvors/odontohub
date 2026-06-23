@@ -240,6 +240,5 @@ const Hero: React.FC<HeroProps> = ({ onSearch }) => {
     </>
   );
 };
-
 export default Hero;
 
