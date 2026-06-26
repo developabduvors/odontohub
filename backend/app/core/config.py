@@ -7,7 +7,9 @@ class Settings(BaseSettings):
     # 🔐 Security
     SECRET_KEY: str = "super-secret-key-change-in-production"
     ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
+    # Sessiya umri: qurilmada bir marta kirgan foydalanuvchi qayta login
+    # qilmasligi uchun token uzoq yashaydi (30 kun). Bir yil uchun 60*24*365.
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 30
 
     # 🤖 Telegram bot (parolni tiklash kodlarini yuborish uchun)
     TELEGRAM_BOT_TOKEN: Optional[str] = None
