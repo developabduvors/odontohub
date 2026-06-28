@@ -13,7 +13,7 @@ import AppointmentDetailModal from '@/components/Appointments/AppointmentDetailM
 import InProgressView from '@/components/Appointments/InProgressView';
 import { toast } from '@/components/Shared/Toast';
 import { useMyAppointments } from '@/api/appointments';
-import { useServices } from '@/api/services';
+import { useMyServices } from '@/api/services';
 
 // AppointmentDetailModal va InProgressView ikkalasi ham qabul qiladigan shakl.
 type SelectedAppointment = {
@@ -37,7 +37,7 @@ const AppointmentsPage: React.FC = () => {
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
     const { data: apiAppointments, isLoading } = useMyAppointments();
-    const { data: services } = useServices();
+    const { data: services } = useMyServices();
 
     const allAppointmentsData = useMemo(() => {
         if (!apiAppointments || !Array.isArray(apiAppointments)) return [];

@@ -12,8 +12,10 @@ import EditProfileModal from "@/components/Shared/EditProfileModal";
 import { usePatientProfile, useUpdatePatient } from "@/api/profile";
 import { toast } from "@/components/Shared/Toast";
 import { getToken } from "@/utils/auth";
+import { defaultAvatarFor } from "@/lib/avatar";
 
-const DefaultAvatar = "/assets/img/photos/NoProfilePhoto.png";
+// Foydalanuvchi rasm yuklamagan bo'lsa — jins bo'yicha default avatar.
+const DefaultAvatar = defaultAvatarFor("male");
 
 type PatientProfileState = {
     name: string;
@@ -87,7 +89,7 @@ const PatientProfilePage = () => {
                 gender: patientProfile.gender === "male" ? "Мужчина" : patientProfile.gender === "female" ? "Женщина" : "Мужчина",
                 birthDate: patientProfile.birth_date ? patientProfile.birth_date.slice(0, 10) : "",
                 address: patientProfile.address || defaultAddress,
-                avatar: DefaultAvatar,
+                avatar: defaultAvatarFor(patientProfile.gender),
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -110,6 +112,11 @@ const PatientProfilePage = () => {
 
     const handleSaveProfile = async (newData: Partial<PatientProfileState>) => {
         const updatedData = { ...userData, ...newData };
+        // Foydalanuvchi o'z rasmini yuklamagan (hali default) bo'lsa — jinsga mos avatarga o'tkazamiz.
+        const isDefaultAvatar = updatedData.avatar === defaultAvatarFor("male") || updatedData.avatar === defaultAvatarFor("female");
+        if (isDefaultAvatar) {
+            updatedData.avatar = defaultAvatarFor(updatedData.gender);
+        }
         setUserData(updatedData);
 
         const accessToken = getToken();

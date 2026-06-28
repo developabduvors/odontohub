@@ -13,6 +13,7 @@ class RegisterSchema(BaseModel):
     full_name: str
     email: str | None = None
     password: str
+    gender: str | None = None  # "male" | "female" — default avatar shu bo'yicha tanlanadi
     # Mini App'da ro'yxatdan o'tganda Telegram WebApp initData yuboriladi —
     # tasdiqlangach telegram_id saqlanadi va keyingi kirishlarda avto-login ishlaydi.
     init_data: str | None = None

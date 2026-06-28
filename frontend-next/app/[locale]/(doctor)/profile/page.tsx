@@ -15,6 +15,10 @@ import ScheduleCard from '@/components/DoctorProfile/ScheduleCard';
 import SocialNetworksCard from '@/components/DoctorProfile/SocialNetworksCard';
 import { useDentistProfile } from '@/api/profile';
 
+// Doktor default avatarlari (foydalanuvchi o'z rasmini yuklamagan bo'lsa).
+const DENTIST_MALE_AVATAR = '/assets/img/photos/Dentist.png';
+const DENTIST_FEMALE_AVATAR = '/assets/img/photos/DentistFemale.jpg';
+
 interface ProfileData {
     phone: string;
     email: string;
@@ -112,8 +116,19 @@ const DoctorProfilePage: FC = () => {
         }));
     }, [user]);
 
-    const [avatarUrl, setAvatarUrl] = useState<string>('/assets/img/photos/Dentist.png');
+    const [avatarUrl, setAvatarUrl] = useState<string>(DENTIST_MALE_AVATAR);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // Doktor o'z rasmini yuklamagan bo'lsa — jinsga mos default foto.
+    // Erkak: Dentist.png; Ayol: DentistFemale.jpg.
+    useEffect(() => {
+        if (!dentistData) return;
+        setAvatarUrl((prev) => {
+            const isDefault = prev === DENTIST_MALE_AVATAR || prev === DENTIST_FEMALE_AVATAR;
+            if (!isDefault) return prev; // foydalanuvchi rasm yuklagan — tegmaymiz
+            return dentistData.gender === 'female' ? DENTIST_FEMALE_AVATAR : DENTIST_MALE_AVATAR;
+        });
+    }, [dentistData]);
 
     const handleUpdateProfile = (newData: Partial<ProfileData>) => {
         setProfileData((prev) => ({ ...prev, ...newData }));

@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from typing import List
 
@@ -23,13 +22,25 @@ def read_services(
     if search:
         query = query.filter(Service.name.ilike(f"%{search}%"))
     if dentist_id:
-        # Show this dentist's own services PLUS the shared global catalogue
-        # (services with no dentist assigned, dentist_id IS NULL).
-        query = query.filter(
-            or_(Service.dentist_id == dentist_id, Service.dentist_id.is_(None))
-        )
+        # Strictly this dentist's own services. No global/NULL catalogue leak —
+        # each dentist owns only the services they created.
+        query = query.filter(Service.dentist_id == dentist_id)
     services = query.offset(skip).limit(limit).all()
     return services
+
+@router.get("/my", response_model=List[ServiceSchema])
+def read_my_services(
+    user: User = Depends(require_role(UserRole.DENTIST)),
+    db: Session = Depends(get_db)
+):
+    """Authenticated dentist's own services only (keyed off JWT, not a client id)."""
+    profile = user.dentist_profile
+    if not profile:
+        from app.models.dentist import DentistProfile
+        profile = db.query(DentistProfile).filter(DentistProfile.user_id == user.id).first()
+    if not profile:
+        raise HTTPException(status_code=400, detail="Dentist profile not found")
+    return db.query(Service).filter(Service.dentist_id == profile.id).all()
 
 @router.post("/", response_model=ServiceSchema)
 def create_service(

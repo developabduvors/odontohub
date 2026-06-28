@@ -195,6 +195,7 @@ def dentist_me(
         "verification_status": profile.verification_status.value if hasattr(profile.verification_status, 'value') else profile.verification_status,
         "specialization": profile.specialization,
         "education": profile.education,
+        "gender": profile.gender,  # default avatar/jins ko'rsatish uchun
         "phone": user.phone,  # Берем из user, а не из profile
         "email": user.email,  # Добавляем email
         "address": profile.address,

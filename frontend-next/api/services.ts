@@ -27,6 +27,20 @@ export const useServices = (dentistId?: number) => {
     });
 };
 
+// Doktorning O'ZINING xizmatlari — JWT orqali, dentist_id klientdan kelmaydi.
+// Boshqaruv (DoctorProfile) ko'rinishi shuni ishlatadi: hech qachon boshqa
+// doktorning xizmatlari aralashmaydi.
+export const useMyServices = () => {
+    return useQuery({
+        queryKey: ['services', 'my'],
+        queryFn: async () => {
+            const response = await api.get<Service[]>('/services/my');
+            return response.data;
+        },
+        enabled: isAuthenticated(),
+    });
+};
+
 export const useCreateService = () => {
     const queryClient = useQueryClient();
     return useMutation({

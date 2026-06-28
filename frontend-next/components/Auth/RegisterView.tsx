@@ -24,6 +24,7 @@ interface RegisterFormData {
   phone: string;
   email?: string;
   password: string;
+  gender: 'male' | 'female';
 }
 
 export default function RegisterView({ role }: RegisterViewProps) {
@@ -52,6 +53,7 @@ export default function RegisterView({ role }: RegisterViewProps) {
         email: data.email || '',
         password: data.password,
         role,
+        gender: data.gender, // default avatar shu bo'yicha tanlanadi (Erkak/Ayol)
         init_data: initData || undefined, // Mini App'da telegram_id ni darrov bog'laydi
       });
 
@@ -167,6 +169,38 @@ export default function RegisterView({ role }: RegisterViewProps) {
                         </p>
                       </button>
                     </div>
+                  </div>
+
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-[#3d4a73]" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>
+                      {t('auth.register.gender')}
+                    </label>
+                    <Controller
+                      name="gender"
+                      control={control}
+                      rules={{ required: t('auth.register.gender_required') }}
+                      render={({ field: { onChange, value } }) => (
+                        <div className="grid grid-cols-2 gap-3">
+                          {(['male', 'female'] as const).map((g) => (
+                            <button
+                              key={g}
+                              type="button"
+                              onClick={() => onChange(g)}
+                              className={`flex items-center justify-center gap-2 rounded-[24px] border p-3.5 text-base font-semibold transition-all ${
+                                value === g
+                                  ? 'border-[#7080ff] bg-[#eef1ff] text-[#5667ff]'
+                                  : 'border-[#d9def7] bg-white text-[#6f789a] hover:border-[#c5cdf4]'
+                              }`}
+                              style={{ fontFamily: '"Space Grotesk", sans-serif' }}
+                            >
+                              {g === 'male' ? <User size={20} /> : <UserRound size={20} />}
+                              {g === 'male' ? t('auth.register.gender_male') : t('auth.register.gender_female')}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    />
+                    {errors.gender && <p className="mt-1.5 text-sm text-red-500">{errors.gender.message}</p>}
                   </div>
 
                   <div>

@@ -4,12 +4,12 @@ import { type FC, useState } from 'react';
 import { Edit2, Trash2, Plus, Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { useServices, useDeleteService, type Service } from '@/api/services';
+import { useMyServices, useDeleteService, type Service } from '@/api/services';
 import ServiceModal from '@/components/Services/ServiceModal';
 
 const ServicesSection: FC = () => {
     const t = useTranslations();
-    const { data: services, isLoading } = useServices();
+    const { data: services, isLoading } = useMyServices();
     const deleteService = useDeleteService();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingService, setEditingService] = useState<{ id: number; name: string; price: number } | null>(null);

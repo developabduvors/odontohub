@@ -148,13 +148,16 @@ def register(data: RegisterSchema, db: Session = Depends(get_db)):
         db.add(user)
         db.flush()
 
+        gender = data.gender if data.gender in ("male", "female") else None
+
         if role_value == "patient":
-            db.add(PatientProfile(user_id=user.id, full_name=full_name))
+            db.add(PatientProfile(user_id=user.id, full_name=full_name, gender=gender))
         elif role_value == "dentist":
             db.add(
                 DentistProfile(
                     user_id=user.id,
                     full_name=full_name,
+                    gender=gender,
                     # Avto-tasdiqlash: yangi doktor ro'yxatdan o'tishi bilan darrov
                     # bemorlarga ko'rinsin (admin tasdiqlashini kutmasdan).
                     verification_status=VerificationStatus.APPROVED,
@@ -208,13 +211,16 @@ def get_me(user: User = Depends(get_current_user)):
     full_name = "User"
     patient_id = None
     dentist_id = None
+    gender = None
 
     if user.role.value == UserRole.PATIENT.value and user.patient_profile:
         full_name = user.patient_profile.full_name
         patient_id = user.patient_profile.id
+        gender = user.patient_profile.gender
     elif user.role.value == UserRole.DENTIST.value and user.dentist_profile:
         full_name = user.dentist_profile.full_name
         dentist_id = user.dentist_profile.id
+        gender = user.dentist_profile.gender
 
     # has_password=False => faqat magic-link placeholder bor, frontend "parol
     # o'rnатиш" rejimини ko'рсатади (eski parol so'rамаydi).
@@ -229,6 +235,7 @@ def get_me(user: User = Depends(get_current_user)):
         "full_name": full_name,
         "patient_id": patient_id,
         "dentist_id": dentist_id,
+        "gender": gender,
         "has_password": has_password,
     }
 

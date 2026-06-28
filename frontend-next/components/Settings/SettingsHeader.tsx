@@ -8,11 +8,17 @@ import { useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/i18n/navigation';
 import { paths } from '@/lib/paths';
 import type { RootState } from '@/store/store';
+import { defaultAvatarFor } from '@/lib/avatar';
 
 export const SettingsHeader: React.FC = () => {
   const router = useRouter();
   const t = useTranslations('common');
   const user = useSelector((state: RootState) => state.user.user);
+  const gender = (user as { gender?: string | null } | null)?.gender;
+  // Doktor: jinsga mos foto; bemor: jinsga mos silhuet (foydalanuvchi rasm yuklamasa).
+  const headerAvatar = user?.role === 'dentist'
+    ? (gender === 'female' ? '/assets/img/photos/DentistFemale.jpg' : '/assets/img/photos/Dentist.png')
+    : defaultAvatarFor(gender);
 
   return (
     <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:gap-6">
@@ -38,7 +44,7 @@ export const SettingsHeader: React.FC = () => {
       >
         <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg bg-white/15">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/img/photos/Dentist.png" alt="Profile" className="h-full w-full object-cover" />
+          <img src={headerAvatar} alt="Profile" className="h-full w-full object-cover" />
         </div>
         <div className="hidden min-w-0 flex-col leading-tight md:flex">
           <span className="whitespace-nowrap text-sm font-bold">

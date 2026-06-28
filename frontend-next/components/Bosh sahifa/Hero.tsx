@@ -31,6 +31,10 @@ const Hero: React.FC<HeroProps> = ({ onSearch }) => {
 
   const { data: stats } = useDentistStats();
   const { data: dentistProfile } = useDentistProfile();
+  // Header avatari jinsga mos default foto bilan (foydalanuvchi rasm yuklamasa).
+  const dentistAvatar = dentistProfile?.gender === 'female'
+    ? '/assets/img/photos/DentistFemale.jpg'
+    : '/assets/img/photos/Dentist.png';
   const u = user as { dentist_profile?: { id?: number }; dentist_id?: number; id?: number } | null;
   const dentistId = dentistProfile?.id || u?.dentist_profile?.id || u?.dentist_id || u?.id;
   const { data: reviewsData, isLoading: reviewsLoading } = useDentistReviews(dentistId);
@@ -172,7 +176,7 @@ const Hero: React.FC<HeroProps> = ({ onSearch }) => {
               <Link href={user?.role === 'dentist' ? paths.profile : paths.patientProfileSettings} className="flex h-11 shrink-0 items-center gap-2.5 rounded-2xl bg-gray-900 pl-2.5 pr-2.5 text-white shadow-lg shadow-gray-200 transition-all hover:bg-gray-800 active:scale-95 sm:gap-3 sm:pr-5">
                 <div className="h-8 w-8 shrink-0 overflow-hidden rounded-xl border border-gray-700 sm:h-9 sm:w-9">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/assets/img/photos/Dentist.png" alt="Profile" className="h-full w-full object-cover" />
+                  <img src={dentistAvatar} alt="Profile" className="h-full w-full object-cover" />
                 </div>
                 <div className="hidden min-w-0 flex-col leading-tight sm:flex">
                   <span className="max-w-[110px] truncate text-xs font-bold">{String(user?.full_name || 'Shifokor')}</span>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Erkak avatar">
+  <rect width="200" height="200" rx="28" fill="#4d4f55"/>
+  <g fill="#d7dae0">
+    <circle cx="100" cy="78" r="34"/>
+    <path d="M40 174c0-33 27-52 60-52s60 19 60 52z"/>
+  </g>
+</svg>
