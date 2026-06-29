@@ -108,8 +108,10 @@ def get_all_dentists(
             conditions.append(func.lower(DentistProfile.clinic).like(f"%%{kw.lower()}%%"))
         query = query.filter(or_(*conditions))
 
-    dentists = query.all()
-    
+    # Yangi ro'yxatdan o'tgan doktorlar birinchi ko'rinsin (eng yangi -> eski).
+    # Bosh sahifadagi slice(0,5) eski doktorlarni emas, yangilarni ko'rsatishi uchun muhim.
+    dentists = query.order_by(DentistProfile.id.desc()).all()
+
     result = []
     for dentist in dentists:
         result.append({

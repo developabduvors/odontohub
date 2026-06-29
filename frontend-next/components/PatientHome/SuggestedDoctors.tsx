@@ -46,25 +46,25 @@ export default function SuggestedDoctors() {
 
   const suggestedDoctors = useMemo(() => {
     if (!dentists) return [];
-    let list = [...dentists];
-    if (userLocation) {
-      list = list
-        .map((d: any) => {
-          const lat = Number(d.latitude);
-          const lng = Number(d.longitude);
-          const dist =
-            Number.isFinite(lat) && Number.isFinite(lng) && lat !== 0 && lng !== 0
-              ? getDistance(userLocation.lat, userLocation.lng, lat, lng)
-              : null;
-          return { ...d, distance: dist };
-        })
-        .sort((a: any, b: any) => {
-          if (a.distance === null || a.distance === undefined) return 1;
-          if (b.distance === null || b.distance === undefined) return -1;
-          return a.distance - b.distance;
-        });
-    }
-    return list.slice(0, 5);
+    // Har bir doktor uchun masofani hisoblaymiz (koordinata bo'lsa).
+    const withDist = dentists.map((d: any) => {
+      const lat = Number(d.latitude);
+      const lng = Number(d.longitude);
+      const distance =
+        userLocation && Number.isFinite(lat) && Number.isFinite(lng) && lat !== 0 && lng !== 0
+          ? getDistance(userLocation.lat, userLocation.lng, lat, lng)
+          : null;
+      return { ...d, distance };
+    });
+    // Yaqin doktorlar (masofasi bor) oldinda; koordinatasi yo'qlar backend tartibini
+    // (eng yangi -> eski) saqlaydi, shunda yangi doktorlar ham top-5 ga tushadi.
+    const sorted = withDist.sort((a: any, b: any) => {
+      if (a.distance !== null && b.distance !== null) return a.distance - b.distance;
+      if (a.distance !== null) return -1;
+      if (b.distance !== null) return 1;
+      return 0; // ikkalasi ham null -> backend tartibi saqlanadi
+    });
+    return sorted.slice(0, 5);
   }, [dentists, userLocation]);
 
   const isLoading = isLoadingDentists || isLoadingAppointments;
