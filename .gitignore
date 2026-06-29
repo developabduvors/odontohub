@@ -8,3 +8,4 @@ __pycache__/
 !backend/.env.example
 backend/venv/
 backend/app/__pycache__/
+.vercel
