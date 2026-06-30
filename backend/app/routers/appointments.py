@@ -79,8 +79,13 @@ def create_appointment(
             db.add(notif)
             db.commit()
         except Exception as notif_err:
+            # Notification ikkilamchi — yiqilsa sessiyani tozalaymiz, aks holda
+            # expire_on_commit tufayli quyidagi db_appointment serializatsiyasi
+            # buzilgan sessiyada qayta yuklanib, 500 beradi (appointment esa saqlangan).
+            db.rollback()
             print(f"Notification error (non-critical): {notif_err}")
 
+        db.refresh(db_appointment)
         return db_appointment
     except HTTPException:
         raise

@@ -117,7 +117,7 @@ def on_startup():
             ("userrole", ["patient", "dentist"]),
             ("verificationstatus", ["pending", "approved", "rejected"]),
             ("appointment_status", ["pending", "confirmed", "in_progress", "moved", "cancelled", "completed"]),
-            ("notificationtype", ["appointment_confirmed", "appointment_cancelled", "appointment_reminder", "payment_received", "review_received", "profile_approved", "profile_rejected", "system_message", "new_message"]),
+            ("notificationtype", ["appointment_confirmed", "appointment_cancelled", "appointment_reminder", "payment_received", "review_received", "profile_approved", "profile_rejected", "system_message", "new_message", "appointment_completed"]),
         ]
         with engine.begin() as conn:
             for type_name, values in enum_types:
@@ -134,6 +134,17 @@ def on_startup():
             conn.execute(text(
                 "DO $$ BEGIN "
                 "  ALTER TYPE notificationtype ADD VALUE IF NOT EXISTS 'new_message'; "
+                "EXCEPTION WHEN others THEN NULL; "
+                "END $$;"
+            ))
+
+        # Add appointment_completed to notificationtype enum if missing
+        # (qabulni yakunlashda APPOINTMENT_COMPLETED notification yaratiladi —
+        #  qiymat bo'lmasa INSERT yiqilib, xuddi booking'dagidek 500 beradi).
+        with engine.begin() as conn:
+            conn.execute(text(
+                "DO $$ BEGIN "
+                "  ALTER TYPE notificationtype ADD VALUE IF NOT EXISTS 'appointment_completed'; "
                 "EXCEPTION WHEN others THEN NULL; "
                 "END $$;"
             ))

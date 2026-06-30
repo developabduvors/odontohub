@@ -21,7 +21,13 @@ class Notification(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    type = Column(Enum(NotificationType), nullable=False)
+    # values_callable: enum NOMI (APPOINTMENT_CONFIRMED) emas, QIYMATI
+    # (appointment_confirmed) saqlansin — Postgres 'notificationtype' enum'i
+    # lowercase qiymatlardan iborat. Aks holda INSERT "invalid input value" beradi.
+    type = Column(
+        Enum(NotificationType, values_callable=lambda x: [e.value for e in x]),
+        nullable=False,
+    )
     title = Column(String(255), nullable=False)
     message = Column(Text, nullable=False)
     is_read = Column(Boolean, default=False, nullable=False)
