@@ -11,6 +11,9 @@ export function TelegramAuthWrapper({ children }: { children: React.ReactNode })
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
     const [authError, setAuthError] = useState<string | null>(null);
+    // Telegram ichida, ammo akkaunt hali bog'lanmagan (404) — login formasi o'rniga
+    // "botda raqamingizni ulashing" ekranini ko'rsatamiz.
+    const [needsContact, setNeedsContact] = useState(false);
 
     useEffect(() => {
         if (!isReady) return;
@@ -55,8 +58,10 @@ export function TelegramAuthWrapper({ children }: { children: React.ReactNode })
                     try {
                         await api.post('/api/telegram/request-link', { init_data: initData });
                     } catch {
-                        /* bot xabarini yuborib bo'lmasa, oddiy login sahifasi ko'rsatiladi */
+                        /* bot xabarini yuborib bo'lmasa ham, foydalanuvchini botga yo'naltiramiz */
                     }
+                    // Login formasi o'rniga botga raqam ulashish ekranini ko'rsatamiz.
+                    setNeedsContact(true);
                 }
             } finally {
                 setLoading(false);
@@ -121,6 +126,38 @@ export function TelegramAuthWrapper({ children }: { children: React.ReactNode })
                         className="w-full py-4 bg-[#1a1f36] text-white font-bold rounded-[22px] hover:bg-[#2c3545] transition-all active:scale-[0.98]"
                     >
                         Yopish / Закрыть
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    if (needsContact) {
+        const BOT_URL = 'https://t.me/gosmileuz_bot';
+        const openBot = () => {
+            // Mini App ichida bot chatини ochish — u yerда "raqam ulashish" tugmasi turadi.
+            if (tg?.openTelegramLink) tg.openTelegramLink(BOT_URL);
+            else window.open(BOT_URL, '_blank');
+        };
+        return (
+            <div className="flex min-h-screen items-center justify-center bg-gray-50 p-6">
+                <div className="bg-white w-full max-w-sm rounded-[32px] p-8 text-center shadow-lg border border-gray-100 flex flex-col items-center">
+                    <div className="w-16 h-16 bg-[#5d6dff]/10 rounded-full flex items-center justify-center mb-5 shrink-0">
+                        <svg className="w-8 h-8 text-[#5d6dff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                        </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-[#1a1f36] mb-3">Kirish / Вход</h3>
+                    <div className="text-gray-500 font-medium text-sm mb-6 leading-relaxed space-y-2">
+                        <p>Kirish uchun botда telefon raqamingizni ulashing.</p>
+                        <hr className="border-gray-100 my-2" />
+                        <p>Чтобы войти, поделитесь номером телефона в боте.</p>
+                    </div>
+                    <button
+                        onClick={openBot}
+                        className="w-full py-4 bg-[#5d6dff] text-white font-bold rounded-[22px] hover:bg-[#4a5ae0] transition-all active:scale-[0.98]"
+                    >
+                        Botni ochish / Открыть бота
                     </button>
                 </div>
             </div>

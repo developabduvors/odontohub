@@ -17,6 +17,7 @@ interface TelegramWebApp {
     expand: () => void;
     ready: () => void;
     close: () => void;
+    openTelegramLink?: (url: string) => void;
 }
 
 // Define the shape of Telegram's global object for TypeScript
