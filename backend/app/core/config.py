@@ -20,7 +20,9 @@ class Settings(BaseSettings):
     WEBHOOK_BASE_URL: Optional[str] = None
     # Telegram Mini App (frontend) URL'i — "Ilovani ochish" tugmasi uchun.
     MINI_APP_URL: Optional[str] = None
-    TELEGRAM_BOT_USERNAME: str = "GoSmileBot"
+    # Botning HAQIQIY username'i (getMe: @gosmileuz_bot). Invite havola shundan
+    # quriladi — noto'g'ri bo'lsa t.me/<username>/... "not found" beradi.
+    TELEGRAM_BOT_USERNAME: str = "gosmileuz_bot"
     TELEGRAM_MINI_APP_SHORT_NAME: str = "app"
 
     # 🗄 Database
