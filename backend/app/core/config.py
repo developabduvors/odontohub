@@ -23,7 +23,9 @@ class Settings(BaseSettings):
     # Botning HAQIQIY username'i (getMe: @gosmileuz_bot). Invite havola shundan
     # quriladi — noto'g'ri bo'lsa t.me/<username>/... "not found" beradi.
     TELEGRAM_BOT_USERNAME: str = "gosmileuz_bot"
-    TELEGRAM_MINI_APP_SHORT_NAME: str = "app"
+    # Mini App short name (BotFather /myapps): havola t.me/<bot>/<short_name>.
+    # Bu botda app short name'i ham 'gosmileuz_bot'.
+    TELEGRAM_MINI_APP_SHORT_NAME: str = "gosmileuz_bot"
 
     # 🗄 Database
     DATABASE_URL: Optional[str] = None
