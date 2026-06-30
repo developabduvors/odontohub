@@ -35,6 +35,12 @@ export function TelegramAuthWrapper({ children }: { children: React.ReactNode })
                 dispatch(setUser(userData));
             } catch (err) {
                 console.log("Telegram auth not linked yet or failed");
+                // Bog'lanmagan — bot orqali raqam ulashishni so'raymiz (parolsiz kirish).
+                try {
+                    await api.post('/api/telegram/request-link', { init_data: initData });
+                } catch {
+                    /* bot xabarini yuborib bo'lmasa, oddiy login sahifasi ko'rsatiladi */
+                }
             } finally {
                 setLoading(false);
             }

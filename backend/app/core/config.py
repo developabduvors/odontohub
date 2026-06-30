@@ -13,6 +13,13 @@ class Settings(BaseSettings):
 
     # 🤖 Telegram bot (parolni tiklash kodlarini yuborish uchun)
     TELEGRAM_BOT_TOKEN: Optional[str] = None
+    # Webhook'ni soxta so'rovlardan himoya qiladi: setWebhook'da o'rnatiladi va
+    # Telegram har so'rovda X-Telegram-Bot-Api-Secret-Token header'ida qaytaradi.
+    TELEGRAM_WEBHOOK_SECRET: Optional[str] = None
+    # Backendning ommaviy URL'i (Railway), webhook'ni ro'yxatdan o'tkazish uchun.
+    WEBHOOK_BASE_URL: Optional[str] = None
+    # Telegram Mini App (frontend) URL'i — "Ilovani ochish" tugmasi uchun.
+    MINI_APP_URL: Optional[str] = None
 
     # 🗄 Database
     DATABASE_URL: Optional[str] = None
