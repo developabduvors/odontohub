@@ -156,47 +156,57 @@ def login_via_telegram(data: TelegramAuthSchema, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.telegram_id == tg_id).first()
     
     # 2. Обработка приглашения (invite_token)
+    #
+    # Invite BIR MARTALIK: muvaffaqiyatli ulangach token NULL bo'ladi (pastda).
+    # Shu sabab topilmagan / eskirgan / ishlatilgan token uchun QATTIQ XATO
+    # bermаймиз — aks holda havola ikkinchi marta ochilganda "Инвайт-код
+    # недействителен" boshi berk ko'chasi chiqadi. Buning o'rniga oddiy login'ga
+    # o'tkazamiz: bu Telegram allaqachon ulangan bo'lsa (1) — kiritamiz; bog'lanmagan
+    # bo'lsa pastdagi `if not user` 404 → raqam ulashish (parolsiz kirish) oqimini
+    # ishga tushiradi. Faqat invite HAQIQATAN amal qilsa va boshqa akkauntga taalluqli
+    # bo'lsa — ataylab xato qaytaramiz.
     if data.invite_token:
         profile = db.query(PatientProfile).filter(PatientProfile.invite_token == data.invite_token).first()
-        if not profile:
-            raise HTTPException(status_code=400, detail="Инвайт-код недействителен.")
-            
-        if profile.invite_expires and profile.invite_expires < datetime.utcnow():
-            raise HTTPException(status_code=400, detail="Срок действия приглашения истек.")
-            
-        if user and user.id != profile.user_id:
-            raise HTTPException(status_code=400, detail="Этот Telegram-аккаунт уже привязан к другому пользователю.")
-            
-        target_user = profile.user
-        if not target_user:
-            raise HTTPException(status_code=400, detail="Пользователь для этого профиля пациента не найден.")
-            
-        if target_user.telegram_id and target_user.telegram_id != tg_id:
-            raise HTTPException(status_code=400, detail="У этого пациента уже привязан другой Telegram-аккаунт.")
-            
-        # Привязываем telegram_id и очищаем приглашение
-        if not target_user.telegram_id:
-            target_user.telegram_id = tg_id
+        invite_active = (
+            profile is not None
+            and (profile.invite_expires is None or profile.invite_expires >= datetime.utcnow())
+        )
 
-        # Обновляем username и first_name (если доступны)
-        if tg_user.get("username"):
-            if hasattr(target_user, "username"):
-                target_user.username = tg_user.get("username")
-            elif hasattr(profile, "username"):
-                profile.username = tg_user.get("username")
-                
-        if tg_user.get("first_name"):
-            if hasattr(target_user, "first_name"):
-                target_user.first_name = tg_user.get("first_name")
-            elif hasattr(profile, "first_name"):
-                profile.first_name = tg_user.get("first_name")
+        if invite_active:
+            if user and user.id != profile.user_id:
+                raise HTTPException(status_code=400, detail="Этот Telegram-аккаунт уже привязан к другому пользователю.")
 
-        profile.invite_token = None
-        profile.invite_expires = None
-        db.commit()
-        
-        user = target_user
-        
+            target_user = profile.user
+            if not target_user:
+                raise HTTPException(status_code=400, detail="Пользователь для этого профиля пациента не найден.")
+
+            if target_user.telegram_id and target_user.telegram_id != tg_id:
+                raise HTTPException(status_code=400, detail="У этого пациента уже привязан другой Telegram-аккаунт.")
+
+            # Привязываем telegram_id и очищаем приглашение
+            if not target_user.telegram_id:
+                target_user.telegram_id = tg_id
+
+            # Обновляем username и first_name (если доступны)
+            if tg_user.get("username"):
+                if hasattr(target_user, "username"):
+                    target_user.username = tg_user.get("username")
+                elif hasattr(profile, "username"):
+                    profile.username = tg_user.get("username")
+
+            if tg_user.get("first_name"):
+                if hasattr(target_user, "first_name"):
+                    target_user.first_name = tg_user.get("first_name")
+                elif hasattr(profile, "first_name"):
+                    profile.first_name = tg_user.get("first_name")
+
+            profile.invite_token = None
+            profile.invite_expires = None
+            db.commit()
+
+            user = target_user
+        # else: invite topilmadi/eskirgan/ishlatilgan — pastdagi oddiy login hal qiladi.
+
     if not user:
         # Hali bog'lanmagan — frontend foydalanuvchini botga (raqam ulashishga) yo'naltirsin.
         raise HTTPException(status_code=404, detail="Telegram account not linked")
