@@ -13,6 +13,8 @@ class Settings(BaseSettings):
 
     # 🤖 Telegram bot (parolni tiklash kodlarini yuborish uchun)
     TELEGRAM_BOT_TOKEN: Optional[str] = None
+    TELEGRAM_BOT_USERNAME: str = "GoSmileBot"
+    TELEGRAM_MINI_APP_SHORT_NAME: str = "app"
 
     # 🗄 Database
     DATABASE_URL: Optional[str] = None

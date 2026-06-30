@@ -83,10 +83,14 @@ const AddPatientModal: React.FC<AddPatientModalProps> = ({ isOpen, onClose, onSu
             // Magic-havola yaratamiz va muvaffaqiyat ekraniga o'tamiz (modal yopilmaydi)
             try {
                 const link = await getMagicLink.mutateAsync(newPatient.id);
-                const origin = typeof window !== 'undefined' ? window.location.origin : '';
-                setMagicUrl(`${origin}/${locale}/magic/${link.token}`);
+                if (link.telegram_link) {
+                    setMagicUrl(link.telegram_link);
+                } else {
+                    const origin = typeof window !== 'undefined' ? window.location.origin : '';
+                    setMagicUrl(`${origin}/${locale}/magic/${link.token}`);
+                }
             } catch (linkErr) {
-                console.error('Failed to generate magic link', linkErr);
+                console.error('Failed to generate magic link/telegram link', linkErr);
                 // Havola yaratilmasa ham bemor qo'shilgan — shunchaki havolasiz ko'rsatamiz
             }
             setCreated({ id: newPatient.id, name: newPatient.full_name });
@@ -139,9 +143,8 @@ const AddPatientModal: React.FC<AddPatientModalProps> = ({ isOpen, onClose, onSu
                                     />
                                     <button
                                         onClick={handleCopy}
-                                        className={`h-14 px-5 rounded-[18px] font-bold flex items-center gap-2 transition-all shrink-0 ${
-                                            copied ? 'bg-[#00e396] text-white' : 'bg-[#4f6bff] text-white hover:bg-[#3d56d5]'
-                                        }`}
+                                        className={`h-14 px-5 rounded-[18px] font-bold flex items-center gap-2 transition-all shrink-0 ${copied ? 'bg-[#00e396] text-white' : 'bg-[#4f6bff] text-white hover:bg-[#3d56d5]'
+                                            }`}
                                     >
                                         {copied ? <Check size={18} /> : <Copy size={18} />}
                                         {copied ? t('magic.copied') : t('magic.copy')}
@@ -163,105 +166,105 @@ const AddPatientModal: React.FC<AddPatientModalProps> = ({ isOpen, onClose, onSu
                         </button>
                     </div>
                 ) : (
-                <>
-                <h2 className="text-3xl md:text-4xl font-black text-[#1a1f36] mb-8 pr-8">
-                    {t('patients_list.add_modal.title')}
-                </h2>
+                    <>
+                        <h2 className="text-3xl md:text-4xl font-black text-[#1a1f36] mb-8 pr-8">
+                            {t('patients_list.add_modal.title')}
+                        </h2>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="space-y-2">
-                        <label className="flex items-center gap-2 text-sm font-bold text-gray-500 ml-1">
-                            <User size={16} />
-                            {t('patients_list.add_modal.full_name')} <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                            type="text"
-                            value={formData.full_name}
-                            onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                            placeholder={t('patients_list.add_modal.full_name_placeholder')}
-                            className="w-full h-14 bg-[#efefef] rounded-[20px] px-6 text-base font-bold text-[#1a1f36] border-none focus:ring-2 focus:ring-[#4f6bff]/20 outline-none transition-all placeholder:text-gray-400"
-                            required
-                        />
-                    </div>
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div className="space-y-2">
+                                <label className="flex items-center gap-2 text-sm font-bold text-gray-500 ml-1">
+                                    <User size={16} />
+                                    {t('patients_list.add_modal.full_name')} <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    value={formData.full_name}
+                                    onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
+                                    placeholder={t('patients_list.add_modal.full_name_placeholder')}
+                                    className="w-full h-14 bg-[#efefef] rounded-[20px] px-6 text-base font-bold text-[#1a1f36] border-none focus:ring-2 focus:ring-[#4f6bff]/20 outline-none transition-all placeholder:text-gray-400"
+                                    required
+                                />
+                            </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                            <label className="flex items-center gap-2 text-sm font-bold text-gray-500 ml-1">
-                                <Phone size={16} />
-                                {t('patients_list.add_modal.phone')} <span className="text-red-500">*</span>
-                            </label>
-                            <PhoneInput
-                                value={formData.phone}
-                                onChange={(v) => setFormData({ ...formData, phone: v })}
-                                placeholder="+998 XX XXX XX XX"
-                                className="w-full h-14 bg-[#efefef] rounded-[20px] px-6 text-base font-bold text-[#1a1f36] border-none focus:ring-2 focus:ring-[#4f6bff]/20 outline-none transition-all placeholder:text-gray-400"
-                                required
-                            />
-                        </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="flex items-center gap-2 text-sm font-bold text-gray-500 ml-1">
+                                        <Phone size={16} />
+                                        {t('patients_list.add_modal.phone')} <span className="text-red-500">*</span>
+                                    </label>
+                                    <PhoneInput
+                                        value={formData.phone}
+                                        onChange={(v) => setFormData({ ...formData, phone: v })}
+                                        placeholder="+998 XX XXX XX XX"
+                                        className="w-full h-14 bg-[#efefef] rounded-[20px] px-6 text-base font-bold text-[#1a1f36] border-none focus:ring-2 focus:ring-[#4f6bff]/20 outline-none transition-all placeholder:text-gray-400"
+                                        required
+                                    />
+                                </div>
 
-                        <div className="space-y-2">
-                            <label className="flex items-center gap-2 text-sm font-bold text-gray-500 ml-1">
-                                <Check size={16} />
-                                {t('patients_list.add_modal.gender')}
-                            </label>
-                            <select
-                                value={formData.gender}
-                                onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-                                className="w-full h-14 bg-[#efefef] rounded-[20px] px-6 text-base font-bold text-[#1a1f36] border-none focus:ring-2 focus:ring-[#4f6bff]/20 outline-none appearance-none cursor-pointer"
-                            >
-                                <option value="">{t('patients_list.add_modal.gender_select')}</option>
-                                <option value="male">{t('patients_list.add_modal.gender_male')}</option>
-                                <option value="female">{t('patients_list.add_modal.gender_female')}</option>
-                            </select>
-                        </div>
-                    </div>
+                                <div className="space-y-2">
+                                    <label className="flex items-center gap-2 text-sm font-bold text-gray-500 ml-1">
+                                        <Check size={16} />
+                                        {t('patients_list.add_modal.gender')}
+                                    </label>
+                                    <select
+                                        value={formData.gender}
+                                        onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+                                        className="w-full h-14 bg-[#efefef] rounded-[20px] px-6 text-base font-bold text-[#1a1f36] border-none focus:ring-2 focus:ring-[#4f6bff]/20 outline-none appearance-none cursor-pointer"
+                                    >
+                                        <option value="">{t('patients_list.add_modal.gender_select')}</option>
+                                        <option value="male">{t('patients_list.add_modal.gender_male')}</option>
+                                        <option value="female">{t('patients_list.add_modal.gender_female')}</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                    <div className="space-y-2">
-                        <label className="flex items-center gap-2 text-sm font-bold text-gray-500 ml-1">
-                            <Calendar size={16} />
-                            {t('patients_list.add_modal.birth_date')}
-                        </label>
-                        <input
-                            type="date"
-                            value={formData.birth_date}
-                            onChange={(e) => setFormData({ ...formData, birth_date: e.target.value })}
-                            className="w-full h-14 bg-[#efefef] rounded-[20px] px-6 text-base font-bold text-[#1a1f36] border-none focus:ring-2 focus:ring-[#4f6bff]/20 outline-none transition-all cursor-pointer"
-                        />
-                    </div>
+                            <div className="space-y-2">
+                                <label className="flex items-center gap-2 text-sm font-bold text-gray-500 ml-1">
+                                    <Calendar size={16} />
+                                    {t('patients_list.add_modal.birth_date')}
+                                </label>
+                                <input
+                                    type="date"
+                                    value={formData.birth_date}
+                                    onChange={(e) => setFormData({ ...formData, birth_date: e.target.value })}
+                                    className="w-full h-14 bg-[#efefef] rounded-[20px] px-6 text-base font-bold text-[#1a1f36] border-none focus:ring-2 focus:ring-[#4f6bff]/20 outline-none transition-all cursor-pointer"
+                                />
+                            </div>
 
-                    <div className="space-y-2">
-                        <label className="flex items-center gap-2 text-sm font-bold text-gray-500 ml-1">
-                            <MapPin size={16} />
-                            {t('patients_list.add_modal.address')}
-                        </label>
-                        <textarea
-                            value={formData.address}
-                            onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                            placeholder={t('patients_list.add_modal.address_placeholder')}
-                            rows={3}
-                            className="w-full bg-[#efefef] rounded-[24px] px-6 py-4 text-base font-bold text-[#1a1f36] border-none focus:ring-2 focus:ring-[#4f6bff]/20 outline-none resize-none transition-all placeholder:text-gray-400"
-                        />
-                    </div>
+                            <div className="space-y-2">
+                                <label className="flex items-center gap-2 text-sm font-bold text-gray-500 ml-1">
+                                    <MapPin size={16} />
+                                    {t('patients_list.add_modal.address')}
+                                </label>
+                                <textarea
+                                    value={formData.address}
+                                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                                    placeholder={t('patients_list.add_modal.address_placeholder')}
+                                    rows={3}
+                                    className="w-full bg-[#efefef] rounded-[24px] px-6 py-4 text-base font-bold text-[#1a1f36] border-none focus:ring-2 focus:ring-[#4f6bff]/20 outline-none resize-none transition-all placeholder:text-gray-400"
+                                />
+                            </div>
 
-                    <div className="flex gap-4 pt-4">
-                        <button
-                            type="button"
-                            onClick={handleClose}
-                            className="flex-1 py-4 bg-gray-100 text-gray-500 text-lg font-black rounded-[22px] hover:bg-gray-200 transition-all active:scale-[0.98] cursor-pointer"
-                        >
-                            {t('patients_list.add_modal.cancel')}
-                        </button>
-                        <button
-                            type="submit"
-                            disabled={createPatient.isPending || getMagicLink.isPending}
-                            className="flex-2 py-4 bg-[#00e396] text-white text-lg font-black rounded-[22px] shadow-xl shadow-[#00e396]/20 hover:bg-[#00d08a] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
-                        >
-                            {(createPatient.isPending || getMagicLink.isPending) && <Loader2 className="w-5 h-5 animate-spin" />}
-                            {t('patients_list.add_modal.add')}
-                        </button>
-                    </div>
-                </form>
-                </>
+                            <div className="flex gap-4 pt-4">
+                                <button
+                                    type="button"
+                                    onClick={handleClose}
+                                    className="flex-1 py-4 bg-gray-100 text-gray-500 text-lg font-black rounded-[22px] hover:bg-gray-200 transition-all active:scale-[0.98] cursor-pointer"
+                                >
+                                    {t('patients_list.add_modal.cancel')}
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={createPatient.isPending || getMagicLink.isPending}
+                                    className="flex-2 py-4 bg-[#00e396] text-white text-lg font-black rounded-[22px] shadow-xl shadow-[#00e396]/20 hover:bg-[#00d08a] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
+                                >
+                                    {(createPatient.isPending || getMagicLink.isPending) && <Loader2 className="w-5 h-5 animate-spin" />}
+                                    {t('patients_list.add_modal.add')}
+                                </button>
+                            </div>
+                        </form>
+                    </>
                 )}
             </div>
         </div>

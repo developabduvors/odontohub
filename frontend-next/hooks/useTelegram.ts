@@ -13,7 +13,7 @@ interface TelegramWebAppUser {
 }
 interface TelegramWebApp {
     initData: string;
-    initDataUnsafe: { user?: TelegramWebAppUser };
+    initDataUnsafe: { user?: TelegramWebAppUser; start_param?: string };
     expand: () => void;
     ready: () => void;
     close: () => void;

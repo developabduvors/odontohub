@@ -209,6 +209,19 @@ def on_startup():
                     conn.execute(text("ALTER TABLE users ADD COLUMN backup_phone VARCHAR"))
                 print("OK: users migration - added backup_phone")
 
+        if 'patient_profiles' in inspector.get_table_names():
+            patient_cols = [col['name'] for col in inspector.get_columns('patient_profiles')]
+            patient_fields = []
+            if 'invite_token' not in patient_cols:
+                patient_fields.append(('invite_token', 'VARCHAR'))
+            if 'invite_expires' not in patient_cols:
+                patient_fields.append(('invite_expires', 'TIMESTAMP'))
+            if patient_fields:
+                with engine.begin() as conn:
+                    for field_name, field_type in patient_fields:
+                        conn.execute(text(f"ALTER TABLE patient_profiles ADD COLUMN {field_name} {field_type}"))
+                print(f"OK: patient_profiles migration — added {[f[0] for f in patient_fields]}")
+
     except Exception as e:
         print(f"Warning: Could not migrate dentist fields: {e}")
         # Don't fail startup if migration fails
