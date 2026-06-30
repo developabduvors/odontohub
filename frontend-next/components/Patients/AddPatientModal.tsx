@@ -78,6 +78,15 @@ const AddPatientModal: React.FC<AddPatientModalProps> = ({ isOpen, onClose, onSu
                 source: 'doctor_added'
             });
 
+            // Bu raqamga User allaqachon mavjud — invite havola berMAYmiz, xabar ko'rsatamiz.
+            if (newPatient.already_registered) {
+                toast.info(t('patients_list.add_modal.already_registered'));
+                if (onSuccess) onSuccess(newPatient.id);
+                resetAll();
+                onClose();
+                return;
+            }
+
             toast.success(t('patients_list.add_modal.success_added'));
 
             // Magic-havola yaratamiz va muvaffaqiyat ekraniga o'tamiz (modal yopilmaydi)

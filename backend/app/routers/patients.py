@@ -153,8 +153,9 @@ def create_patient(
                 schema = PatientSchema.model_validate(profile)
                 schema.phone = existing_user.phone
                 schema.status = calculate_patient_status(profile.id, db)
+                schema.already_registered = True  # bu raqamga User allaqachon bor
                 return schema
-            
+
             # If user exists but no profile, create profile
             profile = PatientProfile(
                 user_id=existing_user.id, 
@@ -170,6 +171,7 @@ def create_patient(
             schema = PatientSchema.model_validate(profile)
             schema.phone = existing_user.phone
             schema.status = calculate_patient_status(profile.id, db)
+            schema.already_registered = True  # bu raqamga User allaqachon bor
             return schema
 
         # Create new user and profile

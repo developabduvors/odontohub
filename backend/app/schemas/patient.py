@@ -24,6 +24,9 @@ class PatientSchema(PatientBase):
     user_id: int
     phone: Optional[str] = None
     status: Optional[str] = None
+    # Doktor qo'shganda: bu raqamga User allaqachon mavjud bo'lsa True —
+    # frontend invite havola o'rniga "foydalanuvchi bor" xabarini ko'rsatadi.
+    already_registered: Optional[bool] = False
 
     class Config:
         from_attributes = True

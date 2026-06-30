@@ -516,7 +516,8 @@
       "cancel": "Bekor qilish",
       "add": "Qo'shish",
       "error_required": "Iltimos, ism va telefon raqamini kiriting",
-      "success_added": "Bemor muvaffaqiyatli qo'shildi"
+      "success_added": "Bemor muvaffaqiyatli qo'shildi",
+      "already_registered": "Bu raqamdagi foydalanuvchi allaqachon ro'yxatdan o'tgan"
     },
     "delete_confirm": "\"{name}\" bemorni o'chirmoqchimisiz?",
     "delete_error": "Bemorni o'chirishda xatolik"

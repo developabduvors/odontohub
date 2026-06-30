@@ -13,6 +13,7 @@ export interface Patient {
     source?: string | null;
     status?: string | null;
     dentist_id?: number | null;
+    already_registered?: boolean;
 }
 
 export interface DentistProfile {
