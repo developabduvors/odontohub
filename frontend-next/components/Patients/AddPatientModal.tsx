@@ -89,15 +89,15 @@ const AddPatientModal: React.FC<AddPatientModalProps> = ({ isOpen, onClose, onSu
 
             toast.success(t('patients_list.add_modal.success_added'));
 
-            // Magic-havola yaratamiz va muvaffaqiyat ekraniga o'tamiz (modal yopilmaydi)
+            // Magic-havola yaratamiz va muvaffaqiyat ekraniga o'tamiz (modal yopilmaydi).
+            // ATAYLAB web magic-havoladан foydalanamiz (Telegram deep-link emas): u
+            // tokenни URL'dan olib /auth/me orqali bemorни TO'G'RIDAN-TO'G'RI kiritadi —
+            // register/login ekrani chiqmaydi, init_data/start_param'ga bog'liq emas va
+            // har qanday brauzerда (Telegram ichидаги brauzer ham) ishlaydi.
             try {
                 const link = await getMagicLink.mutateAsync(newPatient.id);
-                if (link.telegram_link) {
-                    setMagicUrl(link.telegram_link);
-                } else {
-                    const origin = typeof window !== 'undefined' ? window.location.origin : '';
-                    setMagicUrl(`${origin}/${locale}/magic/${link.token}`);
-                }
+                const origin = typeof window !== 'undefined' ? window.location.origin : '';
+                setMagicUrl(`${origin}/${locale}/magic/${link.token}`);
             } catch (linkErr) {
                 console.error('Failed to generate magic link/telegram link', linkErr);
                 // Havola yaratilmasa ham bemor qo'shilgan — shunchaki havolasiz ko'rsatamiz
