@@ -324,10 +324,15 @@ def update_patient(
 
     if not (is_dentist or is_own_patient_profile):
         raise HTTPException(status_code=403, detail="Not authorized to update this patient")
-    
-    for key, value in data.dict(exclude_unset=True).items():
+
+    update_data = data.dict(exclude_unset=True)
+    # phone PatientProfile ustuni emas — User'da. Ajratib, user'ga yozamiz.
+    phone = update_data.pop("phone", None)
+    for key, value in update_data.items():
         setattr(profile, key, value)
-    
+    if phone is not None and profile.user:
+        profile.user.phone = phone
+
     db.commit()
     db.refresh(profile)
     schema = PatientSchema.model_validate(profile)

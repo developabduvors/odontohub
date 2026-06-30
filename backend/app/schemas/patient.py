@@ -18,6 +18,7 @@ class PatientUpdate(BaseModel):
     gender: Optional[str] = None
     address: Optional[str] = None
     source: Optional[str] = None
+    phone: Optional[str] = None  # User.phone'ga yoziladi (PatientProfile ustuni emas)
 
 class PatientSchema(PatientBase):
     id: int

@@ -15,7 +15,7 @@ class DentistProfile(Base):
     __tablename__ = "dentist_profiles"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), unique=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), unique=True)
 
     full_name: Mapped[str]
     pinfl: Mapped[str | None] = mapped_column(String, nullable=True)

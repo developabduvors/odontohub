@@ -273,6 +273,60 @@ def on_startup():
         print(f"Warning: generic schema auto-migration failed: {e}")
         # Never fail startup on migration issues
 
+    # --- FK ON DELETE migration -------------------------------------------
+    # Model'dagi ondelete= faqat YANGI jadvalga ta'sir qiladi; Neon'dagi
+    # mavjud cheklovlar eski (ON DELETE NO ACTION) holatida qoladi va
+    # "DELETE on users violates foreign key" xatosini beradi. Shu yerda har
+    # bir FK'ni standart nom ({jadval}_{ustun}_fkey) bo'yicha DROP qilib,
+    # to'g'ri ON DELETE bilan qayta yaratamiz. Idempotent: DROP IF EXISTS + ADD.
+    #   CASCADE  — bola yozuv egasi bilan birga o'chadi
+    #   SET NULL — ixtiyoriy "kim qildi"/havola; yozuv qoladi, bog'lanish uziladi
+    if "postgresql" in db_url or "postgres" in db_url:
+        fk_rules = [
+            # (jadval, ustun, ota_jadval, ondelete)
+            ("patient_profiles", "user_id",        "users",            "CASCADE"),
+            ("dentist_profiles", "user_id",        "users",            "CASCADE"),
+            ("messages",         "sender_id",      "users",            "CASCADE"),
+            ("messages",         "appointment_id", "appointments",     "CASCADE"),
+            ("notifications",    "user_id",        "users",            "CASCADE"),
+            ("appointments",     "patient_id",     "patient_profiles", "CASCADE"),
+            ("appointments",     "dentist_id",     "dentist_profiles", "CASCADE"),
+            ("allergies",        "patient_id",     "patient_profiles", "CASCADE"),
+            ("allergies",        "documented_by",  "users",            "SET NULL"),
+            ("prescriptions",    "patient_id",     "patient_profiles", "CASCADE"),
+            ("prescriptions",    "prescribed_by",  "users",            "SET NULL"),
+            ("payments",         "patient_id",     "patient_profiles", "CASCADE"),
+            ("payments",         "appointment_id", "appointments",     "SET NULL"),
+            ("payments",         "recorded_by",    "users",            "SET NULL"),
+            ("patient_photos",   "patient_id",     "patient_profiles", "CASCADE"),
+            ("patient_photos",   "uploaded_by",    "users",            "SET NULL"),
+            ("complaints",       "patient_id",     "patient_profiles", "CASCADE"),
+            ("complaints",       "dentist_id",     "dentist_profiles", "CASCADE"),
+            ("medical_records",  "patient_id",     "patient_profiles", "CASCADE"),
+            ("medical_records",  "dentist_id",     "dentist_profiles", "CASCADE"),
+            ("medical_records",  "appointment_id", "appointments",     "CASCADE"),
+            ("reviews",          "patient_id",     "patient_profiles", "CASCADE"),
+            ("reviews",          "dentist_id",     "dentist_profiles", "CASCADE"),
+            ("reviews",          "appointment_id", "appointments",     "SET NULL"),
+        ]
+        try:
+            from sqlalchemy import inspect as _insp2
+            _existing_tables = set(_insp2(engine).get_table_names())
+            for _tbl, _col, _ref, _action in fk_rules:
+                if _tbl not in _existing_tables:
+                    continue  # jadval hali yo'q → create_all() to'g'ri yaratadi
+                _name = f"{_tbl}_{_col}_fkey"
+                with engine.begin() as conn:
+                    conn.execute(text(f'ALTER TABLE {_tbl} DROP CONSTRAINT IF EXISTS "{_name}"'))
+                    conn.execute(text(
+                        f'ALTER TABLE {_tbl} ADD CONSTRAINT "{_name}" '
+                        f'FOREIGN KEY ({_col}) REFERENCES {_ref}(id) ON DELETE {_action}'
+                    ))
+            print("OK: FK ON DELETE rules migrated")
+        except Exception as e:
+            print(f"Warning: FK ON DELETE migration failed: {e}")
+            # Never fail startup on migration issues
+
     # Create all tables (checkfirst=True skips existing tables)
     Base.metadata.create_all(bind=engine, checkfirst=True)
 

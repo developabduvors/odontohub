@@ -187,6 +187,9 @@ export const useUpdatePatient = () => {
         onSuccess: (_, variables) => {
             queryClient.invalidateQueries({ queryKey: ['patients'] });
             queryClient.invalidateQueries({ queryKey: ['patient', variables.id] });
+            // Profil sahifasi (/patients/me) shu kalitdan o'qiydi — saqlangach
+            // server qiymati bilan yangilanishi uchun majburan invalidate qilamiz.
+            queryClient.invalidateQueries({ queryKey: ['patientProfile'] });
         }
     });
 };

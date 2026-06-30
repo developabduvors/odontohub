@@ -11,13 +11,13 @@ class Message(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     appointment_id: Mapped[int] = mapped_column(
-        ForeignKey("appointments.id"),
+        ForeignKey("appointments.id", ondelete="CASCADE"),
         index=True,
         nullable=False
     )
 
     sender_id: Mapped[int] = mapped_column(
-        ForeignKey("users.id"),
+        ForeignKey("users.id", ondelete="CASCADE"),
         nullable=False
     )
 

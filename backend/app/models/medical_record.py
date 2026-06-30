@@ -11,19 +11,19 @@ class MedicalRecord(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     patient_id: Mapped[int] = mapped_column(
-        ForeignKey("patient_profiles.id"),
+        ForeignKey("patient_profiles.id", ondelete="CASCADE"),
         index=True,
         nullable=False
     )
 
     dentist_id: Mapped[int] = mapped_column(
-        ForeignKey("dentist_profiles.id"),
+        ForeignKey("dentist_profiles.id", ondelete="CASCADE"),
         index=True,
         nullable=False
     )
 
     appointment_id: Mapped[int] = mapped_column(
-        ForeignKey("appointments.id"),
+        ForeignKey("appointments.id", ondelete="CASCADE"),
         nullable=False
     )
 

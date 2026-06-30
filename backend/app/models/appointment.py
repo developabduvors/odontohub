@@ -22,12 +22,12 @@ class Appointment(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     dentist_id: Mapped[int] = mapped_column(
-        ForeignKey("dentist_profiles.id"),
+        ForeignKey("dentist_profiles.id", ondelete="CASCADE"),
         index=True
     )
 
     patient_id: Mapped[int] = mapped_column(
-        ForeignKey("patient_profiles.id"),
+        ForeignKey("patient_profiles.id", ondelete="CASCADE"),
         index=True
     )
 
