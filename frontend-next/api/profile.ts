@@ -162,6 +162,7 @@ export interface MagicLink {
     token: string;
     expires_at: string;
     patient_id: number;
+    telegram_link?: string;
 }
 
 // Doktor bemor uchun magic-havola tokenini oladi (faqat dentist).

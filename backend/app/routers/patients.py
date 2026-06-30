@@ -230,13 +230,32 @@ def get_patient_magic_link(
     if not profile.user_id:
         raise HTTPException(status_code=400, detail="Patient has no user account")
 
+    import secrets
+    from app.core.config import settings
+
     expires_delta = timedelta(days=MAGIC_LINK_VALID_DAYS)
     token = create_access_token(
         {"sub": str(profile.user_id), "role": UserRole.PATIENT.value},
         expires_delta=expires_delta,
     )
     expires_at = (datetime.utcnow() + expires_delta).isoformat() + "Z"
-    return {"token": token, "expires_at": expires_at, "patient_id": patient_id}
+    
+    # ── Mini App Deep Link (Telegram-first invite flow) ──
+    # Generate a new url-safe random token
+    invite_token = secrets.token_urlsafe(16)
+    profile.invite_token = invite_token
+    profile.invite_expires = datetime.utcnow() + expires_delta
+    db.commit()
+
+    telegram_link = f"https://t.me/{settings.TELEGRAM_BOT_USERNAME}/{settings.TELEGRAM_MINI_APP_SHORT_NAME}?startapp=invite_{invite_token}"
+
+    return {
+        "token": token,  # kept for fallback/backward-compatibility
+        "expires_at": expires_at,
+        "patient_id": patient_id,
+        "invite_token": invite_token,
+        "telegram_link": telegram_link
+    }
 
 @router.get("/me", response_model=PatientSchema)
 def patient_me(
